@@ -89,6 +89,34 @@ body{
 .card-note{font-size:11px;color:var(--green-dim);margin-top:3px;border-left:3px solid var(--line-dash);padding-left:7px}
 .empty{color:var(--dim);font-size:11px;text-align:center;padding:22px 0;letter-spacing:2px}
 
+.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tab{border:2px solid var(--ink);background:var(--panel);color:var(--dim);font-family:inherit;font-size:12px;letter-spacing:1px;padding:4px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);transition:transform .05s,box-shadow .05s}
+.tab:hover{color:var(--ink);transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
+.tab.active{background:var(--ink);color:var(--bg);box-shadow:3px 3px 0 var(--shadow)}
+
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.plan-day{border:2px solid var(--line-dash);padding:9px 10px;background:var(--panel2)}
+.plan-day.today{border-color:var(--amber);background:#f8eed8}
+.plan-day-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:8px}
+.plan-day-h b{color:var(--ink);font-weight:normal}
+.plan-load{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dim)}
+.load-track{width:60px;height:8px;border:2px solid var(--line-dash);background:var(--panel)}
+.load-fill{height:100%;background:var(--green)}
+.load-fill.hot{background:var(--amber)}
+.load-fill.full{background:var(--red)}
+.plan-fixed,.plan-blocks{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
+.plan-blocks:empty,.plan-fixed:empty{display:none}
+.chip.sm{font-size:10px;padding:1px 6px;box-shadow:1px 1px 0 var(--shadow)}
+.chip.class{border-color:var(--cyan)}
+.chip.class .t{color:var(--cyan)}
+.chip.meeting{border-color:var(--green)}
+.chip.meeting .t{color:var(--green)}
+.chip.study{border-color:var(--amber)}
+.chip.study .t{color:var(--amber)}
+.plan-warn{font-size:10px;color:var(--red);margin-top:2px}
+.plan-warn:empty{display:none}
+.plan-label{font-size:10px;color:var(--dim);letter-spacing:1px;margin:4px 0 3px}
+
 .week-row{display:flex;gap:10px;padding:6px 8px;border-left:4px solid transparent;align-items:baseline}
 .week-row.today{border-left-color:var(--amber);background:#f8eed8}
 .week-day{width:34px;color:var(--dim);font-size:11px;flex-shrink:0}
@@ -116,6 +144,7 @@ body{
   .main-grid{grid-template-columns:1fr}
   .kanban{grid-template-columns:1fr}
   .kcol{min-height:auto}
+  .plan-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -127,6 +156,12 @@ body{
     <div class="clock"><span id="clock">----/--/-- --:--:--</span><span class="cursor">▊</span></div>
   </div>
 
+  <div class="tabs">
+    <button class="tab active" data-view="board">▚ BOARD // 看板</button>
+    <button class="tab" data-view="plan">▚ PLAN // 排期</button>
+  </div>
+
+  <div id="view-board">
   <div class="panel">
     <div class="ph"><span><span class="lead">■</span> TODAY // 今日</span><span class="r" id="weekTag"></span></div>
     <div class="pb"><div class="today-line" id="todayBody"></div></div>
@@ -158,6 +193,14 @@ body{
         <div class="ph"><span><span class="lead">■</span> ADHOC // 临时事项</span></div>
         <div class="pb" id="adhocBody"></div>
       </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="view-plan" style="display:none">
+    <div class="panel">
+      <div class="ph"><span><span class="lead">■</span> PLAN // 排期引擎</span><span class="r" id="planMeta"></span></div>
+      <div class="pb"><div class="plan-grid" id="planBody"></div></div>
     </div>
   </div>
 
@@ -323,8 +366,269 @@ body{
 </script>
 <!--DATA:END-->
 
+<!--PLANNING:BEGIN-->
+<script id="planning-data" type="application/json">
+{
+  "generated_at": "2026-09-15T01:46:55+08:00",
+  "horizon_days": 14,
+  "calendar_sync": {
+    "status": "unavailable",
+    "imported": 0,
+    "error": "Apple Calendar read failed: Calendar permission was not granted."
+  },
+  "days": [
+    {
+      "date": "2026-09-15",
+      "weekday": "周二",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务管理理论与实务",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "内部控制理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-16",
+      "weekday": "周三",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "经济管理统计分析",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-17",
+      "weekday": "周四",
+      "fixed": [
+        {
+          "start": "09:00",
+          "end": "12:00",
+          "title": "审计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [
+        {
+          "start": "20:00",
+          "end": "21:00",
+          "title": "课程作业",
+          "course": "会计大数据管理分析",
+          "type": "homework"
+        }
+      ],
+      "load_minutes": 60,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-18",
+      "weekday": "周五",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务会计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-19",
+      "weekday": "周六",
+      "fixed": [],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-20",
+      "weekday": "周日",
+      "fixed": [],
+      "blocks": [
+        {
+          "start": "09:30",
+          "end": "10:30",
+          "title": "小组作业展示 · 每周推进",
+          "course": "管理经济学",
+          "type": "homework"
+        }
+      ],
+      "load_minutes": 60,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-21",
+      "weekday": "周一",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "会计大数据管理分析",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "管理经济学",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-22",
+      "weekday": "周二",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务管理理论与实务",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "内部控制理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-23",
+      "weekday": "周三",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "经济管理统计分析",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-24",
+      "weekday": "周四",
+      "fixed": [
+        {
+          "start": "09:00",
+          "end": "12:00",
+          "title": "审计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-25",
+      "weekday": "周五",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务会计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-26",
+      "weekday": "周六",
+      "fixed": [],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-27",
+      "weekday": "周日",
+      "fixed": [],
+      "blocks": [
+        {
+          "start": "09:30",
+          "end": "10:30",
+          "title": "小组作业展示 · 每周推进",
+          "course": "管理经济学",
+          "type": "homework"
+        }
+      ],
+      "load_minutes": 60,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-28",
+      "weekday": "周一",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "会计大数据管理分析",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "管理经济学",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    }
+  ]
+}
+</script>
+<!--PLANNING:END-->
+
 <script>
 const DATA = JSON.parse(document.getElementById("board-data").textContent);
+const PLANNING = JSON.parse(document.getElementById("planning-data").textContent);
 const WD = ["日","一","二","三","四","五","六"];
 const DAYN = {1:"周一",2:"周二",3:"周三",4:"周四",5:"周五",6:"周六",7:"周日"};
 
@@ -490,6 +794,7 @@ function renderAll(){
   renderExams();
   renderAdhoc();
   renderFooter();
+  renderPlan();
 }
 
 function tickClock(){
@@ -505,6 +810,59 @@ document.getElementById("btnExport").addEventListener("click", () => {
   a.download = "master-board-backup.json";
   a.click();
   URL.revokeObjectURL(a.href);
+});
+
+function renderPlan(){
+  document.getElementById("planMeta").textContent =
+    PLANNING.days && PLANNING.days.length
+      ? "生成于 " + (PLANNING.generated_at||"").slice(0,16).replace("T"," ") + " · 日历" + (PLANNING.calendar_sync && PLANNING.calendar_sync.status === "available" ? "已同步 " + PLANNING.calendar_sync.imported + " 条" : "未同步·用课表兜底")
+      : "尚未生成 · 让 agent 运行 python3 plan.py";
+  const body = document.getElementById("planBody");
+  if(!PLANNING.days || !PLANNING.days.length){
+    body.innerHTML = '<div class="empty" style="grid-column:1/-1">· 排期为空 · 运行 python3 plan.py 生成 ·</div>';
+    return;
+  }
+  const todayIso = new Date().toISOString().slice(0,10);
+  const todayLocal = new Date();
+  const localIso = todayLocal.getFullYear() + "-" + pad(todayLocal.getMonth()+1) + "-" + pad(todayLocal.getDate());
+  let h = "";
+  PLANNING.days.forEach(d => {
+    const pct = Math.min(100, Math.round((d.load_minutes||0) / (d.capacity_minutes||1) * 100));
+    const loadCls = pct >= 90 ? "full" : pct >= 60 ? "hot" : "";
+    h += '<div class="plan-day' + (d.date === localIso ? " today" : "") + '">'
+      + '<div class="plan-day-h"><b>' + d.date.slice(5) + " " + d.weekday + "</b>"
+      + '<span class="plan-load"><span class="load-track"><span class="load-fill ' + loadCls + '" style="width:' + pct + '%"></span></span>' + (d.load_minutes||0) + "/" + d.capacity_minutes + "分</span></div>";
+    if(d.fixed && d.fixed.length){
+      h += '<div class="plan-fixed">';
+      d.fixed.forEach(b => {
+        h += '<span class="chip sm ' + (b.type||"class") + '"><span class="t">' + b.start + "-" + b.end + "</span>" + b.title + "</span>";
+      });
+      h += "</div>";
+    }
+    if(d.blocks && d.blocks.length){
+      h += '<div class="plan-label">▸ 建议学习块</div><div class="plan-blocks">';
+      d.blocks.forEach(b => {
+        h += '<span class="chip sm study"><span class="t">' + b.start + "-" + b.end + "</span>" + b.title + '<span class="r2">' + b.course + "</span></span>";
+      });
+      h += "</div>";
+    } else if(!d.fixed || !d.fixed.length){
+      h += '<div class="plan-label">▸ 自由日 · 无固定安排</div>';
+    }
+    if(d.warnings && d.warnings.length){
+      h += '<div class="plan-warn">⚠ ' + d.warnings.join("；") + "</div>";
+    }
+    h += "</div>";
+  });
+  body.innerHTML = h;
+}
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById("view-board").style.display = tab.dataset.view === "board" ? "" : "none";
+    document.getElementById("view-plan").style.display = tab.dataset.view === "plan" ? "" : "none";
+  });
 });
 
 tickClock();

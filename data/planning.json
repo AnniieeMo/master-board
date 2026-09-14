@@ -1,0 +1,255 @@
+{
+  "generated_at": "2026-09-15T01:46:55+08:00",
+  "horizon_days": 14,
+  "calendar_sync": {
+    "status": "unavailable",
+    "imported": 0,
+    "error": "Apple Calendar read failed: Calendar permission was not granted."
+  },
+  "days": [
+    {
+      "date": "2026-09-15",
+      "weekday": "周二",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务管理理论与实务",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "内部控制理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-16",
+      "weekday": "周三",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "经济管理统计分析",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-17",
+      "weekday": "周四",
+      "fixed": [
+        {
+          "start": "09:00",
+          "end": "12:00",
+          "title": "审计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [
+        {
+          "start": "20:00",
+          "end": "21:00",
+          "title": "课程作业",
+          "course": "会计大数据管理分析",
+          "type": "homework"
+        }
+      ],
+      "load_minutes": 60,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-18",
+      "weekday": "周五",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务会计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-19",
+      "weekday": "周六",
+      "fixed": [],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-20",
+      "weekday": "周日",
+      "fixed": [],
+      "blocks": [
+        {
+          "start": "09:30",
+          "end": "10:30",
+          "title": "小组作业展示 · 每周推进",
+          "course": "管理经济学",
+          "type": "homework"
+        }
+      ],
+      "load_minutes": 60,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-21",
+      "weekday": "周一",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "会计大数据管理分析",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "管理经济学",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-22",
+      "weekday": "周二",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务管理理论与实务",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "内部控制理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-23",
+      "weekday": "周三",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "经济管理统计分析",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-24",
+      "weekday": "周四",
+      "fixed": [
+        {
+          "start": "09:00",
+          "end": "12:00",
+          "title": "审计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-25",
+      "weekday": "周五",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "财务会计理论与实务",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-26",
+      "weekday": "周六",
+      "fixed": [],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-27",
+      "weekday": "周日",
+      "fixed": [],
+      "blocks": [
+        {
+          "start": "09:30",
+          "end": "10:30",
+          "title": "小组作业展示 · 每周推进",
+          "course": "管理经济学",
+          "type": "homework"
+        }
+      ],
+      "load_minutes": 60,
+      "capacity_minutes": 120,
+      "warnings": []
+    },
+    {
+      "date": "2026-09-28",
+      "weekday": "周一",
+      "fixed": [
+        {
+          "start": "14:00",
+          "end": "17:00",
+          "title": "会计大数据管理分析",
+          "type": "class"
+        },
+        {
+          "start": "18:00",
+          "end": "21:00",
+          "title": "管理经济学",
+          "type": "class"
+        }
+      ],
+      "blocks": [],
+      "load_minutes": 0,
+      "capacity_minutes": 120,
+      "warnings": []
+    }
+  ]
+}

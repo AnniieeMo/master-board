@@ -54,15 +54,15 @@ def fixed_blocks_for(day: date, data: dict, calendar: dict) -> list[dict]:
     blocks = []
     if calendar.get("status") == "available":
         for event in calendar["events"]:
-            if event.get("allDay") or not event.get("scheduledStart") or not event.get("scheduledEnd"):
+            if event.get("all_day") or not event.get("scheduled_start") or not event.get("scheduled_end"):
                 continue
-            if event.get("scheduledDate") != day.isoformat():
+            if event.get("scheduled_date") != day.isoformat():
                 continue
             blocks.append({
-                "start": event["scheduledStart"],
-                "end": event["scheduledEnd"],
+                "start": event["scheduled_start"],
+                "end": event["scheduled_end"],
                 "title": event.get("title") or "日程",
-                "type": "class" if "暨大" in str(event.get("calendarName", "")) else "meeting",
+                "type": "class" if "暨大" in str(event.get("calendar_name", "")) else "meeting",
             })
     else:
         js_day = day.weekday() + 1
@@ -85,10 +85,12 @@ def homework_requests(data: dict, today: date, horizon_end: date) -> list[dict]:
         days_left = min(days_left, (horizon_end - today).days)
         label = task["title"]
         if days_left <= 3:
-            requests.append({"day": 0, "duration": 60, "priority": "high", "title": label, "course": task["course"], "kind": "homework", "retry_until": min(days_left, (horizon_end - today).days)})
+            offsets = {0} | ({days_left - 1} if days_left >= 2 else set())
+            for offset in sorted(offsets):
+                requests.append({"day": offset, "duration": 60, "priority": "high", "title": label, "course": task["course"], "kind": "homework", "retry_until": min(days_left, (horizon_end - today).days)})
         elif days_left <= 10:
-            start_day = max(1, days_left - 3)
-            requests.append({"day": start_day, "duration": 60, "priority": "normal", "title": label, "course": task["course"], "kind": "homework", "retry_until": days_left})
+            for offset in sorted({max(0, days_left - 4), max(0, days_left - 2)}):
+                requests.append({"day": offset, "duration": 60, "priority": "normal", "title": label, "course": task["course"], "kind": "homework", "retry_until": days_left})
         else:
             offset = 0
             while offset <= days_left:
@@ -117,7 +119,6 @@ def main() -> int:
     horizon_end = today + timedelta(days=args.horizon - 1)
 
     calendar = sync_calendar(today)
-    calendar_events = calendar.pop("events", [])
     requests = homework_requests(data, today, horizon_end)
 
     by_day: dict[int, list[dict]] = {}

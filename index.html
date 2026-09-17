@@ -2,149 +2,147 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MASTER·BOARD // 硕士课程工作台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MASTER·BOARD // 硕士工作台</title>
 <link rel="stylesheet" href="assets/pixel/Fusion-Pixel-12px-Monospaced-Simplified-Chinese.css">
 <style>
 :root{
-  --bg:#e9e3d3;
-  --panel:#f7f2e4;
-  --panel2:#fffdf4;
-  --ink:#33312a;
-  --line:#ddd5c0;
-  --line-dash:#b3aa90;
-  --green:#2f7d3c;
-  --green-dim:#7d9b80;
-  --amber:#b9791f;
-  --red:#c24334;
-  --cyan:#2f7a8f;
-  --text:#3c3a32;
-  --dim:#8f8871;
-  --shadow:rgba(51,49,42,.18);
+  --bg:#e9e3d3;--panel:#f7f2e4;--panel2:#fffdf4;--ink:#33312a;
+  --line:#ddd5c0;--line-dash:#b3aa90;
+  --green:#2f7d3c;--green-dim:#7d9b80;--amber:#b9791f;--red:#c24334;
+  --cyan:#2f7a8f;--text:#3c3a32;--dim:#8f8871;--shadow:rgba(51,49,42,.18);
+  --life:#8f8871;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
 body{
   background:var(--bg);
   background-image:radial-gradient(rgba(51,49,42,.07) 1px,transparent 1.4px);
   background-size:10px 10px;
   color:var(--text);
-  font-family:"Fusion Pixel 12px Monospaced Simplified Chinese","SF Mono",Menlo,Consolas,"Courier New",monospace;
+  font-family:"Fusion Pixel 12px Monospaced Simplified Chinese","SF Mono",Menlo,Consolas,monospace;
   font-size:13px;line-height:1.6;
 }
 ::selection{background:var(--amber);color:#fff}
-.wrap{max-width:1140px;margin:0 auto;padding:22px 18px 48px}
+.wrap{max-width:1180px;margin:0 auto;padding:18px 16px 60px}
 
-.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:16px;flex-wrap:wrap;gap:6px}
+.hdr{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:12px;flex-wrap:wrap;gap:8px}
 .logo{color:var(--ink);font-size:16px;letter-spacing:2px}
 .logo .sq{color:var(--red)}
-.hdr .sub{color:var(--dim);font-size:11px;margin-left:10px;letter-spacing:1px}
-.clock{color:var(--ink);font-size:12px;letter-spacing:1px}
+.hdr .sub{color:var(--dim);font-size:11px;margin-left:8px}
+.hdr-right{display:flex;gap:8px;align-items:center}
+.clock{color:var(--ink);font-size:12px}
+.sync-dot{font-size:10px;letter-spacing:1px;padding:1px 8px;border:2px solid var(--line-dash);color:var(--dim);cursor:default}
+.sync-dot.dirty{border-color:var(--amber);color:var(--amber)}
+.sync-dot.ok{border-color:var(--green);color:var(--green)}
+.sync-dot.err{border-color:var(--red);color:var(--red)}
 .cursor{display:inline-block;color:var(--red);animation:blink 1.1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 
-.panel{border:2px solid var(--ink);background:var(--panel);box-shadow:4px 4px 0 var(--shadow);margin-bottom:16px}
-.ph{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 12px;border-bottom:2px solid var(--ink);background:var(--panel2);color:var(--ink);font-size:11px;letter-spacing:1px}
-.ph .lead{color:var(--green)}
-.ph .r{color:var(--dim);letter-spacing:0}
-.pb{padding:12px}
-
-.today-line{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.today-meta{color:var(--dim)}
-.today-meta b{color:var(--amber);font-weight:normal}
-
-.chip{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--ink);background:var(--panel2);padding:2px 9px;font-size:12px;white-space:nowrap;box-shadow:2px 2px 0 var(--shadow)}
-.chip .t{color:var(--cyan)}
-.chip .r2{color:var(--dim)}
-.chip.now{border-color:var(--amber);animation:pulse 1.6s infinite}
-.chip.now .t{color:var(--amber)}
-@keyframes pulse{0%,100%{box-shadow:2px 2px 0 rgba(185,121,31,.75)}50%{box-shadow:2px 2px 0 rgba(185,121,31,.12)}}
-
-.main-grid{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
-.side-grid{display:grid;gap:16px}
-
-.kanban{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.kcol{border:2px dashed var(--line-dash);min-height:180px;padding:8px}
-.kcol-h{color:var(--dim);font-size:10px;letter-spacing:1px;margin-bottom:8px;display:flex;justify-content:space-between}
-.kcol-h .n{color:var(--ink)}
-.kcol.doing .kcol-h{color:var(--amber)}
-
-.card{border:2px solid var(--ink);background:var(--panel2);padding:9px 10px;margin-bottom:8px;box-shadow:3px 3px 0 var(--shadow);transition:transform .05s,box-shadow .05s}
-.card:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--shadow)}
-.card:last-child{margin-bottom:0}
-.card.st-doing{background:#fbf0da;border-color:var(--amber);box-shadow:3px 3px 0 rgba(185,121,31,.28)}
-.card.st-done{opacity:.6;background:#efeadd;border-color:var(--line-dash);box-shadow:none}
-.card.st-done .card-title{text-decoration:line-through}
-.card-top{display:flex;justify-content:space-between;gap:6px;align-items:center;margin-bottom:4px}
-.tag{font-size:10px;padding:0 6px;border:2px solid;letter-spacing:0;background:var(--panel);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
-.tag.c-green{color:var(--green);border-color:var(--green)}
-.tag.c-amber{color:var(--amber);border-color:var(--amber)}
-.tag.c-cyan{color:var(--cyan);border-color:var(--cyan)}
-.cd{font-size:11px;white-space:nowrap}
-.cd.ok{color:var(--green)}
-.cd.warn{color:var(--amber)}
-.cd.late{color:var(--red);animation:blink 1.2s steps(1) infinite}
-.card-title{font-size:13px;color:var(--ink)}
-.card-due{font-size:11px;color:var(--dim);margin-top:2px}
-.card-note{font-size:11px;color:var(--green-dim);margin-top:3px;border-left:3px solid var(--line-dash);padding-left:7px}
-.empty{color:var(--dim);font-size:11px;text-align:center;padding:22px 0;letter-spacing:2px}
-
-.tabs{display:flex;gap:8px;margin-bottom:16px}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .tab{border:2px solid var(--ink);background:var(--panel);color:var(--dim);font-family:inherit;font-size:12px;letter-spacing:1px;padding:4px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);transition:transform .05s,box-shadow .05s}
 .tab:hover{color:var(--ink);transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
-.tab.active{background:var(--ink);color:var(--bg);box-shadow:3px 3px 0 var(--shadow)}
+.tab.active{background:var(--ink);color:var(--bg)}
 
-.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.plan-day{border:2px solid var(--line-dash);padding:9px 10px;background:var(--panel2)}
-.plan-day.today{border-color:var(--amber);background:#f8eed8}
-.plan-day-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;gap:8px}
-.plan-day-h b{color:var(--ink);font-weight:normal}
-.plan-load{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dim)}
-.load-track{width:60px;height:8px;border:2px solid var(--line-dash);background:var(--panel)}
-.load-fill{height:100%;background:var(--green)}
-.load-fill.hot{background:var(--amber)}
-.load-fill.full{background:var(--red)}
-.plan-fixed,.plan-blocks{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
-.plan-blocks:empty,.plan-fixed:empty{display:none}
-.chip.sm{font-size:10px;padding:1px 6px;box-shadow:1px 1px 0 var(--shadow)}
-.chip.class{border-color:var(--cyan)}
-.chip.class .t{color:var(--cyan)}
-.chip.meeting{border-color:var(--green)}
-.chip.meeting .t{color:var(--green)}
-.chip.study{border-color:var(--amber)}
-.chip.study .t{color:var(--amber)}
-.plan-warn{font-size:10px;color:var(--red);margin-top:2px}
-.plan-warn:empty{display:none}
-.plan-label{font-size:10px;color:var(--dim);letter-spacing:1px;margin:4px 0 3px}
+.btn{border:2px solid var(--ink);background:var(--panel2);color:var(--ink);font-family:inherit;font-size:10px;padding:1px 9px;cursor:pointer;letter-spacing:1px;box-shadow:2px 2px 0 var(--ink);transition:transform .05s,box-shadow .05s}
+.btn:hover{background:#fff;transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.warn{color:var(--amber)}
+.btn.danger{color:var(--red)}
 
-.week-row{display:flex;gap:10px;padding:6px 8px;border-left:4px solid transparent;align-items:baseline}
-.week-row.today{border-left-color:var(--amber);background:#f8eed8}
-.week-day{width:34px;color:var(--dim);font-size:11px;flex-shrink:0}
-.week-row.today .week-day{color:var(--amber)}
-.week-courses{display:flex;flex-wrap:wrap;gap:6px}
+.panel{border:2px solid var(--ink);background:var(--panel);box-shadow:4px 4px 0 var(--shadow);margin-bottom:14px}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 12px;border-bottom:2px solid var(--ink);background:var(--panel2);color:var(--ink);font-size:11px;letter-spacing:1px}
+.ph .lead{color:var(--green)}
+.ph .r{color:var(--dim)}
+.pb{padding:12px}
 
-.exam-row{display:flex;gap:10px;align-items:baseline;padding:5px 2px;border-bottom:2px dotted var(--line);font-size:12px;flex-wrap:wrap}
-.exam-row:last-child{border-bottom:0}
-.exam-d{color:var(--amber);white-space:nowrap;font-size:11px}
-.exam-n{flex:1;min-width:120px}
+.ddl-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.ddl-chip{border:2px solid var(--red);background:var(--panel2);padding:2px 9px;font-size:11px;box-shadow:2px 2px 0 var(--shadow)}
+.ddl-chip b{color:var(--red);font-weight:normal}
+.ddl-chip.warn{border-color:var(--amber)}
+.ddl-chip.warn b{color:var(--amber)}
 
-.todo-row{display:flex;gap:8px;align-items:flex-start;padding:5px 2px;border-bottom:2px dotted var(--line);font-size:12px}
-.todo-row:last-child{border-bottom:0}
-.todo-row.done-item .tt{text-decoration:line-through;color:var(--dim)}
-.todo-row .tt{flex:1;word-break:break-all}
-.todo-row .done-mark{color:var(--green);font-size:10px;white-space:nowrap}
+.seg-title{color:var(--dim);font-size:11px;letter-spacing:2px;margin:10px 2px 6px}
+.ev{display:flex;gap:8px;align-items:flex-start;border:2px solid var(--line-dash);background:var(--panel2);padding:7px 10px;margin-bottom:7px;box-shadow:2px 2px 0 var(--shadow)}
+.ev:last-child{margin-bottom:0}
+.ev:hover{border-color:var(--ink)}
+.ev.done .tt{text-decoration:line-through;color:var(--dim)}
+.ev.done{opacity:.55}
+.ev .tick{cursor:pointer;user-select:none;font-size:12px;line-height:1.5;width:18px;flex-shrink:0;text-align:center;color:var(--green-dim)}
+.ev .tick:hover{color:var(--green)}
+.tt{flex:1;min-width:0}
+.tt b{color:var(--ink);font-weight:normal}
+.tt .meta{font-size:10px;color:var(--dim)}
+.cat{font-size:9px;padding:0 6px;border:2px solid;white-space:nowrap;letter-spacing:1px;flex-shrink:0;margin-top:2px}
+.cat.skill{color:var(--green);border-color:var(--green)}
+.cat.course{color:var(--cyan);border-color:var(--cyan)}
+.cat.work{color:var(--amber);border-color:var(--amber)}
+.cat.life{color:var(--life);border-color:var(--life)}
+.cd-inline{font-size:10px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.cd-inline.warn{color:var(--amber)}
+.cd-inline.late{color:var(--red);animation:blink 1.2s steps(1) infinite}
+.cd-inline.ok{color:var(--green-dim)}
+.empty{color:var(--dim);font-size:11px;text-align:center;padding:14px 0;letter-spacing:2px}
 
-.footer{margin-top:6px;color:var(--dim);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:center}
-.prog{display:flex;gap:2px;align-items:center}
-.prog .cell{width:8px;height:12px;border:2px solid var(--line-dash)}
-.prog .cell.f{background:var(--green);border-color:var(--green)}
-.prog .cell.c{background:var(--amber);border-color:var(--amber)}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.wk-col{border:2px dashed var(--line-dash);padding:6px;min-height:150px;background:var(--panel)}
+.wk-col.today{border:2px solid var(--amber);background:#f8eed8}
+.wk-col.past{opacity:.55}
+.wk-h{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:5px;letter-spacing:1px}
+.wk-col.today .wk-h{color:var(--amber)}
+.wk-ev{border:2px solid var(--ink);background:var(--panel2);padding:2px 5px;font-size:10px;margin-bottom:4px;box-shadow:1px 1px 0 var(--shadow);overflow:hidden}
+.wk-ev .t{color:var(--cyan)}
+.wk-ev.fixed{border-style:dashed;border-color:var(--line-dash);color:var(--dim);background:transparent;box-shadow:none}
+.wk-ev.fixed .t{color:var(--dim)}
+.wk-ev.done{opacity:.5}
 
-@media (max-width:920px){
-  .main-grid{grid-template-columns:1fr}
-  .kanban{grid-template-columns:1fr}
-  .kcol{min-height:auto}
-  .plan-grid{grid-template-columns:1fr}
+.rev-card{border:2px solid var(--ink);background:var(--panel2);padding:12px;box-shadow:3px 3px 0 var(--shadow);white-space:pre-wrap;font-size:12px}
+.rev-old{border:2px dashed var(--line-dash);padding:9px 10px;margin-top:8px;font-size:11px;color:var(--dim);white-space:pre-wrap}
+.rev-week{color:var(--amber);font-size:10px;letter-spacing:1px;margin-top:6px}
+
+.chat-fab{position:fixed;right:18px;bottom:18px;z-index:60;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font-family:inherit;font-size:12px;letter-spacing:1px;padding:9px 16px;cursor:pointer;box-shadow:4px 4px 0 var(--shadow)}
+.chat-fab:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
+.chat{position:fixed;top:0;right:-400px;width:380px;max-width:100vw;height:100vh;background:var(--bg);border-left:2px solid var(--ink);z-index:70;display:flex;flex-direction:column;transition:right .18s steps(4);box-shadow:-6px 0 0 rgba(51,49,42,.12)}
+.chat.open{right:0}
+.chat-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:2px solid var(--ink);background:var(--panel2)}
+.chat-h b{color:var(--ink);font-weight:normal;letter-spacing:1px;font-size:12px}
+.chat-log{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px}
+.msg{border:2px solid var(--line-dash);background:var(--panel2);padding:8px 10px;font-size:12px;white-space:pre-wrap;word-break:break-word;max-width:92%}
+.msg.user{align-self:flex-end;background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.msg.assistant{align-self:flex-start}
+.msg.sys{align-self:center;border-style:dashed;color:var(--dim);font-size:10px;background:transparent;box-shadow:none}
+.msg .acts{margin-top:6px;display:flex;flex-direction:column;gap:4px}
+.act-chip{border:2px solid var(--green);color:var(--green);font-size:10px;padding:2px 6px;background:rgba(47,125,60,.06)}
+.act-chip.warn{border-color:var(--amber);color:var(--amber)}
+.chat-input{display:flex;gap:6px;padding:10px;border-top:2px solid var(--ink);background:var(--panel2)}
+.chat-input textarea{flex:1;border:2px solid var(--ink);background:#fff;color:var(--text);font-family:inherit;font-size:12px;padding:6px 8px;outline:none;resize:none;height:52px}
+.chat-input textarea:focus{border-color:var(--amber)}
+.chat-send{align-self:flex-end}
+.typing{color:var(--dim);font-size:10px;letter-spacing:2px;padding:2px 4px}
+
+.modal-bg{position:fixed;inset:0;background:rgba(51,49,42,.45);z-index:80;display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--shadow);width:420px;max-width:100%;max-height:90vh;overflow-y:auto}
+.modal .ph .r{cursor:pointer}
+.modal .pb{display:flex;flex-direction:column;gap:10px}
+.f-label{font-size:10px;color:var(--dim);letter-spacing:1px;margin-bottom:2px}
+.f-label b{color:var(--ink);font-weight:normal}
+.modal input[type=text],.modal input[type=password]{
+  width:100%;background:#fff;border:2px solid var(--ink);color:var(--text);
+  font-family:inherit;font-size:12px;padding:5px 8px;outline:none;
+}
+.modal input:focus{border-color:var(--amber)}
+.check-row{display:flex;gap:8px;align-items:center;font-size:12px}
+.check-row input{accent-color:#2f7d3c;width:14px;height:14px}
+.hint{font-size:10px;color:var(--dim)}
+.hint a{color:var(--cyan)}
+
+.footer{margin-top:8px;color:var(--dim);font-size:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+
+@media (max-width:900px){
+  .week-grid{grid-template-columns:1fr}
+  .wk-col{min-height:auto}
+  .chat{width:100vw;border-left:0}
 }
 </style>
 </head>
@@ -152,820 +150,1440 @@ body{
 <div class="wrap">
 
   <div class="hdr">
-    <div><span class="logo">▛▞ MASTER<span class="sq">·</span>BOARD</span><span class="sub">硕士课程工作台 // PIXEL CONSOLE v2</span></div>
-    <div class="clock"><span id="clock">----/--/-- --:--:--</span><span class="cursor">▊</span></div>
+    <div><span class="logo">▛▞ MASTER<span class="sq">·</span>BOARD</span><span class="sub">硕士工作台 v3 // AGENT CONSOLE</span></div>
+    <div class="hdr-right">
+      <span class="sync-dot" id="syncDot">LOCAL</span>
+      <span class="clock"><span id="clock">--:--:--</span><span class="cursor">▊</span></span>
+      <button class="btn" id="btnSettings">设置</button>
+    </div>
   </div>
+
+  <div class="ddl-strip" id="ddlStrip"></div>
 
   <div class="tabs">
-    <button class="tab active" data-view="board">▚ BOARD // 看板</button>
-    <button class="tab" data-view="plan">▚ PLAN // 排期</button>
+    <button class="tab active" data-view="today">▚ TODAY // 今日</button>
+    <button class="tab" data-view="week">▚ WEEK // 本周</button>
+    <button class="tab" data-view="review">▚ REVIEW // 周报</button>
   </div>
 
-  <div id="view-board">
-  <div class="panel">
-    <div class="ph"><span><span class="lead">■</span> TODAY // 今日</span><span class="r" id="weekTag"></span></div>
-    <div class="pb"><div class="today-line" id="todayBody"></div></div>
-  </div>
-
-  <div class="main-grid">
-    <div>
-      <div class="panel">
-        <div class="ph">
-          <span><span class="lead">■</span> DDL BOARD // 作业看板</span>
-          <span class="r">状态由 data.json 同步</span>
-        </div>
-        <div class="pb">
-          <div class="kanban" id="kanban"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-grid">
-      <div class="panel">
-        <div class="ph"><span><span class="lead">■</span> WEEKLY // 每周课表</span></div>
-        <div class="pb" id="weekBody"></div>
-      </div>
-      <div class="panel">
-        <div class="ph"><span><span class="lead">■</span> EXAMS // 考试日程</span></div>
-        <div class="pb" id="examBody"></div>
-      </div>
-      <div class="panel">
-        <div class="ph"><span><span class="lead">■</span> ADHOC // 临时事项</span></div>
-        <div class="pb" id="adhocBody"></div>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <div id="view-plan" style="display:none">
-    <div class="panel">
-      <div class="ph"><span><span class="lead">■</span> PLAN // 排期引擎</span><span class="r" id="planMeta"></span></div>
-      <div class="pb"><div class="plan-grid" id="planBody"></div></div>
-    </div>
-  </div>
+  <div id="view-today"></div>
+  <div id="view-week" style="display:none"></div>
+  <div id="view-review" style="display:none"></div>
 
   <div class="footer">
-    <span id="semProg"></span>
-    <span><button class="btn" id="btnExport">导出备份</button></span>
-    <span>有新作业/改状态 → 告诉 opencode · 我更新 data.json 并自动发布到所有设备</span>
+    <span id="dataMeta"></span>
+    <span>LOCAL-FIRST · 数据存 GitHub 私有流 · key 只存本机浏览器</span>
   </div>
 
 </div>
 
-<!--DATA:BEGIN-->
-<script id="board-data" type="application/json">
+<button class="chat-fab" id="btnChat">◆ 助手</button>
+
+<div class="chat" id="chatPanel">
+  <div class="chat-h">
+    <b>◆ AGENT // 排期助手</b>
+    <span><button class="btn" id="btnClearChat">清空</button> <button class="btn danger" id="btnCloseChat">✕</button></span>
+  </div>
+  <div class="chat-log" id="chatLog"></div>
+  <div class="typing" id="typing" style="display:none">▓▓▓ 思考中…</div>
+  <div class="chat-input">
+    <textarea id="chatText" placeholder="例如：周四晚上两小时准备小组展示；下周三下午看医生"></textarea>
+    <button class="btn primary chat-send" id="btnSend">发送</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="settingsModal">
+  <div class="modal">
+    <div class="ph"><span><span class="lead">■</span> SETTINGS // 设置</span><span class="r" id="btnCloseSettings">✕ 关闭</span></div>
+    <div class="pb">
+      <div>
+        <div class="f-label"><b>LLM · 智谱 GLM</b>（OpenAI 兼容）</div>
+        <input type="text" id="cfgLlmBase" placeholder="https://open.bigmodel.cn/api/paas/v4">
+        <div style="height:6px"></div>
+        <input type="password" id="cfgLlmKey" placeholder="API Key（只存本机浏览器）">
+        <div style="height:6px"></div>
+        <input type="text" id="cfgLlmModel" placeholder="模型名，如 glm-4-flash">
+      </div>
+      <div>
+        <div class="f-label"><b>GitHub 写回</b>（手机/电脑同步）</div>
+        <input type="text" id="cfgGhRepo" placeholder="AnniieeMo/master-board">
+        <div style="height:6px"></div>
+        <input type="password" id="cfgGhPat" placeholder="Fine-grained PAT（仅本仓库 Contents 读写）">
+        <div class="hint" style="margin-top:4px">创建：GitHub → Settings → Developer settings → Fine-grained tokens → 勾选 master-board 仓库的 Contents: Read and write</div>
+      </div>
+      <label class="check-row"><input type="checkbox" id="cfgAuto"> 助手改完自动入库（关闭则仅存本机，需手动同步）</label>
+      <div class="hint">不填 key：三视图仍可用（只读模式），助手面板不可用。</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn primary" id="btnSaveSettings">保存</button>
+        <button class="btn danger" id="btnWipe">清除本机全部配置</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SEED:BEGIN-->
+<script id="seed-data" type="application/json">
 {
-  "rev": 1,
-  "semester": {
-    "start": "2026-09-14",
-    "weeks": 15,
-    "note": "节假日停课以校历/日历为准"
-  },
-  "courses": [
+  "events": [
     {
-      "id": "acc-bigdata",
-      "name": "会计大数据管理分析",
-      "day": 1,
-      "start": "14:00",
-      "end": "17:00",
-      "room": "教学大楼1007",
-      "color": "cyan"
+      "id": "e-seed-001",
+      "title": "会计大数据作业",
+      "category": "course",
+      "date": "2026-09-16",
+      "start": "20:00",
+      "end": "21:30",
+      "ddl": "2026-09-20T23:59",
+      "status": "todo",
+      "notes": "周日晚24:00前提交",
+      "source": "seed"
     },
     {
-      "id": "manecon",
-      "name": "管理经济学",
-      "day": 1,
+      "id": "e-seed-002",
+      "title": "会计大数据作业",
+      "category": "course",
+      "date": "2026-09-18",
+      "start": "20:00",
+      "end": "21:30",
+      "ddl": "2026-09-20T23:59",
+      "status": "todo",
+      "notes": "第二次投入，收尾提交",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-003",
+      "title": "小组展示推进",
+      "category": "course",
+      "date": "2026-09-20",
+      "start": "09:30",
+      "end": "10:30",
+      "ddl": "2026-10-19T18:00",
+      "status": "todo",
+      "notes": "管理经济学小组作业，每周日推进",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-004",
+      "title": "小组展示推进",
+      "category": "course",
+      "date": "2026-09-27",
+      "start": "09:30",
+      "end": "10:30",
+      "ddl": "2026-10-19T18:00",
+      "status": "todo",
+      "notes": "每周日推进",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-005",
+      "title": "小组展示推进",
+      "category": "course",
+      "date": "2026-10-04",
+      "start": "09:30",
+      "end": "10:30",
+      "ddl": "2026-10-19T18:00",
+      "status": "todo",
+      "notes": "每周日推进",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-006",
+      "title": "小组展示推进",
+      "category": "course",
+      "date": "2026-10-11",
+      "start": "09:30",
+      "end": "10:30",
+      "ddl": "2026-10-19T18:00",
+      "status": "todo",
+      "notes": "每周日推进",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-007",
+      "title": "管理经济学小组展示",
+      "category": "course",
+      "date": "2026-10-19",
       "start": "18:00",
       "end": "21:00",
-      "room": "教学大楼1002",
-      "color": "amber"
+      "ddl": "2026-10-19T18:00",
+      "status": "todo",
+      "notes": "第6周课上展示",
+      "source": "seed"
     },
     {
-      "id": "fin-mgmt",
-      "name": "财务管理理论与实务",
-      "day": 2,
-      "start": "14:00",
-      "end": "17:00",
-      "room": "教学大楼1107",
-      "color": "green"
-    },
-    {
-      "id": "ic",
-      "name": "内部控制理论与实务",
-      "day": 2,
+      "id": "e-seed-008",
+      "title": "管理经济学考核",
+      "category": "course",
+      "date": "2026-11-16",
       "start": "18:00",
       "end": "21:00",
-      "room": "教学大楼117",
-      "color": "cyan"
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
     },
     {
-      "id": "stat",
-      "name": "经济管理统计分析",
-      "day": 3,
+      "id": "e-seed-009",
+      "title": "内部控制理论与实务考核",
+      "category": "course",
+      "date": "2026-11-17",
+      "start": "18:00",
+      "end": "21:00",
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-010",
+      "title": "经济管理统计分析考核",
+      "category": "course",
+      "date": "2026-11-18",
       "start": "14:00",
       "end": "17:00",
-      "room": "教学大楼1008",
-      "color": "amber"
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
     },
     {
-      "id": "audit",
-      "name": "审计理论与实务",
-      "day": 4,
+      "id": "e-seed-011",
+      "title": "会计大数据管理分析考核",
+      "category": "course",
+      "date": "2026-12-14",
+      "start": "14:00",
+      "end": "17:00",
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-012",
+      "title": "财务管理理论与实务考核",
+      "category": "course",
+      "date": "2026-12-15",
+      "start": "14:00",
+      "end": "17:00",
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
+    },
+    {
+      "id": "e-seed-013",
+      "title": "审计理论与实务考核",
+      "category": "course",
+      "date": "2026-12-17",
       "start": "09:00",
       "end": "12:00",
-      "room": "教学大楼1105",
-      "color": "green"
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
     },
     {
-      "id": "fin-acct",
-      "name": "财务会计理论与实务",
-      "day": 5,
+      "id": "e-seed-014",
+      "title": "财务会计理论与实务考核",
+      "category": "course",
+      "date": "2026-12-25",
       "start": "14:00",
       "end": "17:00",
-      "room": "教学大楼1107",
-      "color": "cyan"
+      "status": "todo",
+      "notes": "考试/考核周",
+      "source": "seed"
     }
   ],
-  "tasks": [
-    {
-      "id": "hw-acc-001",
-      "kind": "homework",
-      "course": "会计大数据管理分析",
-      "title": "课程作业",
-      "due": "2026-09-20T23:59",
-      "status": "todo",
-      "notes": "周日晚24:00前提交"
-    },
-    {
-      "id": "hw-me-group",
-      "kind": "homework",
-      "course": "管理经济学",
-      "title": "小组作业展示",
-      "due": "2026-10-19T18:00",
-      "status": "todo",
-      "notes": "第6周（10/19 周一）课上展示，提前彩排"
-    },
-    {
-      "id": "exam-me",
-      "kind": "exam",
-      "course": "管理经济学",
-      "title": "考核",
-      "due": "2026-11-16T18:00",
-      "notes": "考试/考核周"
-    },
-    {
-      "id": "exam-ic",
-      "kind": "exam",
-      "course": "内部控制理论与实务",
-      "title": "考核",
-      "due": "2026-11-17T18:00",
-      "notes": "考试/考核周"
-    },
-    {
-      "id": "exam-stat",
-      "kind": "exam",
-      "course": "经济管理统计分析",
-      "title": "考核",
-      "due": "2026-11-18T14:00",
-      "notes": "考试/考核周"
-    },
-    {
-      "id": "exam-acc-bigdata",
-      "kind": "exam",
-      "course": "会计大数据管理分析",
-      "title": "考核",
-      "due": "2026-12-14T14:00",
-      "notes": "考试/考核周"
-    },
-    {
-      "id": "exam-fin-mgmt",
-      "kind": "exam",
-      "course": "财务管理理论与实务",
-      "title": "考核",
-      "due": "2026-12-15T14:00",
-      "notes": "考试/考核周"
-    },
-    {
-      "id": "exam-audit",
-      "kind": "exam",
-      "course": "审计理论与实务",
-      "title": "考核",
-      "due": "2026-12-17T09:00",
-      "notes": "考试/考核周"
-    },
-    {
-      "id": "exam-fin-acct",
-      "kind": "exam",
-      "course": "财务会计理论与实务",
-      "title": "考核",
-      "due": "2026-12-25T14:00",
-      "notes": "考试/考核周"
-    }
-  ]
-}
-</script>
-<!--DATA:END-->
-
-<!--PLANNING:BEGIN-->
-<script id="planning-data" type="application/json">
-{
-  "generated_at": "2026-09-15T20:26:42+08:00",
-  "horizon_days": 14,
-  "calendar_sync": {
-    "status": "available",
-    "imported": 136
-  },
-  "days": [
-    {
-      "date": "2026-09-15",
-      "weekday": "周二",
-      "fixed": [
-        {
-          "start": "11:30",
-          "end": "12:00",
-          "title": "Pre-sales dashboard repackage to slides",
-          "type": "meeting"
-        },
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "财务管理理论与实务",
-          "type": "class"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00",
-          "title": "APAC Analytics team weekly meeting",
-          "type": "meeting"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "TP.ai Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        },
-        {
-          "start": "18:00",
-          "end": "21:00",
-          "title": "内部控制理论与实务",
-          "type": "class"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
-    },
-    {
-      "date": "2026-09-16",
-      "weekday": "周三",
-      "fixed": [
-        {
-          "start": "11:00",
-          "end": "11:30",
-          "title": "Weekly | Ema Discovery & Insights",
-          "type": "meeting"
-        },
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "经济管理统计分析",
-          "type": "class"
-        }
-      ],
-      "blocks": [
-        {
-          "start": "20:00",
-          "end": "21:00",
-          "title": "课程作业",
-          "course": "会计大数据管理分析",
-          "type": "homework"
-        }
-      ],
-      "load_minutes": 60,
-      "capacity_minutes": 120,
-      "warnings": []
-    },
+  "fixed": [
     {
       "date": "2026-09-17",
-      "weekday": "周四",
-      "fixed": [
-        {
-          "start": "09:00",
-          "end": "12:00",
-          "title": "审计理论与实务",
-          "type": "class"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-09-18",
-      "weekday": "周五",
-      "fixed": [
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "财务会计理论与实务",
-          "type": "class"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "TP.ai Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        }
-      ],
-      "blocks": [
-        {
-          "start": "20:00",
-          "end": "21:00",
-          "title": "课程作业",
-          "course": "会计大数据管理分析",
-          "type": "homework"
-        }
-      ],
-      "load_minutes": 60,
-      "capacity_minutes": 120,
-      "warnings": []
-    },
-    {
-      "date": "2026-09-19",
-      "weekday": "周六",
-      "fixed": [],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
-    },
-    {
-      "date": "2026-09-20",
-      "weekday": "周日",
-      "fixed": [],
-      "blocks": [
-        {
-          "start": "09:30",
-          "end": "10:30",
-          "title": "小组作业展示 · 每周推进",
-          "course": "管理经济学",
-          "type": "homework"
-        }
-      ],
-      "load_minutes": 60,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-09-21",
-      "weekday": "周一",
-      "fixed": [
-        {
-          "start": "13:00",
-          "end": "14:00",
-          "title": "tr",
-          "type": "meeting"
-        },
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "会计大数据管理分析",
-          "type": "class"
-        },
-        {
-          "start": "18:00",
-          "end": "21:00",
-          "title": "管理经济学",
-          "type": "class"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-09-21",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
     },
     {
       "date": "2026-09-22",
-      "weekday": "周二",
-      "fixed": [
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "财务管理理论与实务",
-          "type": "class"
-        },
-        {
-          "start": "15:00",
-          "end": "16:00",
-          "title": "APAC Analytics team weekly meeting",
-          "type": "meeting"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "TP.ai Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        },
-        {
-          "start": "18:00",
-          "end": "21:00",
-          "title": "内部控制理论与实务",
-          "type": "class"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-09-22",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-09-23",
-      "weekday": "周三",
-      "fixed": [
-        {
-          "start": "11:00",
-          "end": "11:30",
-          "title": "Weekly | Ema Discovery & Insights",
-          "type": "meeting"
-        },
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "经济管理统计分析",
-          "type": "class"
-        },
-        {
-          "start": "14:00",
-          "end": "15:00",
-          "title": "CORE Monthly Transformation Review",
-          "type": "meeting"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
     },
     {
       "date": "2026-09-24",
-      "weekday": "周四",
-      "fixed": [
-        {
-          "start": "09:00",
-          "end": "12:00",
-          "title": "审计理论与实务",
-          "type": "class"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-09-25",
-      "weekday": "周五",
-      "fixed": [
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        },
-        {
-          "start": "16:00",
-          "end": "17:00",
-          "title": "TP.ai Operate Insights | APAC | Bi-Weekly Touchbase",
-          "type": "meeting"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
-    },
-    {
-      "date": "2026-09-26",
-      "weekday": "周六",
-      "fixed": [],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
-    },
-    {
-      "date": "2026-09-27",
-      "weekday": "周日",
-      "fixed": [],
-      "blocks": [
-        {
-          "start": "09:30",
-          "end": "10:30",
-          "title": "小组作业展示 · 每周推进",
-          "course": "管理经济学",
-          "type": "homework"
-        }
-      ],
-      "load_minutes": 60,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-09-28",
-      "weekday": "周一",
-      "fixed": [
-        {
-          "start": "13:00",
-          "end": "14:00",
-          "title": "tr",
-          "type": "meeting"
-        },
-        {
-          "start": "14:00",
-          "end": "17:00",
-          "title": "会计大数据管理分析",
-          "type": "class"
-        },
-        {
-          "start": "18:00",
-          "end": "21:00",
-          "title": "管理经济学",
-          "type": "class"
-        }
-      ],
-      "blocks": [],
-      "load_minutes": 0,
-      "capacity_minutes": 120,
-      "warnings": []
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-09-28",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-09-29",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-09-29",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-09-30",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-01",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-02",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-05",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-05",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-06",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-06",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-07",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-08",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-09",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-12",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-12",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-13",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-13",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-14",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-15",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-16",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-19",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-19",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-20",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-20",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-21",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-22",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-23",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-26",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-26",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-27",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-27",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-28",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-29",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-30",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-02",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-02",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-03",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-03",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-04",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-05",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-06",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-09",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-09",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-10",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-10",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-11",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-12",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-13",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-16",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-16",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-17",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-17",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-18",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-19",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-20",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-23",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-23",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-24",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-24",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-25",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-26",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-27",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-30",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-11-30",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-01",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-01",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-02",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-03",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-04",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-07",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-07",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-08",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-08",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-09",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-10",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-11",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-14",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-14",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-15",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-15",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-16",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-17",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-18",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-21",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-21",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-22",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-22",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-23",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-24",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-25",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-28",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-28",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-29",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-29",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-30",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-31",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-01",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-04",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-04",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
     }
-  ]
+  ],
+  "summaries": [],
+  "fixed_meta": {
+    "generated_at": "2026-09-17T15:58:05+08:00",
+    "source": "course_fallback",
+    "count": 109,
+    "horizon_days": 110
+  }
 }
 </script>
-<!--PLANNING:END-->
+<!--SEED:END-->
 
 <script>
-const DATA = JSON.parse(document.getElementById("board-data").textContent);
-const PLANNING = JSON.parse(document.getElementById("planning-data").textContent);
 const WD = ["日","一","二","三","四","五","六"];
-const DAYN = {1:"周一",2:"周二",3:"周三",4:"周四",5:"周五",6:"周六",7:"周日"};
+const CATN = {skill:"技能",course:"课程",work:"工作",life:"日常"};
+const pad = n => n < 10 ? "0" + n : "" + n;
+const $ = id => document.getElementById(id);
+const todayIso = () => { const d = new Date(); return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()); };
 
-function courseOf(name){
-  return (DATA.courses||[]).find(c => c.name === name);
+let state = { events: [], fixed: [], summaries: [] };
+let config = {};
+let dirty = false;
+let syncing = false;
+
+function loadConfig(){
+  try { config = JSON.parse(localStorage.getItem("mb.config") || "{}"); } catch(e){ config = {}; }
+  config.llm = config.llm || { base: "https://open.bigmodel.cn/api/paas/v4", key: "", model: "glm-4-flash" };
+  config.gh = config.gh || { repo: "AnniieeMo/master-board", pat: "" };
+  config.auto = config.auto !== false;
 }
-function tagHtml(name){
-  const c = courseOf(name);
-  const cls = c ? ("c-" + (c.color||"green")) : "c-green";
-  return '<span class="tag ' + cls + '">' + name + '</span>';
-}
-function pad(n){ return n < 10 ? "0" + n : "" + n; }
-function fmtDue(due){
-  const d = new Date(due);
-  return pad(d.getMonth()+1) + "-" + pad(d.getDate()) + " " + WD[d.getDay()] + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
-}
-function cdInfo(due){
-  const ms = new Date(due) - new Date();
-  if(ms <= 0){
-    const dd = Math.floor(-ms / 864e5);
-    return { t: dd >= 1 ? "已逾期 " + dd + " 天" : "已逾期", cls: "late" };
+function saveConfig(){ localStorage.setItem("mb.config", JSON.stringify(config)); }
+
+async function init(){
+  loadConfig();
+  let loaded = false;
+  try {
+    const res = await fetch("data/schedule.json?v=" + Date.now());
+    if(res.ok){ state = await res.json(); loaded = true; }
+  } catch(e){}
+  if(!loaded){
+    try { state = JSON.parse($("seed-data").textContent); } catch(e){}
   }
-  const d = Math.floor(ms / 864e5);
-  const h = Math.floor(ms % 864e5 / 36e5);
-  const m = Math.floor(ms % 36e5 / 6e4);
-  let t, cls;
-  if(ms < 864e5){ t = h + "时" + m + "分"; cls = "late"; }
-  else if(d <= 3){ t = d + "天" + h + "时"; cls = "warn"; }
-  else { t = d + " 天"; cls = "ok"; }
-  return { t: "剩 " + t, cls };
+  state.events = state.events || []; state.fixed = state.fixed || []; state.summaries = state.summaries || [];
+  renderAll(); tickClock();
+  setInterval(tickClock, 1000);
+  setInterval(renderAll, 60000);
 }
 
-function semesterWeek(){
-  const [y,m,d] = DATA.semester.start.split("-").map(Number);
-  const s = new Date(y, m-1, d);
-  const now = new Date();
-  const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const w = Math.floor((t0 - s) / (7 * 864e5)) + 1;
-  return w;
+/* ---------- views ---------- */
+
+function evOf(e){
+  const done = e.status === "done";
+  let cd = "";
+  if(e.ddl && !done){
+    const ms = new Date(e.ddl) - new Date();
+    if(ms <= 0) cd = '<span class="cd-inline late">已逾期</span>';
+    else {
+      const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
+      const cls = ms < 864e5 ? "late" : d <= 2 ? "warn" : "ok";
+      cd = '<span class="cd-inline ' + cls + '">DDL ' + (d >= 1 ? d + "天" + h + "时" : h + "时") + '</span>';
+    }
+  }
+  return '<div class="ev' + (done ? " done" : "") + '">'
+    + '<span class="tick" data-done="' + e.id + '">' + (done ? "◉" : "○") + '</span>'
+    + '<span class="tt"><b>' + e.title + '</b>'
+    + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
+    + (e.notes ? '<span class="meta"> · ' + e.notes + "</span>" : "")
+    + '</span>'
+    + (e.ddl ? cd : "")
+    + '<span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span></div>';
+}
+
+function segOf(e){
+  if(!e.start) return "晚上";
+  const h = +e.start.slice(0,2);
+  return h < 12 ? "上午" : h < 18 ? "下午" : "晚上";
 }
 
 function renderToday(){
-  const now = new Date();
-  const jsDay = now.getDay() === 0 ? 7 : now.getDay();
-  const w = semesterWeek();
-  const inSem = w >= 1 && w <= DATA.semester.weeks;
-  document.getElementById("weekTag").textContent =
-    w < 1 ? "未开学" : (w > DATA.semester.weeks ? "假期中" : "第 " + w + " 周 / 共 " + DATA.semester.weeks + " 周");
-  const today = (DATA.courses||[]).filter(c => c.day === jsDay);
+  const t = todayIso();
+  const box = $("view-today");
+  const fixedToday = state.fixed.filter(f => f.date === t);
+  const evs = state.events.filter(e => e.date === t);
   let h = "";
-  h += '<span class="today-meta">' + now.getFullYear() + "-" + pad(now.getMonth()+1) + "-" + pad(now.getDate()) + " 周" + WD[now.getDay()] + "</span>";
-  if(!inSem){
-    h += '<span class="today-meta">· 当前不在教学周内</span>';
-  } else if(today.length === 0){
-    h += '<span class="today-meta">· 今日 <b>无课</b> ▸ 自习/休息</span>';
-  } else {
-    h += '<span class="today-meta">· 今日 <b>' + today.length + '</b> 门课：</span>';
-    today.forEach(c => {
-      const s = c.start.replace(":",""), e = c.end.replace(":","");
-      const isNow = (now.getHours()*100+now.getMinutes()) >= +s && (now.getHours()*100+now.getMinutes()) < +e;
-      h += '<span class="chip' + (isNow ? " now" : "") + '"><span class="t">' + c.start + "-" + c.end + "</span>" + c.name + '<span class="r2">@' + c.room + "</span>" + (isNow ? " · 进行中" : "") + "</span>";
-    });
+  h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r" id="weekTag"></span></div><div class="pb">';
+  if(fixedToday.length){
+    h += '<div class="seg-title">▸ 固定安排（课/会）</div>' + fixedToday.map(f =>
+      '<div class="ev" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span><span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span><span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>').join("");
   }
-  document.getElementById("todayBody").innerHTML = h;
+  for(const seg of ["上午","下午","晚上"]){
+    const list = evs.filter(e => segOf(e) === seg).sort((a,b) => (a.start||"99") < (b.start||"99") ? -1 : 1);
+    h += '<div class="seg-title">▸ ' + seg + '</div>';
+    h += list.length ? list.map(evOf).join("") : '<div class="empty">· 空闲 ·</div>';
+  }
+  h += "</div></div>";
+  box.innerHTML = h;
+}
+
+function weekDates(){
+  const now = new Date();
+  const monday = new Date(now.getFullYear(), now.getMonth(), now.getDate() - ((now.getDay() + 6) % 7));
+  return Array.from({length:7}, (_,i) => {
+    const d = new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i);
+    return { iso: d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()), label: "周" + WD[d.getDay()], dow: d.getDay() };
+  });
 }
 
 function renderWeek(){
-  let h = "";
-  for(let d = 1; d <= 7; d++){
-    const now = new Date();
-    const jsDay = now.getDay() === 0 ? 7 : now.getDay();
-    const list = (DATA.courses||[]).filter(c => c.day === d);
-    h += '<div class="week-row' + (d === jsDay ? " today" : "") + '">';
-    h += '<span class="week-day">' + DAYN[d] + "</span>";
-    h += '<span class="week-courses">';
-    if(list.length === 0){ h += '<span class="week-day">—</span>'; }
-    list.forEach(c => {
-      h += '<span class="chip"><span class="t">' + c.start + "-" + c.end + "</span>" + c.name + '<span class="r2">@' + c.room + "</span></span>";
+  const t = todayIso();
+  const box = $("view-week");
+  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> WEEK // 本周</span><span class="r">虚线=固定 · 实线=计划</span></div><div class="pb"><div class="week-grid">';
+  weekDates().forEach(d => {
+    const cls = d.iso === t ? " today" : (d.iso < t ? " past" : "");
+    h += '<div class="wk-col' + cls + '"><div class="wk-h"><span>' + d.label + "</span><span>" + d.iso.slice(5) + "</span></div>";
+    state.fixed.filter(f => f.date === d.iso).forEach(f => {
+      h += '<div class="wk-ev fixed"><span class="t">' + f.start + "</span> " + f.title + "</div>";
     });
-    h += "</span></div>";
-  }
-  h += '<div style="color:var(--dim);font-size:10px;margin-top:6px;letter-spacing:1px">' + (DATA.semester.note || "") + "</div>";
-  document.getElementById("weekBody").innerHTML = h;
-}
-
-function renderKanban(){
-  const cols = {
-    todo: { cls: "", label: "TODO // 待办", list: [] },
-    doing: { cls: "doing", label: "DOING // 进行中", list: [] },
-    done: { cls: "done", label: "DONE // 已完成", list: [] }
-  };
-  (DATA.tasks||[]).filter(t => t.kind === "homework").forEach(t => {
-    (cols[t.status] || cols.todo).list.push(t);
-  });
-  let h = "";
-  for(const k of ["todo","doing","done"]){
-    const c = cols[k];
-    c.list.sort((a,b) => new Date(a.due||0) - new Date(b.due||0));
-    h += '<div class="kcol ' + c.cls + '"><div class="kcol-h"><span>' + c.label + '</span><span class="n">' + c.list.length + "</span></div>";
-    if(c.list.length === 0){ h += '<div class="empty">· 空闲 ·</div>'; }
-    c.list.forEach(t => {
-      const cd = cdInfo(t.due);
-      h += '<div class="card st-' + t.status + '">'
-        + '<div class="card-top">' + tagHtml(t.course) + '<span class="cd ' + cd.cls + '">' + (t.status === "done" ? "✔ 已完成" : cd.t) + "</span></div>"
-        + '<div class="card-title">' + t.title + "</div>"
-        + '<div class="card-due">DUE ' + fmtDue(t.due) + "</div>"
-        + (t.notes ? '<div class="card-note">' + t.notes + "</div>" : "")
-        + "</div>";
+    state.events.filter(e => e.date === d.iso).sort((a,b) => (a.start||"99") < (b.start||"99") ? -1 : 1).forEach(e => {
+      h += '<div class="wk-ev' + (e.status === "done" ? " done" : "") + '"><span class="t">' + (e.start || "--:--") + '</span> ' + e.title + "</div>";
     });
     h += "</div>";
-  }
-  document.getElementById("kanban").innerHTML = h;
-}
-
-function renderExams(){
-  const list = (DATA.tasks||[]).filter(t => t.kind === "exam").sort((a,b) => new Date(a.due) - new Date(b.due));
-  let h = "";
-  list.forEach(t => {
-    const cd = cdInfo(t.due);
-    h += '<div class="exam-row"><span class="exam-d">' + fmtDue(t.due).slice(0,6) + "</span><span class='exam-n'>" + t.course + " · " + t.title + "</span><span class='cd " + cd.cls + "'>" + cd.t + "</span></div>";
   });
-  if(list.length === 0) h = '<div class="empty">· 暂无考试 ·</div>';
-  document.getElementById("examBody").innerHTML = h;
+  h += "</div></div></div>";
+  box.innerHTML = h;
 }
 
-function renderAdhoc(){
-  const list = (DATA.tasks||[]).filter(t => t.kind === "adhoc").sort((a,b) => (a.status==="done"?1:0)-(b.status==="done"?1:0) || new Date(a.due||0) - new Date(b.due||0));
-  let h = "";
-  list.forEach(t => {
-    const done = t.status === "done";
-    let duePart = "";
-    if(t.due){
-      const cd = cdInfo(t.due);
-      duePart = '<span class="cd ' + cd.cls + '">' + fmtDue(t.due).slice(0,6) + " " + cd.t + "</span>";
-    }
-    const mark = done ? '<span class="done-mark">✔ 完成</span>' : "";
-    h += '<div class="todo-row' + (done ? " done-item" : "") + '">'
-      + '<span class="tt">' + t.title + (t.notes ? ' <span style="color:var(--dim)">· ' + t.notes + "</span>" : "") + "</span>"
-      + duePart
-      + mark + "</div>";
-  });
-  if(list.length === 0) h = '<div class="empty">· 空闲 · 没有临时事项 ·</div>';
-  document.getElementById("adhocBody").innerHTML = h;
+function weekKey(d = new Date()){
+  const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
+  return monday.getFullYear() + "-W" + pad(monday.getMonth()+1) + pad(monday.getDate());
 }
 
-function renderFooter(){
-  const w = semesterWeek();
-  const total = DATA.semester.weeks;
-  let cells = "";
-  for(let i = 1; i <= total; i++){
-    const cls = i < w ? "f" : (i === w && w <= total ? "c" : "");
-    cells += '<span class="cell ' + cls + '"></span>';
+function renderReview(){
+  const t = todayIso();
+  const box = $("view-review");
+  const monday = weekDates()[0].iso, sunday = weekDates()[6].iso;
+  const weekEvs = state.events.filter(e => e.date >= monday && e.date <= sunday);
+  const done = weekEvs.filter(e => e.status === "done").length;
+  const current = state.summaries.find(s => s.week === weekKey());
+  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> REVIEW // ' + weekKey() + '</span>'
+    + '<span class="r"><button class="btn primary" id="btnGenSummary">' + (current ? "重新生成" : "生成本周汇总") + '</button></span></div><div class="pb">';
+  h += '<div class="hint" style="margin-bottom:8px">本周 ' + weekEvs.length + " 项安排，已完成 " + done + " 项。" + (["周六","周日"].includes("周" + WD[new Date().getDay()]) ? "" : "周日晚自动出汇总（现在也可以手动生成）。") + '</div>';
+  if(current){
+    h += '<div class="rev-card">' + current.text + '</div>';
+  } else {
+    h += '<div class="empty">· 本周汇总尚未生成 ·</div>';
   }
-  const pct = Math.max(0, Math.min(100, Math.round(w / total * 100)));
-  document.getElementById("semProg").innerHTML =
-    '<span class="prog">' + cells + '</span> 学期进度 ' + (w >= 1 && w <= total ? pct + "%" : "—");
+  const olds = state.summaries.filter(s => s.week !== weekKey()).sort((a,b) => b.week < a.week ? -1 : 1).slice(0,6);
+  if(olds.length){
+    h += '<div class="seg-title">▸ 往期</div>';
+    olds.forEach(s => { h += '<div class="rev-old">' + s.text + '<div class="rev-week">' + s.week + '</div></div>'; });
+  }
+  h += "</div></div>";
+  box.innerHTML = h;
+  const btn = $("btnGenSummary");
+  if(btn) btn.addEventListener("click", genSummary);
+}
+
+function renderDdl(){
+  const t = todayIso();
+  const list = state.events.filter(e => e.ddl && e.status !== "done" && e.ddl.slice(0,10) >= t)
+    .sort((a,b) => a.ddl < b.ddl ? -1 : 1).slice(0,3);
+  $("ddlStrip").innerHTML = list.map(e => {
+    const ms = new Date(e.ddl) - new Date();
+    const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
+    const cls = ms < 864e5 ? "" : d <= 2 ? "warn" : "";
+    return '<span class="ddl-chip ' + cls + '">DDL ' + e.ddl.slice(5,10) + " · " + e.title + ' <b>' + (d >= 1 ? "剩" + d + "天" : "剩" + h + "小时") + '</b></span>';
+  }).join("");
+}
+
+function renderMeta(){
+  const fm = state.fixed_meta || {};
+  $("dataMeta").textContent = "fixed " + (fm.count || state.fixed.length) + " 块 · " + (fm.generated_at || "").slice(0,16).replace("T"," ") + " · " + (fm.source || "");
 }
 
 function renderAll(){
-  renderToday();
-  renderWeek();
-  renderKanban();
-  renderExams();
-  renderAdhoc();
-  renderFooter();
-  renderPlan();
+  renderToday(); renderWeek(); renderReview(); renderDdl(); renderMeta(); renderSync();
+  $("weekTag") && ($("weekTag").textContent = "第 " + semesterWeek() + " 周");
+}
+
+function semesterWeek(){
+  const s = new Date(2026, 8, 14);
+  const now = new Date();
+  const t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.floor((t0 - s) / (7 * 864e5)) + 1;
 }
 
 function tickClock(){
   const n = new Date();
-  document.getElementById("clock").textContent =
-    n.getFullYear() + "-" + pad(n.getMonth()+1) + "-" + pad(n.getDate()) + " " + WD[n.getDay()].toUpperCase() + " " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + ":" + pad(n.getSeconds());
+  $("clock").textContent = n.getFullYear() + "-" + pad(n.getMonth()+1) + "-" + pad(n.getDate()) + " " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + ":" + pad(n.getSeconds());
 }
 
-document.getElementById("btnExport").addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), rev: DATA.rev, tasks: DATA.tasks }, null, 2)], { type: "application/json" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "master-board-backup.json";
-  a.click();
-  URL.revokeObjectURL(a.href);
-});
+/* ---------- actions & sync ---------- */
 
-function renderPlan(){
-  document.getElementById("planMeta").textContent =
-    PLANNING.days && PLANNING.days.length
-      ? "生成于 " + (PLANNING.generated_at||"").slice(0,16).replace("T"," ") + " · 日历" + (PLANNING.calendar_sync && PLANNING.calendar_sync.status === "available" ? "已同步 " + PLANNING.calendar_sync.imported + " 条" : "未同步·用课表兜底")
-      : "尚未生成 · 让 agent 运行 python3 plan.py";
-  const body = document.getElementById("planBody");
-  if(!PLANNING.days || !PLANNING.days.length){
-    body.innerHTML = '<div class="empty" style="grid-column:1/-1">· 排期为空 · 运行 python3 plan.py 生成 ·</div>';
-    return;
+function applyActions(actions){
+  const out = [];
+  for(const a of actions){
+    if(a.op === "add" && a.event){
+      const ev = {
+        id: "e-" + Date.now().toString(36) + Math.floor(Math.random()*999),
+        title: a.event.title || "未命名", category: ["skill","course","work","life"].includes(a.event.category) ? a.event.category : "life",
+        date: a.event.date, start: a.event.start || "", end: a.event.end || "", ddl: a.event.ddl || "",
+        status: "todo", notes: a.event.notes || "", source: "chat"
+      };
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(ev.date)) continue;
+      const clash = state.fixed.find(f => f.date === ev.date && ev.start && f.start < (ev.end || "24:00") && ev.start < f.end);
+      state.events.push(ev);
+      out.push({ ok: true, text: "＋ " + ev.date.slice(5) + " " + (ev.start || "") + " " + ev.title + (clash ? "（⚠ 与「" + clash.title + "」时间重叠）" : "") });
+    }
+    if(a.op === "update" && a.id){
+      const ev = state.events.find(e => e.id === a.id);
+      if(ev){ Object.assign(ev, a.changes || {}); out.push({ ok: true, text: "↻ " + ev.title + " 已更新" }); }
+      else out.push({ ok: false, text: "✕ 未找到 " + a.id });
+    }
+    if(a.op === "delete" && a.id){
+      const ev = state.events.find(e => e.id === a.id);
+      if(ev){ state.events = state.events.filter(e => e.id !== a.id); out.push({ ok: true, text: "－ " + ev.title + " 已删除" }); }
+    }
+    if(a.op === "done" && a.id){
+      const ev = state.events.find(e => e.id === a.id);
+      if(ev){ ev.status = "done"; out.push({ ok: true, text: "✔ " + ev.title + " 已完成" }); }
+    }
   }
-  const todayIso = new Date().toISOString().slice(0,10);
-  const todayLocal = new Date();
-  const localIso = todayLocal.getFullYear() + "-" + pad(todayLocal.getMonth()+1) + "-" + pad(todayLocal.getDate());
-  let h = "";
-  PLANNING.days.forEach(d => {
-    const pct = Math.min(100, Math.round((d.load_minutes||0) / (d.capacity_minutes||1) * 100));
-    const loadCls = pct >= 90 ? "full" : pct >= 60 ? "hot" : "";
-    h += '<div class="plan-day' + (d.date === localIso ? " today" : "") + '">'
-      + '<div class="plan-day-h"><b>' + d.date.slice(5) + " " + d.weekday + "</b>"
-      + '<span class="plan-load"><span class="load-track"><span class="load-fill ' + loadCls + '" style="width:' + pct + '%"></span></span>' + (d.load_minutes||0) + "/" + d.capacity_minutes + "分</span></div>";
-    if(d.fixed && d.fixed.length){
-      h += '<div class="plan-fixed">';
-      d.fixed.forEach(b => {
-        h += '<span class="chip sm ' + (b.type||"class") + '"><span class="t">' + b.start + "-" + b.end + "</span>" + b.title + "</span>";
-      });
-      h += "</div>";
-    }
-    if(d.blocks && d.blocks.length){
-      h += '<div class="plan-label">▸ 建议学习块</div><div class="plan-blocks">';
-      d.blocks.forEach(b => {
-        h += '<span class="chip sm study"><span class="t">' + b.start + "-" + b.end + "</span>" + b.title + '<span class="r2">' + b.course + "</span></span>";
-      });
-      h += "</div>";
-    } else if(!d.fixed || !d.fixed.length){
-      h += '<div class="plan-label">▸ 自由日 · 无固定安排</div>';
-    }
-    if(d.warnings && d.warnings.length){
-      h += '<div class="plan-warn">⚠ ' + d.warnings.join("；") + "</div>";
-    }
-    h += "</div>";
-  });
-  body.innerHTML = h;
+  return out;
 }
 
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+function renderSync(){
+  const dot = $("syncDot");
+  if(syncing){ dot.className = "sync-dot dirty"; dot.textContent = "SYNC…"; return; }
+  if(!config.gh.pat){ dot.className = "sync-dot dirty"; dot.textContent = dirty ? "LOCAL*" : "LOCAL"; return; }
+  dot.className = "sync-dot " + (dirty ? "dirty" : "ok");
+  dot.textContent = dirty ? "未同步*" : "SYNCED";
+}
+
+async function commitToGitHub(){
+  if(!config.gh.pat || !config.gh.repo){ renderAll(); return { ok: false, msg: "未配置 PAT，仅保存在本机" }; }
+  syncing = true; renderSync();
+  try {
+    const url = "https://api.github.com/repos/" + config.gh.repo + "/contents/data/schedule.json";
+    const headers = { "Authorization": "Bearer " + config.gh.pat, "Accept": "application/vnd.github+json" };
+    let sha;
+    const get = await fetch(url, { headers });
+    if(get.ok) sha = (await get.json()).sha;
+    const body = {
+      message: "app: schedule update " + new Date().toISOString().slice(0,16),
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2) + "\n"))),
+      sha
+    };
+    const put = await fetch(url, { method: "PUT", headers, body: JSON.stringify(body) });
+    if(!put.ok){
+      const retry = await fetch(url, { headers });
+      if(retry.ok){
+        const body2 = { ...body, sha: (await retry.json()).sha };
+        const put2 = await fetch(url, { method: "PUT", headers, body: JSON.stringify(body2) });
+        if(!put2.ok) throw new Error("PUT " + put2.status);
+      } else throw new Error("PUT " + put.status);
+    }
+    dirty = false;
+    return { ok: true, msg: "已提交到 GitHub，全端约 1 分钟内同步" };
+  } catch(err){
+    return { ok: false, msg: "同步失败：" + err.message };
+  } finally {
+    syncing = false; renderSync();
+  }
+}
+
+document.addEventListener("click", async e => {
+  const tick = e.target.closest("[data-done]");
+  if(tick){
+    const ev = state.events.find(x => x.id === tick.dataset.done);
+    if(ev){
+      ev.status = ev.status === "done" ? "todo" : "done";
+      dirty = true; renderAll();
+      const r = await commitToGitHub();
+      if(!r.ok) chatNote(r.msg);
+    }
+  }
+  const tab = e.target.closest(".tab");
+  if(tab){
+    document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
     tab.classList.add("active");
-    document.getElementById("view-board").style.display = tab.dataset.view === "board" ? "" : "none";
-    document.getElementById("view-plan").style.display = tab.dataset.view === "plan" ? "" : "none";
-  });
+    for(const v of ["today","week","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
+  }
 });
 
-tickClock();
-setInterval(tickClock, 1000);
-setInterval(renderAll, 30000);
-renderAll();
+/* ---------- LLM agent ---------- */
+
+const LS_CHAT = "mb.chat";
+function chatHistory(){ try { return JSON.parse(localStorage.getItem(LS_CHAT) || "[]"); } catch(e){ return []; } }
+function pushMsg(role, text, acts){
+  const h = chatHistory(); h.push({ role, text, acts: acts || [] });
+  localStorage.setItem(LS_CHAT, JSON.stringify(h.slice(-60)));
+  renderChatLog();
+}
+function chatNote(text){ pushMsg("sys", text); }
+function renderChatLog(){
+  const log = $("chatLog");
+  const h = chatHistory();
+  log.innerHTML = (h.length ? h : [{ role: "sys", text: "把要安排的事直接说给我：作业、DDL、会议、看医生、想学的东西…我会自动分类排期并与课程避让。" }])
+    .map(m => {
+      const acts = (m.acts && m.acts.length) ? '<div class="acts">' + m.acts.map(a => '<span class="act-chip' + (a.ok ? "" : " warn") + '">' + a.text + '</span>').join("") + "</div>" : "";
+      return '<div class="msg ' + m.role + '">' + m.text + acts + '</div>';
+    }).join("");
+  log.scrollTop = log.scrollHeight;
+}
+
+function systemPrompt(){
+  const n = new Date();
+  const t = todayIso();
+  const horizon = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 14).toISOString().slice(0,10);
+  const events = state.events.filter(e => !e.ddl || e.ddl.slice(0,10) >= t || e.status !== "done").slice(-120);
+  const fixed = state.fixed.filter(f => f.date >= t && f.date <= horizon);
+  return [
+    "你是「MASTER·BOARD」的个人排期助手。今天是 " + t + " 周" + WD[n.getDay()] + "，当前时间 " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + "。",
+    "用户是硕士生，同时在 TP（半导体数据公司）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
+    "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 不要把活动排进固定块时间；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
+    "回复格式：先用简短中文确认或回答；若有排期改动，在回复末尾输出一个 ```json 代码块：",
+    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"}]}',
+    "没有改动就不要输出 json 块。删除/改期前先在文本里说明原因。",
+    "",
+    "当前活动列表(JSON)：",
+    JSON.stringify(events),
+    "",
+    "固定块-未来14天不可占用(JSON)：",
+    JSON.stringify(fixed)
+  ].join("\n");
+}
+
+async function callLlm(messages){
+  const base = config.llm.base.replace(/\/+$/, "");
+  const res = await fetch(base + "/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
+    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 1500 })
+  });
+  if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
+  return (await res.json()).choices[0].message.content;
+}
+
+function extractActions(text){
+  const matches = [...text.matchAll(/```json\s*([\s\S]*?)```/g)];
+  if(!matches.length) return [];
+  try {
+    const parsed = JSON.parse(matches[matches.length - 1][1]);
+    return Array.isArray(parsed.actions) ? parsed.actions : [];
+  } catch(e){ return []; }
+}
+
+async function sendChat(){
+  const box = $("chatText");
+  const text = box.value.trim();
+  if(!text) return;
+  if(!config.llm.key){ chatNote("请先在「设置」里填入智谱 API Key。"); openSettings(); return; }
+  box.value = "";
+  pushMsg("user", text);
+  $("typing").style.display = "block";
+  try {
+    const messages = [{ role: "system", content: systemPrompt() }, ...chatHistory().slice(-16).map(m => ({ role: m.role === "assistant" ? "assistant" : "user", content: m.text }))].filter(m => m.content);
+    const reply = await callLlm(messages);
+    const actions = extractActions(reply);
+    const clean = reply.replace(/```json[\s\S]*?```/g, "").trim() || "（无回复）";
+    const results = applyActions(actions);
+    dirty = dirty || results.some(r => r.ok);
+    pushMsg("assistant", clean, results);
+    renderAll();
+    if(config.auto && dirty){
+      const r = await commitToGitHub();
+      chatNote(r.ok ? "↯ " + r.msg : "↯ " + r.msg);
+    } else if(dirty){
+      chatNote("已更新本机排期（未配置自动入库）。");
+    }
+  } catch(err){
+    chatNote("出错了：" + err.message);
+  } finally {
+    $("typing").style.display = "none";
+  }
+}
+
+async function genSummary(){
+  if(!config.llm.key){ chatNote("生成周报需要先在「设置」填 API Key。"); openSettings(); return; }
+  $("typing").style.display = "block";
+  try {
+    const monday = weekDates()[0].iso, sunday = weekDates()[6].iso;
+    const weekEvs = state.events.filter(e => e.date >= monday && e.date <= sunday);
+    const fixed = state.fixed.filter(f => f.date >= monday && f.date <= sunday);
+    const prompt = "以下是本周（" + monday + " 到 " + sunday + "）的日程数据。请用中文写一段150字以内的周汇总，口吻轻松直接：完成了什么、推进了什么、下周要注意的DDL。不要列表，写自然的短段落。\n活动：" + JSON.stringify(weekEvs) + "\n固定：" + JSON.stringify(fixed);
+    const text = await callLlm([{ role: "user", content: prompt }]);
+    const week = weekKey();
+    state.summaries = state.summaries.filter(s => s.week !== week);
+    state.summaries.push({ week, text, generated_at: new Date().toISOString().slice(0,16) });
+    dirty = true; renderReview();
+    const r = await commitToGitHub();
+    chatNote(r.ok ? "↯ 周报已生成并同步" : "↯ 周报已生成（" + r.msg + "）");
+  } catch(err){
+    chatNote("周报生成失败：" + err.message);
+  } finally {
+    $("typing").style.display = "none";
+  }
+}
+
+/* ---------- chrome ---------- */
+
+$("btnChat").addEventListener("click", () => { $("chatPanel").classList.add("open"); $("chatText").focus(); });
+$("btnCloseChat").addEventListener("click", () => $("chatPanel").classList.remove("open"));
+$("btnSend").addEventListener("click", sendChat);
+$("chatText").addEventListener("keydown", e => {
+  if(e.key === "Enter" && !e.shiftKey){ e.preventDefault(); sendChat(); }
+});
+$("btnClearChat").addEventListener("click", () => { if(confirm("清空聊天记录？排期数据不受影响。")){ localStorage.removeItem(LS_CHAT); renderChatLog(); } });
+function openSettings(){
+  $("cfgLlmBase").value = config.llm.base; $("cfgLlmKey").value = config.llm.key; $("cfgLlmModel").value = config.llm.model;
+  $("cfgGhRepo").value = config.gh.repo; $("cfgGhPat").value = config.gh.pat;
+  $("cfgAuto").checked = config.auto;
+  $("settingsModal").classList.add("open");
+}
+$("btnSettings").addEventListener("click", openSettings);
+$("btnCloseSettings").addEventListener("click", () => $("settingsModal").classList.remove("open"));
+$("settingsModal").addEventListener("click", e => { if(e.target === $("settingsModal")) $("settingsModal").classList.remove("open"); });
+$("btnSaveSettings").addEventListener("click", () => {
+  config.llm = { base: $("cfgLlmBase").value.trim() || "https://open.bigmodel.cn/api/paas/v4", key: $("cfgLlmKey").value.trim(), model: $("cfgLlmModel").value.trim() || "glm-4-flash" };
+  config.gh = { repo: $("cfgGhRepo").value.trim() || "AnniieeMo/master-board", pat: $("cfgGhPat").value.trim() };
+  config.auto = $("cfgAuto").checked;
+  saveConfig(); renderSync();
+  $("settingsModal").classList.remove("open");
+  chatNote(config.llm.key ? "配置已保存，助手可用。" : "已保存（无 key，助手只读）。");
+});
+$("btnWipe").addEventListener("click", () => {
+  if(confirm("清除本机所有配置与聊天记录？")){ localStorage.removeItem("mb.config"); localStorage.removeItem(LS_CHAT); loadConfig(); renderChatLog(); $("settingsModal").classList.remove("open"); }
+});
+$("syncDot").addEventListener("click", async () => {
+  if(dirty){ const r = await commitToGitHub(); chatNote(r.msg); }
+});
+
+init();
 </script>
 </body>
 </html>

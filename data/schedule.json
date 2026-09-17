@@ -160,6 +160,42 @@
       "status": "todo",
       "notes": "考试/考核周",
       "source": "seed"
+    },
+    {
+      "id": "e-stat-001",
+      "title": "统计作业·案例1 四星健康俱乐部",
+      "category": "course",
+      "date": "2026-09-19",
+      "start": "10:00",
+      "end": "11:30",
+      "ddl": "2026-09-21T23:59",
+      "status": "todo",
+      "notes": "第5章离散型概率分布，不要用回归方法",
+      "source": "user"
+    },
+    {
+      "id": "e-stat-002",
+      "title": "统计作业·案例2 Marion Dairies",
+      "category": "course",
+      "date": "2026-09-19",
+      "start": "16:00",
+      "end": "17:30",
+      "ddl": "2026-09-21T23:59",
+      "status": "todo",
+      "notes": "第7章末案例(183页)，第6章正态分布；stata可用normal(z)",
+      "source": "user"
+    },
+    {
+      "id": "e-stat-003",
+      "title": "统计作业·收尾核对并提交",
+      "category": "course",
+      "date": "2026-09-21",
+      "start": "09:30",
+      "end": "11:00",
+      "ddl": "2026-09-21T23:59",
+      "status": "todo",
+      "notes": "赶在下午课前交完",
+      "source": "user"
     }
   ],
   "fixed": [

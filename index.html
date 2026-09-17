@@ -385,6 +385,42 @@ body{
       "status": "todo",
       "notes": "考试/考核周",
       "source": "seed"
+    },
+    {
+      "id": "e-stat-001",
+      "title": "统计作业·案例1 四星健康俱乐部",
+      "category": "course",
+      "date": "2026-09-19",
+      "start": "10:00",
+      "end": "11:30",
+      "ddl": "2026-09-21T23:59",
+      "status": "todo",
+      "notes": "第5章离散型概率分布，不要用回归方法",
+      "source": "user"
+    },
+    {
+      "id": "e-stat-002",
+      "title": "统计作业·案例2 Marion Dairies",
+      "category": "course",
+      "date": "2026-09-19",
+      "start": "16:00",
+      "end": "17:30",
+      "ddl": "2026-09-21T23:59",
+      "status": "todo",
+      "notes": "第7章末案例(183页)，第6章正态分布；stata可用normal(z)",
+      "source": "user"
+    },
+    {
+      "id": "e-stat-003",
+      "title": "统计作业·收尾核对并提交",
+      "category": "course",
+      "date": "2026-09-21",
+      "start": "09:30",
+      "end": "11:00",
+      "ddl": "2026-09-21T23:59",
+      "status": "todo",
+      "notes": "赶在下午课前交完",
+      "source": "user"
     }
   ],
   "fixed": [
@@ -1459,14 +1495,14 @@ function renderChatLog(){
 function systemPrompt(){
   const n = new Date();
   const t = todayIso();
-  const horizon = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 14).toISOString().slice(0,10);
   const events = state.events.filter(e => !e.ddl || e.ddl.slice(0,10) >= t || e.status !== "done").slice(-120);
+  const horizon = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 7).toISOString().slice(0,10);
   const fixed = state.fixed.filter(f => f.date >= t && f.date <= horizon);
   return [
     "你是「MASTER·BOARD」的个人排期助手。今天是 " + t + " 周" + WD[n.getDay()] + "，当前时间 " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + "。",
     "用户是硕士生，同时在 TP（半导体数据公司）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
     "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 不要把活动排进固定块时间；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
-    "回复格式：先用简短中文确认或回答；若有排期改动，在回复末尾输出一个 ```json 代码块：",
+    "回复格式：先一句中文确认；若需改动排期，末尾输出 ```json 代码块（动作要精简，notes 不超过30字）：",
     '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"}]}',
     "没有改动就不要输出 json 块。删除/改期前先在文本里说明原因。",
     "",
@@ -1483,19 +1519,51 @@ async function callLlm(messages){
   const res = await fetch(base + "/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
-    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 1500 })
+    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000 })
   });
   if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
   return (await res.json()).choices[0].message.content;
 }
 
 function extractActions(text){
-  const matches = [...text.matchAll(/```json\s*([\s\S]*?)```/g)];
-  if(!matches.length) return [];
-  try {
-    const parsed = JSON.parse(matches[matches.length - 1][1]);
-    return Array.isArray(parsed.actions) ? parsed.actions : [];
-  } catch(e){ return []; }
+  let raw = null;
+  const blocks = [...text.matchAll(/```json\s*([\s\S]*?)(?:```|$)/g)];
+  if(blocks.length) raw = blocks[blocks.length - 1][1];
+  else {
+    const i = text.lastIndexOf('{"actions"');
+    if(i < 0) return [];
+    raw = text.slice(i);
+  }
+  const start = raw.indexOf('{"actions"');
+  if(start < 0) return [];
+  return parseActionObjects(raw.slice(start));
+}
+
+function parseActionObjects(s){
+  const out = [];
+  let i = s.indexOf('{"op"');
+  while(i !== -1){
+    let depth = 0, inStr = false, esc = false, j = i, end = -1;
+    for(; j < s.length; j++){
+      const c = s[j];
+      if(inStr){
+        if(esc) esc = false;
+        else if(c === "\\") esc = true;
+        else if(c === '"') inStr = false;
+        continue;
+      }
+      if(c === '"') inStr = true;
+      else if(c === "{") depth++;
+      else if(c === "}"){ depth--; if(depth === 0){ end = j; break; } }
+    }
+    if(end === -1) break;
+    try {
+      const obj = JSON.parse(s.slice(i, end + 1));
+      if(obj && obj.op) out.push(obj);
+    } catch(e){}
+    i = s.indexOf('{"op"', end + 1);
+  }
+  return out;
 }
 
 async function sendChat(){

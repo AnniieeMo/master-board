@@ -41,6 +41,8 @@ async function createWidget() {
   const { fixed, evs, seg } = rowsFor(data);
   const w = new ListWidget();
   w.backgroundColor = new Color("#f7f2e4");
+  w.url = "https://anniieemo.github.io/master-board/";
+  w.useDefaultPadding();
 
   const head = w.addText("▛▞ TODAY·" + (seg === "上午" ? "AM" : seg === "下午" ? "PM" : "NIGHT"));
   head.font = Font.boldSystemFont(11);

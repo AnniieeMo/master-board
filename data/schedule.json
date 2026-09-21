@@ -8,7 +8,7 @@
       "start": "20:00",
       "end": "21:30",
       "ddl": "2026-09-20T23:59",
-      "status": "todo",
+      "status": "done",
       "notes": "周日晚24:00前提交",
       "source": "seed"
     },
@@ -20,7 +20,7 @@
       "start": "20:00",
       "end": "21:30",
       "ddl": "2026-09-20T23:59",
-      "status": "todo",
+      "status": "done",
       "notes": "第二次投入，收尾提交",
       "source": "seed"
     },
@@ -981,5 +981,6 @@
     "source": "course_fallback",
     "count": 109,
     "horizon_days": 110
-  }
+  },
+  "ideas": []
 }

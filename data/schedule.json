@@ -32,7 +32,7 @@
       "start": "09:30",
       "end": "10:30",
       "ddl": "2026-10-19T18:00",
-      "status": "todo",
+      "status": "done",
       "notes": "管理经济学小组作业，每周日推进",
       "source": "seed"
     },
@@ -44,7 +44,7 @@
       "start": "09:30",
       "end": "10:30",
       "ddl": "2026-10-19T18:00",
-      "status": "todo",
+      "status": "done",
       "notes": "每周日推进",
       "source": "seed"
     },

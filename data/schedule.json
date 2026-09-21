@@ -101,9 +101,9 @@
       "category": "course",
       "date": "2026-11-17",
       "start": "18:00",
-      "end": "21:00",
+      "end": "20:00",
       "status": "todo",
-      "notes": "考试/考核周",
+      "notes": "闭卷考试",
       "source": "seed"
     },
     {
@@ -121,22 +121,22 @@
       "id": "e-seed-011",
       "title": "会计大数据管理分析考核",
       "category": "course",
-      "date": "2026-12-14",
+      "date": "2026-12-15",
       "start": "14:00",
       "end": "17:00",
       "status": "todo",
-      "notes": "考试/考核周",
+      "notes": "具体时间待定",
       "source": "seed"
     },
     {
       "id": "e-seed-012",
       "title": "财务管理理论与实务考核",
       "category": "course",
-      "date": "2026-12-15",
+      "date": "2026-12-16",
       "start": "14:00",
       "end": "17:00",
       "status": "todo",
-      "notes": "考试/考核周",
+      "notes": "具体时间待定",
       "source": "seed"
     },
     {
@@ -154,11 +154,11 @@
       "id": "e-seed-014",
       "title": "财务会计理论与实务考核",
       "category": "course",
-      "date": "2026-12-25",
+      "date": "2026-12-22",
       "start": "14:00",
       "end": "17:00",
       "status": "todo",
-      "notes": "考试/考核周",
+      "notes": "具体时间待定",
       "source": "seed"
     },
     {

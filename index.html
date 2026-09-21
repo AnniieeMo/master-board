@@ -1960,7 +1960,7 @@ function renderStash(){
       '<div class="idea-row"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
       + '<span class="tt"><b>' + e.title + '</b><span class="meta"> ' + e.date.slice(5) + " " + (e.start || "") + '</span></span>'
       + cdChip(e.ddl)
-      + '<button class="op" data-done="' + e.id + '">✔</button></div>').join("")
+      + '<button class="btn" data-done="' + e.id + '">✔ 完成</button></div>').join("")
     : '<div class="empty">· 没有 ·</div>';
 
   h += '<div class="seg-title">▸ 有DDL · 未排期（' + unscheduled.length + '）</div>';
@@ -1969,8 +1969,8 @@ function renderStash(){
       + '<span class="tt"><b>' + e.title + '</b>' + (e.notes ? '<span class="meta"> · ' + e.notes + '</span>' : '') + '</span>'
       + '<span class="when">DDL ' + e.ddl.slice(5,10) + '</span>'
       + cdChip(e.ddl)
-      + '<button class="op" data-task-schedule="' + e.id + '" title="排进日程">→ 排期</button>'
-      + '<button class="op" data-done="' + e.id + '">✔</button></div>').join("")
+      + '<button class="btn warn" data-task-schedule="' + e.id + '" title="排进日程">→ 排期</button>'
+      + '<button class="btn" data-done="' + e.id + '">✔ 完成</button></div>').join("")
     : '<div class="empty">· 没有 ·</div>';
 
   h += '<div class="seg-title">▸ 纯想法 · 没DDL没排期（' + openIdeas.length + '）</div>';
@@ -1978,9 +1978,9 @@ function renderStash(){
       '<div class="idea-row"><span class="cat ' + i.category + '">' + (CATN[i.category] || i.category) + '</span>'
       + '<span class="tt">' + i.text + '</span>'
       + '<span class="when">' + (i.created_at || "").slice(5) + '</span>'
-      + '<button class="op" data-idea-schedule="' + i.id + '" title="转为排期">→ 排期</button>'
-      + '<button class="op" data-idea-done="' + i.id + '" title="已消化">✔</button>'
-      + '<button class="op del" data-idea-del="' + i.id + '">✕</button></div>').join("")
+      + '<button class="btn warn" data-idea-schedule="' + i.id + '" title="转为排期">→ 排期</button>'
+      + '<button class="btn" data-idea-done="' + i.id + '" title="已消化">✔ 消化</button>'
+      + '<button class="btn danger" data-idea-del="' + i.id + '">✕</button></div>').join("")
     : '<div class="empty">· 想到什么扔进来 ·</div>';
 
   if(doneIdeas.length){

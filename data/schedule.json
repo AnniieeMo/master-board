@@ -196,6 +196,18 @@
       "status": "done",
       "notes": "赶在下午课前交完",
       "source": "user"
+    },
+    {
+      "id": "e-muam3znx547",
+      "title": "管理学院党课",
+      "category": "course",
+      "date": "2026-09-23",
+      "start": "16:00",
+      "end": "17:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "管理学院219上党课",
+      "source": "chat"
     }
   ],
   "fixed": [

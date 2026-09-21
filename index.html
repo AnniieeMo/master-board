@@ -1540,6 +1540,25 @@ async function commitToGitHub(){
   }
 }
 
+async function applyPendingByIdx(idx){
+  const h = chatHistory();
+  const m = h[idx];
+  if(!m || !m.pending) return;
+  const results = applyActions(m.pending);
+  m.acts = results; m.pending = null;
+  localStorage.setItem(LS_CHAT, JSON.stringify(h));
+  dirty = results.some(r => r.ok);
+  renderChatLog(); renderAll();
+  if(dirty && config.gh.pat && config.auto){
+    const r = await commitToGitHub();
+    chatNote("↯ " + r.msg);
+  } else if(dirty){
+    chatNote("已更新本机排期" + (config.gh.pat ? "（自动入库未开启，点顶部状态点手动同步）" : "（未配置 PAT，仅本机）") + "。");
+  } else {
+    chatNote("没有实际改动。");
+  }
+}
+
 document.addEventListener("click", async e => {
   const qt = e.target.closest("[data-qtoggle]");
   if(qt){
@@ -1603,24 +1622,7 @@ document.addEventListener("click", async e => {
     return;
   }
   const cf = e.target.closest("[data-confirm]");
-  if(cf){
-    const h = chatHistory();
-    const m = h[+cf.dataset.confirm];
-    if(m && m.pending){
-      const results = applyActions(m.pending);
-      m.acts = results; m.pending = null;
-      localStorage.setItem(LS_CHAT, JSON.stringify(h));
-      dirty = results.some(r => r.ok);
-      renderChatLog(); renderAll();
-      if(dirty && config.gh.pat && config.auto){
-        const r = await commitToGitHub();
-        chatNote("↯ " + r.msg);
-      } else if(dirty){
-        chatNote("已更新本机排期" + (config.gh.pat ? "（自动入库未开启，点顶部状态点手动同步）" : "（未配置 PAT，仅本机）") + "。");
-      }
-    }
-    return;
-  }
+  if(cf){ applyPendingByIdx(+cf.dataset.confirm); return; }
   const cc = e.target.closest("[data-cancel]");
   if(cc){
     const h = chatHistory();
@@ -1854,6 +1856,17 @@ async function sendChat(){
   const text = box.value.trim();
   if(!text && !pendingImage) return;
   if(!config.llm.key){ chatNote("请先在「设置」里填入智谱 API Key。"); openSettings(); return; }
+  if(/^\s*(确认|确定|好的?|ok|okay|嗯+|yes)\s*$/i.test(text)){
+    const h = chatHistory();
+    let pendingIdx = -1;
+    h.forEach((m, i) => { if(m.pending) pendingIdx = i; });
+    if(pendingIdx >= 0){
+      await applyPendingByIdx(pendingIdx);
+    } else {
+      chatNote("✔ 目前没有待确认的改动（之前的都已入库）。有新任务直接说～");
+    }
+    return;
+  }
   const hasImg = !!pendingImage;
   const imgForTurn = pendingImage;
   box.value = "";
@@ -1893,7 +1906,7 @@ async function sendChat(){
       ]);
       actions = extractActions(reply);
     }
-    const clean = reply.replace(/```json[\s\S]*?```/g, "").trim() || "（无回复）";
+    const clean = reply.replace(/```json[\s\S]*?```/g, "").trim() || "✔ 收到。本轮没有需要改动的排期，有新任务直接说。";
     if(actions.length){
       pushMsg("assistant", clean, [], actions);
       chatNote("⇪ 请核对上面的改动，点「确认入库」后才会写入日程。");

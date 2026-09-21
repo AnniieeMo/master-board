@@ -100,6 +100,20 @@ body{
 .rev-old{border:2px dashed var(--line-dash);padding:9px 10px;margin-top:8px;font-size:11px;color:var(--dim);white-space:pre-wrap}
 .rev-week{color:var(--amber);font-size:10px;letter-spacing:1px;margin-top:6px}
 
+.form-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;padding:10px;border:2px dashed var(--line-dash);background:var(--panel2)}
+.form-row input,.form-row select{background:#fff;border:2px solid var(--ink);color:var(--text);font-family:inherit;font-size:12px;padding:4px 8px;outline:none}
+.form-row input:focus,.form-row select:focus{border-color:var(--amber)}
+.form-row input[type=text].grow{flex:1;min-width:140px}
+.form-row input[type=time],.form-row input[type=date],.form-row input[type=datetime-local]{color-scheme:light}
+.idea-row{display:flex;gap:8px;align-items:flex-start;padding:6px 2px;border-bottom:2px dotted var(--line);font-size:12px}
+.idea-row:last-child{border-bottom:0}
+.idea-row.done-item .tt{text-decoration:line-through;color:var(--dim)}
+.idea-row .tt{flex:1;word-break:break-word}
+.idea-row .when{font-size:10px;color:var(--dim);white-space:nowrap}
+.idea-row .op{cursor:pointer;border:0;background:none;font-family:inherit;font-size:10px;color:var(--dim);padding:0 2px}
+.idea-row .op:hover{color:var(--green)}
+.idea-row .op.del:hover{color:var(--red)}
+
 .chat-fab{position:fixed;right:18px;bottom:18px;z-index:60;border:2px solid var(--ink);background:var(--ink);color:var(--bg);font-family:inherit;font-size:12px;letter-spacing:1px;padding:9px 16px;cursor:pointer;box-shadow:4px 4px 0 var(--shadow)}
 .chat-fab:hover{transform:translate(1px,1px);box-shadow:2px 2px 0 var(--shadow)}
 .chat{position:fixed;top:0;right:-400px;width:380px;max-width:100vw;height:100vh;background:var(--bg);border-left:2px solid var(--ink);z-index:70;display:flex;flex-direction:column;transition:right .18s steps(4);box-shadow:-6px 0 0 rgba(51,49,42,.12)}
@@ -168,11 +182,13 @@ body{
   <div class="tabs">
     <button class="tab active" data-view="today">▚ TODAY // 今日</button>
     <button class="tab" data-view="week">▚ WEEK // 本周</button>
+    <button class="tab" data-view="ideas">▚ IDEAS // 想法池</button>
     <button class="tab" data-view="review">▚ REVIEW // 周报</button>
   </div>
 
   <div id="view-today"></div>
   <div id="view-week" style="display:none"></div>
+  <div id="view-ideas" style="display:none"></div>
   <div id="view-review" style="display:none"></div>
 
   <div class="footer">
@@ -432,7 +448,7 @@ body{
       "id": "e-muam3znx547",
       "title": "管理学院党课",
       "category": "course",
-      "date": "2026-09-23",
+      "date": "2026-09-24",
       "start": "16:00",
       "end": "17:00",
       "ddl": "",
@@ -1248,6 +1264,7 @@ async function init(){
     try { state = JSON.parse($("seed-data").textContent); } catch(e){}
   }
   state.events = state.events || []; state.fixed = state.fixed || []; state.summaries = state.summaries || [];
+  state.ideas = state.ideas || [];
   renderAll(); tickClock();
   setInterval(tickClock, 1000);
   setInterval(renderAll, 60000);
@@ -1283,13 +1300,33 @@ function segOf(e){
   return h < 12 ? "上午" : h < 18 ? "下午" : "晚上";
 }
 
+function preserveForm(prefix){
+  const f = $("qform_" + prefix);
+  if(!f || f.style.display === "none") return null;
+  const vals = {};
+  ["title","cat","date","start","dur","ddl","note"].forEach(k => {
+    const el = $("q_" + prefix + "_" + k);
+    if(el) vals[k] = el.value;
+  });
+  return vals;
+}
+function restoreForm(prefix, vals){
+  if(!vals) return;
+  const f = $("qform_" + prefix);
+  if(!f) return;
+  f.style.display = "flex";
+  Object.entries(vals).forEach(([k,v]) => { const el = $("q_" + prefix + "_" + k); if(el) el.value = v; });
+}
+
 function renderToday(){
   const t = todayIso();
   const box = $("view-today");
+  const keepT = preserveForm("t");
   const fixedToday = state.fixed.filter(f => f.date === t);
   const evs = state.events.filter(e => e.date === t);
   let h = "";
-  h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r" id="weekTag"></span></div><div class="pb">';
+  h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r"><button class="btn" data-qtoggle="t">＋ 手动添加</button></span></div><div class="pb">'
+    + quickFormHtml("t", t);
   if(fixedToday.length){
     h += '<div class="seg-title">▸ 固定安排（课/会）</div>' + fixedToday.map(f =>
       '<div class="ev" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span><span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span><span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>').join("");
@@ -1302,6 +1339,7 @@ function renderToday(){
   }
   h += "</div></div>";
   box.innerHTML = h;
+  restoreForm("t", keepT);
 }
 
 function weekDates(){
@@ -1317,7 +1355,8 @@ function renderWeek(){
   const t = todayIso();
   const box = $("view-week");
   const monday = weekDates()[0].iso, sunday = weekDates()[6].iso;
-  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> WEEK // 本周</span><span class="r">虚线=固定 · 实线=计划 · 可拖动卡片</span></div><div class="pb"><div class="week-grid">';
+  const keepW = preserveForm("w");
+  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> WEEK // 本周</span><span class="r"><button class="btn" data-qtoggle="w">＋ 手动添加</button> 虚线=固定 · 实线=计划</span></div><div class="pb">' + quickFormHtml("w", t) + '<div class="week-grid">';
   weekDates().forEach(d => {
     const cls = d.iso === t ? " today" : (d.iso < t ? " past" : "");
     h += '<div class="wk-col' + cls + '" data-drop data-day="' + d.iso + '"><div class="wk-h"><span>' + d.label + "</span><span>" + d.iso.slice(5) + "</span></div>";
@@ -1335,6 +1374,7 @@ function renderWeek(){
   });
   h += "</div></div></div>";
   box.innerHTML = h;
+  restoreForm("w", keepW);
 }
 
 function weekKey(d = new Date()){
@@ -1386,7 +1426,7 @@ function renderMeta(){
 }
 
 function renderAll(){
-  const jobs = { renderToday, renderWeek, renderReview, renderDdl, renderMeta, renderSync };
+  const jobs = { renderToday, renderWeek, renderIdeas, renderReview, renderDdl, renderMeta, renderSync };
   for(const [name, fn] of Object.entries(jobs)){
     try { fn(); } catch(err){ console.error(name + " failed:", err); }
   }
@@ -1435,6 +1475,15 @@ function applyActions(actions){
       const ev = state.events.find(e => e.id === a.id);
       if(ev){ ev.status = "done"; out.push({ ok: true, text: "✔ " + ev.title + " 已完成" }); }
     }
+    if(a.op === "idea" && a.text){
+      state.ideas.push({
+        id: "i-" + Date.now().toString(36) + Math.floor(Math.random() * 999),
+        text: String(a.text).slice(0, 200),
+        category: ["skill","course","work","life"].includes(a.category) ? a.category : "life",
+        created_at: todayIso(), status: "open"
+      });
+      out.push({ ok: true, text: "💡 已记入想法池：" + String(a.text).slice(0, 60) });
+    }
   }
   return out;
 }
@@ -1480,6 +1529,40 @@ async function commitToGitHub(){
 }
 
 document.addEventListener("click", async e => {
+  const qt = e.target.closest("[data-qtoggle]");
+  if(qt){
+    const f = $("qform_" + qt.dataset.qtoggle);
+    f.style.display = f.style.display === "none" ? "flex" : "none";
+    return;
+  }
+  const qs = e.target.closest("[data-qsubmit]");
+  if(qs){ submitQuick(qs.dataset.qsubmit); return; }
+  const ia = e.target.closest("[data-idea-add]");
+  if(ia){
+    const text = $("ideaText").value.trim();
+    if(!text){ alert("想法内容不能为空"); return; }
+    state.ideas.push({ id: "i-" + Date.now().toString(36), text, category: $("ideaCat").value, created_at: todayIso(), status: "open" });
+    $("ideaText").value = "";
+    dirty = true; renderIdeas();
+    const r = await commitToGitHub();
+    chatNote("💡 " + r.msg);
+    return;
+  }
+  const isd = e.target.closest("[data-idea-done]");
+  if(isd){
+    const i = findIdea(isd.dataset.ideaDone);
+    if(i){ i.status = "done"; dirty = true; renderIdeas(); commitToGitHub().then(r => { if(!r.ok) chatNote(r.msg); }); }
+    return;
+  }
+  const idl = e.target.closest("[data-idea-del]");
+  if(idl){
+    if(!confirm("删除这条想法？")) return;
+    state.ideas = state.ideas.filter(i => i.id !== idl.dataset.ideaDel);
+    dirty = true; renderIdeas(); commitToGitHub();
+    return;
+  }
+  const isc = e.target.closest("[data-idea-schedule]");
+  if(isc){ ideaToForm(isc.dataset.ideaSchedule); return; }
   const cf = e.target.closest("[data-confirm]");
   if(cf){
     const h = chatHistory();
@@ -1525,7 +1608,7 @@ document.addEventListener("click", async e => {
   if(tab){
     document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
     tab.classList.add("active");
-    for(const v of ["today","week","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
+    for(const v of ["today","week","ideas","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
   }
 });
 
@@ -1559,6 +1642,7 @@ function pendingChip(a){
   if(a.op === "update") return '<span class="act-chip">↻ 修改 ' + a.id + "：" + JSON.stringify(a.changes || {}) + '</span>';
   if(a.op === "delete") return '<span class="act-chip warn">－ 删除 ' + a.id + '</span>';
   if(a.op === "done") return '<span class="act-chip">✔ 完成 ' + a.id + '</span>';
+  if(a.op === "idea") return '<span class="act-chip">💡 记入想法池：' + String(a.text || "").slice(0, 60) + '</span>';
   return '<span class="act-chip warn">未知动作</span>';
 }
 
@@ -1577,13 +1661,17 @@ function systemPrompt(){
     "日期对照表（用户说「这周X/下周X/明天」时严格按此换算，禁止自行推算）：" + dateMap + "。其中今天=" + t + "。",
     "用户是硕士生，同时在 TP（呼叫中心的数据分析部门）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
     "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 不要把活动排进固定块时间；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
+    "想法池：用户说「先记一下/还没定时间/以后想试试/帮我记着」这类没有明确时间的想法时，不要强行排期，用 {\"op\":\"idea\",\"text\":\"…\",\"category\":\"…\"} 存入想法池；只有明确了时间或截止的才排 event。",
     "重要：你输出的改动不会立即生效，会先以卡片形式请用户确认。所以直接给出你建议的完整动作，不要输出「确认添加」之类的空话。",
     "回复格式：先一句中文说明你的安排和理由；末尾输出 ```json 代码块（动作要精简，notes 不超过30字）：",
-    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"}]}',
+    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"},{"op":"idea","text":"...","category":"..."}]}',
     "没有改动就不要输出 json 块。删除/改期前先在文本里说明原因。",
     "",
     "当前活动列表(JSON)：",
     JSON.stringify(events),
+    "",
+    "想法池-未消化(JSON)：",
+    JSON.stringify(state.ideas.filter(i => i.status === "open").slice(-30)),
     "",
     "固定块-未来14天不可占用(JSON)：",
     JSON.stringify(fixed)
@@ -1694,6 +1782,91 @@ async function genSummary(){
 
 const mins = v => { const p = String(v).split(":").map(Number); return (p[0] || 0) * 60 + (p[1] || 0); };
 const addMin = (v, d) => { const t = Math.min(23 * 60 + 59, mins(v) + d); return pad(Math.floor(t / 60)) + ":" + pad(t % 60); };
+
+function quickFormHtml(p, defDate){
+  return '<div class="form-row" id="qform_' + p + '" style="display:none">'
+    + '<input type="text" class="grow" id="q_' + p + '_title" placeholder="标题（必填）">'
+    + '<select id="q_' + p + '_cat"><option value="life">日常</option><option value="course">课程</option><option value="work">工作</option><option value="skill">技能</option></select>'
+    + '<input type="date" id="q_' + p + '_date" value="' + defDate + '">'
+    + '<input type="time" id="q_' + p + '_start" value="20:00">'
+    + '<select id="q_' + p + '_dur"><option value="60">60分钟</option><option value="30">30分钟</option><option value="45">45分钟</option><option value="90">90分钟</option><option value="120">120分钟</option></select>'
+    + '<input type="datetime-local" id="q_' + p + '_ddl" title="DDL（可选）">'
+    + '<input type="text" class="grow" id="q_' + p + '_note" placeholder="备注（可选）">'
+    + '<button class="btn primary" data-qsubmit="' + p + '">入库</button></div>';
+}
+
+function submitQuick(p){
+  const title = $("q_" + p + "_title").value.trim();
+  if(!title){ alert("标题不能为空"); return; }
+  const date = $("q_" + p + "_date").value;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){ alert("请填写日期"); return; }
+  const ev = {
+    id: "e-" + Date.now().toString(36) + Math.floor(Math.random() * 999),
+    title, category: $("q_" + p + "_cat").value, date,
+    start: $("q_" + p + "_start").value || "", end: "",
+    ddl: $("q_" + p + "_ddl").value || "", status: "todo",
+    notes: $("q_" + p + "_note").value.trim(), source: "manual"
+  };
+  if(ev.start) ev.end = addMin(ev.start, +$("q_" + p + "_dur").value || 60);
+  state.events.push(ev);
+  if(state._pendingIdea){
+    const idea = findIdea(state._pendingIdea);
+    if(idea) idea.status = "done";
+    state._pendingIdea = null;
+  }
+  dirty = true; renderAll();
+  $("qform_" + p).style.display = "none";
+  commitToGitHub().then(r => chatNote("↯ " + r.msg + "：" + title));
+}
+
+function renderIdeas(){
+  const box = $("view-ideas");
+  const ideaVal = $("ideaText") ? $("ideaText").value : "";
+  const open = state.ideas.filter(i => i.status === "open");
+  const done = state.ideas.filter(i => i.status === "done").slice(-8).reverse();
+  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> IDEAS // 想法池</span><span class="r">' + open.length + ' 条待消化 · 助手对话也能随手记</span></div><div class="pb">';
+  h += '<div class="form-row" style="display:flex">'
+    + '<input type="text" class="grow" id="ideaText" placeholder="想做的事 / 想了解的东西（还没定时间）">'
+    + '<select id="ideaCat"><option value="skill">技能</option><option value="course">课程</option><option value="work">工作</option><option value="life">日常</option></select>'
+    + '<button class="btn primary" data-idea-add>随手记</button></div>';
+  if(open.length === 0){
+    h += '<div class="empty">· 想法池是空的 · 想到什么扔进来，不用定时间 ·</div>';
+  } else {
+    open.sort((a,b) => a.created_at < b.created_at ? 1 : -1).forEach(i => {
+      h += '<div class="idea-row"><span class="cat ' + i.category + '">' + (CATN[i.category] || i.category) + '</span>'
+        + '<span class="tt">' + i.text + '</span>'
+        + '<span class="when">' + (i.created_at || "").slice(5) + '</span>'
+        + '<button class="op" data-idea-schedule="' + i.id + '" title="转为排期">→ 排期</button>'
+        + '<button class="op" data-idea-done="' + i.id + '" title="已消化">✔</button>'
+        + '<button class="op del" data-idea-del="' + i.id + '">✕</button></div>';
+    });
+  }
+  if(done.length){
+    h += '<div class="seg-title">▸ 已消化</div>';
+    done.forEach(i => { h += '<div class="idea-row done-item"><span class="tt">' + i.text + '</span><span class="when">' + (i.created_at || "").slice(5) + '</span></div>'; });
+  }
+  h += "</div></div>";
+  box.innerHTML = h;
+  if($("ideaText")) $("ideaText").value = ideaVal;
+}
+
+function findIdea(id){ return state.ideas.find(i => i.id === id); }
+
+function ideaToForm(id){
+  const i = findIdea(id);
+  if(!i) return;
+  ["t","w"].forEach(p => {
+    const f = $("qform_" + p);
+    if(f && f.style.display !== "none"){
+      $("q_" + p + "_title").value = i.text;
+      $("q_" + p + "_cat").value = i.category;
+      f.scrollIntoView({ block: "center" });
+      $("q_" + p + "_title").focus();
+    }
+  });
+  chatNote("💡 想法已填入手动添加表单（选好时间点「入库」），入库后我会把这条想法标记为已消化。");
+  state._pendingIdea = id;
+}
 
 document.addEventListener("dragstart", e => {
   const el = e.target.closest ? e.target.closest("[data-drag]") : null;

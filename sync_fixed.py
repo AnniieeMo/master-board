@@ -19,7 +19,7 @@ WEEKDAY_CN = ["周一", "周二", "周三", "周四", "周五", "周六", "周�
 def load_schedule() -> dict:
     if SCHEDULE_PATH.exists():
         return json.loads(SCHEDULE_PATH.read_text(encoding="utf-8"))
-    return {"events": [], "fixed": [], "summaries": []}
+    return {"events": [], "fixed": [], "summaries": [], "ideas": []}
 
 
 def calendar_events(today: date) -> list[dict]:

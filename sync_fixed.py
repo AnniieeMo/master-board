@@ -63,6 +63,24 @@ def course_fallback(data: dict, today: date) -> list[dict]:
     return fixed
 
 
+def routine_blocks(data: dict, today: date) -> list[dict]:
+    """Weekly recurring meetings from data.json routines (TP work meetings etc.)."""
+    out = []
+    for offset in range(HORIZON_DAYS):
+        day = today + timedelta(days=offset)
+        wd = day.weekday() + 1
+        for r in data.get("routines", []):
+            if r["weekday"] == wd:
+                out.append({
+                    "date": day.isoformat(),
+                    "start": r["start"],
+                    "end": r["end"],
+                    "title": r["name"],
+                    "kind": "meeting",
+                })
+    return out
+
+
 def main() -> int:
     today = date.today()
     data = json.loads((PROJECT_DIR / "data.json").read_text(encoding="utf-8"))
@@ -73,6 +91,14 @@ def main() -> int:
     if not fixed:
         fixed = course_fallback(data, today)
         source = "course_fallback"
+
+    routines = routine_blocks(data, today)
+    if source == "apple_calendar":
+        taken = {(e["date"], e["start"]) for e in fixed}
+        fixed += [r for r in routines if (r["date"], r["start"]) not in taken]
+    else:
+        fixed += routines
+    fixed = sorted(fixed, key=lambda b: (b["date"], b["start"]))
 
     schedule["fixed"] = fixed
     schedule["fixed_meta"] = {

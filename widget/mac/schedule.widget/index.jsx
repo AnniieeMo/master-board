@@ -1,6 +1,7 @@
-// MASTER·BOARD 桌面小组件 — Übersicht
-// 安装：brew install --cask übersicht
-// 然后把本文件夹复制/软链到 ~/Library/Application Support/Übersicht/widgets/
+// MASTER·BOARD 桌面小组件 — Übersicht（全天版）
+// 安装：brew install --cask ubersicht
+// 把本文件夹复制/软链到 ~/Library/Application Support/Übersicht/widgets/
+// 点击小组件直达工作台；每 60 秒自动刷新
 
 import { run } from "uebersicht";
 
@@ -13,60 +14,66 @@ const todayIso = () => {
   const d = new Date();
   return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
 };
-const segOf = start => {
-  const h = +String(start || "").slice(0, 2);
-  return h < 12 ? "上午" : h < 18 ? "下午" : "晚上";
-};
-const nowSeg = () => {
-  const h = new Date().getHours();
-  return h < 12 ? "上午" : h < 18 ? "下午" : "晚上";
-};
+const mins = v => { const p = String(v || "00:00").split(":").map(Number); return (p[0] || 0) * 60 + (p[1] || 0); };
 
 export const render = ({ output }) => {
   let data = {};
   try { data = JSON.parse(output); } catch (e) {}
-  const events = (data.events || []).filter(e => e.date === todayIso());
-  const fixed = (data.fixed || []).filter(f => f.date === todayIso());
-  const seg = nowSeg();
+  const t = todayIso();
+  const now = new Date();
+  const nowM = now.getHours() * 60 + now.getMinutes();
 
-  const segName = { 上午: "AM", 下午: "PM", 晚上: "NIGHT" }[seg];
-  const list = events
-    .filter(e => segOf(e.start) === seg)
-    .sort((a, b) => (a.start || "99") < (b.start || "99") ? -1 : 1);
-  const fixedList = fixed.filter(f => segOf(f.start) === seg);
+  const fixed = (data.fixed || []).filter(f => f.date === t);
+  const events = (data.events || []).filter(e => e.date === t);
+
+  const items = [
+    ...fixed.map(f => ({ time: f.start, end: f.end, title: f.title, fixed: true, done: false })),
+    ...events.map(e => ({ time: e.start || "00:00", end: e.end || "", title: e.title, fixed: false, done: e.status === "done", cat: e.category }))
+  ].sort((a, b) => mins(a.time) - mins(b.time));
+
+  const MAX = 9;
+  const shown = items.slice(0, MAX);
+  const hidden = items.length - shown.length;
 
   const catColor = c => ({ skill: "#2f7d3c", course: "#2f7a8f", work: "#b9791f", life: "#8f8871" }[c] || "#8f8871");
 
-  const row = (time, title, color, dashed) => (
-    <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 5 }}>
-      <span style={{ color: "#8f8871", fontSize: 11 }}>{time}</span>
-      <span style={{
-        color: "#33312a", fontSize: 12, fontFamily: '"Fusion Pixel 12px Monospaced SC", Menlo, monospace',
-        borderBottom: dashed ? "1px dashed #b3aa90" : "2px solid " + color, paddingBottom: 1
-      }}>{title}</span>
-    </div>
-  );
+  const row = (it) => {
+    const m = mins(it.time), e2 = mins(it.end || "23:59");
+    const past = e2 <= nowM || it.done;
+    const now = !it.done && m <= nowM && nowM < e2;
+    return (
+      <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 4, opacity: past ? 0.4 : 1 }}>
+        <span style={{ color: "#8f8871", fontSize: 10, width: 78 }}>{it.time}-{it.end || "----"}</span>
+        <span style={{
+          color: it.fixed ? "#8f8871" : "#33312a", fontSize: 11,
+          fontFamily: '"Fusion Pixel 12px Monospaced SC", Menlo, monospace',
+          borderBottom: it.fixed ? "1px dashed #b3aa90" : "2px solid " + (it.done ? "#b3aa90" : catColor(it.cat)),
+          paddingBottom: 1, textDecoration: it.done ? "line-through" : "none"
+        }}>{it.title}</span>
+        {now && <span style={{ color: "#b9791f", fontSize: 9 }}>◀ NOW</span>}
+        {it.done && <span style={{ color: "#2f7d3c", fontSize: 9 }}>✓</span>}
+      </div>
+    );
+  };
 
   return (
     <div
       onClick={() => run("open 'https://anniieemo.github.io/master-board/'")}
       style={{
-      position: "fixed", top: 24, left: 28, width: 260,
+      position: "fixed", top: 24, left: 28, width: 272,
       background: "rgba(247,242,228,.94)", border: "2px solid #33312a",
       boxShadow: "4px 4px 0 rgba(51,49,42,.25)", padding: "10px 12px",
       fontFamily: '"Fusion Pixel 12px Monospaced SC", Menlo, monospace', fontSize: 12,
       cursor: "pointer"
     }}>
       <div style={{ color: "#33312a", fontSize: 11, letterSpacing: 2, borderBottom: "2px solid #33312a", paddingBottom: 4, marginBottom: 8, display: "flex", justifyContent: "space-between" }}>
-        <b style={{ fontWeight: "normal" }}>▛▞ TODAY·{segName}</b>
-        <span style={{ color: "#8f8871" }}>{todayIso().slice(5)}</span>
+        <b style={{ fontWeight: "normal" }}>▛▞ TODAY / 全天</b>
+        <span style={{ color: "#8f8871" }}>{t.slice(5)}</span>
       </div>
-      {fixedList.map(f => row(f.start + "-" + f.end, f.title, "#2f7a8f", true))}
-      {list.map(e => row((e.start || "--:--") + (e.end ? "-" + e.end : ""), (e.status === "done" ? "✓ " : "") + e.title, catColor(e.category), false))}
-      {list.length === 0 && fixedList.length === 0 && (
-        <div style={{ color: "#8f8871", fontSize: 11, padding: "6px 0" }}>· 本时段空闲 ·</div>
-      )}
-      <div style={{ color: "#8f8871", fontSize: 9, marginTop: 6, letterSpacing: 1 }}>MASTER·BOARD WIDGET / {seg}时段</div>
+      {shown.map(it => row(it))}
+      {items.length === 0 && <div style={{ color: "#8f8871", fontSize: 11, padding: "6px 0" }}>· 今天没有安排 ·</div>}
+      {hidden > 0 && <div style={{ color: "#8f8871", fontSize: 9 }}>… 还有 {hidden} 条，点击查看</div>}
+      <div style={{ color: "#8f8871", fontSize: 9, marginTop: 6, letterSpacing: 1, borderTop: "1px dotted #b3aa90", paddingTop: 4 }}>MASTER·BOARD WIDGET / 虚线=固定</div>
     </div>
   );
 };

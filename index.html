@@ -1717,15 +1717,44 @@ function systemPrompt(){
   ].join("\n");
 }
 
-async function callLlm(messages){
+async function callLlm(messages, onDelta){
   const base = config.llm.base.replace(/\/+$/, "");
+  const useStream = typeof onDelta === "function";
   const res = await fetch(base + "/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
-    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000 })
+    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: useStream })
   });
   if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
-  return (await res.json()).choices[0].message.content;
+  if(!useStream) return (await res.json()).choices[0].message.content;
+  const reader = res.body.getReader();
+  const dec = new TextDecoder();
+  let buf = "", full = "";
+  for(;;){
+    const { done, value } = await reader.read();
+    if(done) break;
+    buf += dec.decode(value, { stream: true });
+    const lines = buf.split("\n");
+    buf = lines.pop();
+    for(const line of lines){
+      const s = line.trim();
+      if(!s.startsWith("data:")) continue;
+      const payload = s.slice(5).trim();
+      if(payload === "[DONE]") continue;
+      try {
+        const j = JSON.parse(payload);
+        const d = j.choices && j.choices[0] && j.choices[0].delta && j.choices[0].delta.content;
+        if(d){ full += d; onDelta(d); }
+      } catch(e){}
+    }
+  }
+  return full;
+}
+
+function setStatus(txt){
+  const t = $("typing");
+  t.style.display = "block";
+  t.innerHTML = '<span class="cursor">▊</span> ' + txt;
 }
 
 async function ocrImage(dataUrl){
@@ -1830,20 +1859,34 @@ async function sendChat(){
   box.value = "";
   pendingImage = null; renderPreview();
   pushMsg("user", (hasImg ? "📷 [图片] " : "") + text);
-  $("typing").style.display = "block";
   try {
     let userTurn = text;
     if(hasImg){
+      setStatus("📷 视觉模型识别图片中…");
       const ocr = await ocrImage(imgForTurn);
       userTurn = "（用户发来一张图片，视觉模型识别结果如下）\n" + ocr + (text ? "\n用户补充说明：" + text : "\n请根据图片内容处理。");
     }
     const hist = chatHistory().slice(-16).map(m => ({ role: m.role === "assistant" ? "assistant" : "user", content: m.text }));
     hist[hist.length - 1] = { role: "user", content: userTurn };
     const base = [{ role: "system", content: systemPrompt() }, ...hist];
-    let reply = await callLlm(base);
+    setStatus("模型思考中（可实时看到过程）…");
+    const live = document.createElement("div");
+    live.className = "msg assistant";
+    const liveText = document.createElement("span");
+    const liveCur = document.createElement("span");
+    liveCur.className = "cursor";
+    liveCur.textContent = "▊";
+    live.appendChild(liveText); live.appendChild(liveCur);
+    $("chatLog").appendChild(live);
+    $("chatLog").scrollTop = $("chatLog").scrollHeight;
+    let reply = await callLlm(base, d => {
+      liveText.textContent += d;
+      $("chatLog").scrollTop = $("chatLog").scrollHeight;
+    });
+    live.remove();
     let actions = extractActions(reply);
     if(actions.length === 0 && /(已添加|已排|已安排|已更新|已修改|已删除|已记入|已帮你|帮你加|帮你排|帮你改|帮你记)/.test(reply)){
-      chatNote("⚠ 助手声称已改动但没有输出动作，正在追问…");
+      setStatus("发现它没交动作，追问中…");
       reply = await callLlm([...base,
         { role: "assistant", content: reply },
         { role: "user", content: "你说你做了改动，但我这边没有收到任何 JSON 动作块，什么都没发生。请现在严格按系统提示的格式输出 ```json 代码块（包含 actions 数组）；如果确实无需改动，只回复「无需改动」四个字。" }
@@ -1866,7 +1909,7 @@ async function sendChat(){
 
 async function genSummary(){
   if(!config.llm.key){ chatNote("生成周报需要先在「设置」填 API Key。"); openSettings(); return; }
-  $("typing").style.display = "block";
+  setStatus("正在汇总本周日程…");
   try {
     const monday = weekDates()[0].iso, sunday = weekDates()[6].iso;
     const weekEvs = state.events.filter(e => e.date >= monday && e.date <= sunday);

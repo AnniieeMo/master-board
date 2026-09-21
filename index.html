@@ -1422,13 +1422,17 @@ function renderReview(){
 
 function renderDdl(){
   const t = todayIso();
-  const list = state.events.filter(e => e.ddl && e.status !== "done" && e.ddl.slice(0,10) >= t)
-    .sort((a,b) => a.ddl < b.ddl ? -1 : 1).slice(0,3);
-  $("ddlStrip").innerHTML = list.map(e => {
-    const ms = new Date(e.ddl) - new Date();
+  const list = state.events
+    .filter(e => e.status !== "done")
+    .map(e => ({ e, ref: e.ddl || (e.date ? e.date + "T" + (e.start || "23:59") : "") }))
+    .filter(x => x.ref && x.ref.slice(0,10) >= t)
+    .sort((a,b) => a.ref < b.ref ? -1 : 1).slice(0,4);
+  $("ddlStrip").innerHTML = list.map(({e, ref}) => {
+    const ms = new Date(ref) - new Date();
     const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
     const cls = ms < 864e5 ? "" : d <= 2 ? "warn" : "";
-    return '<span class="ddl-chip ' + cls + '">DDL ' + e.ddl.slice(5,10) + " · " + e.title + ' <b>' + (d >= 1 ? "剩" + d + "天" : "剩" + h + "小时") + '</b></span>';
+    const tag = e.ddl ? "DDL" : "日程";
+    return '<span class="ddl-chip ' + cls + '">' + tag + " " + ref.slice(5,10) + " · " + e.title + ' <b>' + (d >= 1 ? "剩" + d + "天" : "剩" + h + "小时") + '</b></span>';
   }).join("");
 }
 
@@ -1990,8 +1994,10 @@ function submitQuick(p){
 function renderStash(){
   const box = $("view-ideas");
   const stashVal = $("stashText") ? $("stashText").value : "";
-  const ddlTasks = state.events.filter(e => e.ddl && e.status !== "done");
-  const scheduled = ddlTasks.filter(e => e.date).sort((a,b) => a.ddl < b.ddl ? -1 : 1);
+  const ddlTasks = state.events.filter(e => !e.date && e.ddl && e.status !== "done");
+  const refOf = e => e.ddl || (e.date ? e.date + "T" + (e.start || "23:59") : "9999-12-31");
+  const scheduled = state.events.filter(e => e.date && e.status !== "done")
+    .sort((a,b) => refOf(a) < refOf(b) ? -1 : 1);
   const unscheduled = ddlTasks.filter(e => !e.date).sort((a,b) => a.ddl < b.ddl ? -1 : 1);
   const openIdeas = state.ideas.filter(i => i.status === "open");
   const doneIdeas = state.ideas.filter(i => i.status === "done").slice(-8).reverse();
@@ -2011,11 +2017,11 @@ function renderStash(){
     + '<input type="datetime-local" id="stashDdl" title="DDL（可选，填了就算任务）">'
     + '<button class="btn primary" data-stash-add>扔进去</button></div>';
 
-  h += '<div class="seg-title">▸ 已排期 · 有DDL（' + scheduled.length + '）</div>';
+  h += '<div class="seg-title">▸ 已排期 · 未完成（' + scheduled.length + '）</div>';
   h += scheduled.length ? scheduled.map(e =>
       '<div class="idea-row"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
       + '<span class="tt"><b>' + e.title + '</b><span class="meta"> ' + e.date.slice(5) + " " + (e.start || "") + '</span></span>'
-      + cdChip(e.ddl)
+      + cdChip(refOf(e))
       + '<button class="btn" data-done="' + e.id + '">✔ 完成</button></div>').join("")
     : '<div class="empty">· 没有 ·</div>';
 

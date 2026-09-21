@@ -139,6 +139,11 @@ body{
 
 .footer{margin-top:8px;color:var(--dim);font-size:10px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
 
+[data-drag]{cursor:grab}
+[data-drop].drag-over{border-color:var(--amber) !important;background:#fdf3e0 !important;box-shadow:0 0 0 2px var(--amber) inset}
+.wk-ev.ddl-mark{border-color:var(--red);color:var(--red);background:rgba(194,67,52,.06)}
+.wk-ev.ddl-mark .meta{color:var(--red);font-size:9px}
+
 @media (max-width:900px){
   .week-grid{grid-template-columns:1fr}
   .wk-col{min-height:auto}
@@ -202,7 +207,8 @@ body{
         <div style="height:6px"></div>
         <input type="password" id="cfgLlmKey" placeholder="API Key（只存本机浏览器）">
         <div style="height:6px"></div>
-        <input type="text" id="cfgLlmModel" placeholder="模型名，如 glm-4-flash">
+        <input type="text" id="cfgLlmModel" placeholder="glm-5.3-flash（推荐）/ glm-4-flash（免费但较弱）">
+        <div class="hint" style="margin-top:4px">模型越新越聪明：日期推算、分类准确度差别很大。推荐 glm-5.3-flash 或 glm-4.6 系列；glm-4-flash 是入门免费款，容易排错日期。</div>
       </div>
       <div>
         <div class="f-label"><b>GitHub 写回</b>（手机/电脑同步）</div>
@@ -1213,7 +1219,7 @@ let syncing = false;
 
 function loadConfig(){
   try { config = JSON.parse(localStorage.getItem("mb.config") || "{}"); } catch(e){ config = {}; }
-  config.llm = config.llm || { base: "https://open.bigmodel.cn/api/paas/v4", key: "", model: "glm-4-flash" };
+  config.llm = config.llm || { base: "https://open.bigmodel.cn/api/paas/v4", key: "", model: "glm-5.3-flash" };
   config.gh = config.gh || { repo: "AnniieeMo/master-board", pat: "" };
   config.auto = config.auto !== false;
 }
@@ -1249,7 +1255,7 @@ function evOf(e){
       cd = '<span class="cd-inline ' + cls + '">DDL ' + (d >= 1 ? d + "天" + h + "时" : h + "时") + '</span>';
     }
   }
-  return '<div class="ev' + (done ? " done" : "") + '">'
+  return '<div class="ev' + (done ? " done" : "") + '" draggable="true" data-drag="' + e.id + '">'
     + '<span class="tick" data-done="' + e.id + '">' + (done ? "◉" : "○") + '</span>'
     + '<span class="tt"><b>' + e.title + '</b>'
     + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
@@ -1278,8 +1284,9 @@ function renderToday(){
   }
   for(const seg of ["上午","下午","晚上"]){
     const list = evs.filter(e => segOf(e) === seg).sort((a,b) => (a.start||"99") < (b.start||"99") ? -1 : 1);
-    h += '<div class="seg-title">▸ ' + seg + '</div>';
-    h += list.length ? list.map(evOf).join("") : '<div class="empty">· 空闲 ·</div>';
+    h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
+    h += list.length ? list.map(evOf).join("") : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
+    h += "</div>";
   }
   h += "</div></div>";
   box.innerHTML = h;
@@ -1300,12 +1307,16 @@ function renderWeek(){
   let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> WEEK // 本周</span><span class="r">虚线=固定 · 实线=计划</span></div><div class="pb"><div class="week-grid">';
   weekDates().forEach(d => {
     const cls = d.iso === t ? " today" : (d.iso < t ? " past" : "");
-    h += '<div class="wk-col' + cls + '"><div class="wk-h"><span>' + d.label + "</span><span>" + d.iso.slice(5) + "</span></div>";
+    h += '<div class="wk-col' + cls + '" data-drop data-day="' + d.iso + '"><div class="wk-h"><span>' + d.label + "</span><span>" + d.iso.slice(5) + "</span></div>";
+    const dueHere = state.events.filter(e => e.ddl && e.status !== "done" && e.ddl.slice(0,10) === d.iso && (e.date < monday || e.date > sunday));
+    dueHere.forEach(e => {
+      h += '<div class="wk-ev ddl-mark">⏳ DDL ' + e.title + '<span class="meta">（' + e.date.slice(5) + ' 排）</span></div>';
+    });
     state.fixed.filter(f => f.date === d.iso).forEach(f => {
       h += '<div class="wk-ev fixed"><span class="t">' + f.start + "</span> " + f.title + "</div>";
     });
     state.events.filter(e => e.date === d.iso).sort((a,b) => (a.start||"99") < (b.start||"99") ? -1 : 1).forEach(e => {
-      h += '<div class="wk-ev' + (e.status === "done" ? " done" : "") + '"><span class="t">' + (e.start || "--:--") + '</span> ' + e.title + "</div>";
+      h += '<div class="wk-ev' + (e.status === "done" ? " done" : "") + '" draggable="true" data-drag="' + e.id + '"><span class="t">' + (e.start || "--:--") + '</span> ' + e.title + "</div>";
     });
     h += "</div>";
   });
@@ -1453,6 +1464,37 @@ async function commitToGitHub(){
 }
 
 document.addEventListener("click", async e => {
+  const cf = e.target.closest("[data-confirm]");
+  if(cf){
+    const h = chatHistory();
+    const m = h[+cf.dataset.confirm];
+    if(m && m.pending){
+      const results = applyActions(m.pending);
+      m.acts = results; m.pending = null;
+      localStorage.setItem(LS_CHAT, JSON.stringify(h));
+      dirty = results.some(r => r.ok);
+      renderChatLog(); renderAll();
+      if(dirty && config.gh.pat && config.auto){
+        const r = await commitToGitHub();
+        chatNote("↯ " + r.msg);
+      } else if(dirty){
+        chatNote("已更新本机排期" + (config.gh.pat ? "（自动入库未开启，点顶部状态点手动同步）" : "（未配置 PAT，仅本机）") + "。");
+      }
+    }
+    return;
+  }
+  const cc = e.target.closest("[data-cancel]");
+  if(cc){
+    const h = chatHistory();
+    const m = h[+cc.dataset.cancel];
+    if(m && m.pending){
+      m.pending = null;
+      m.acts = [{ ok: true, text: "已取消，未做任何改动" }];
+      localStorage.setItem(LS_CHAT, JSON.stringify(h));
+      renderChatLog();
+    }
+    return;
+  }
   const tick = e.target.closest("[data-done]");
   if(tick){
     const ev = state.events.find(x => x.id === tick.dataset.done);
@@ -1475,8 +1517,8 @@ document.addEventListener("click", async e => {
 
 const LS_CHAT = "mb.chat";
 function chatHistory(){ try { return JSON.parse(localStorage.getItem(LS_CHAT) || "[]"); } catch(e){ return []; } }
-function pushMsg(role, text, acts){
-  const h = chatHistory(); h.push({ role, text, acts: acts || [] });
+function pushMsg(role, text, acts, pending){
+  const h = chatHistory(); h.push({ role, text, acts: acts || [], pending: pending || null });
   localStorage.setItem(LS_CHAT, JSON.stringify(h.slice(-60)));
   renderChatLog();
 }
@@ -1484,12 +1526,24 @@ function chatNote(text){ pushMsg("sys", text); }
 function renderChatLog(){
   const log = $("chatLog");
   const h = chatHistory();
-  log.innerHTML = (h.length ? h : [{ role: "sys", text: "把要安排的事直接说给我：作业、DDL、会议、看医生、想学的东西…我会自动分类排期并与课程避让。" }])
-    .map(m => {
+  log.innerHTML = (h.length ? h : [{ role: "sys", text: "把要安排的事直接说给我：作业、DDL、会议、看医生、想学的东西…我会先给建议，你确认后才入库。" }])
+    .map((m, idx) => {
       const acts = (m.acts && m.acts.length) ? '<div class="acts">' + m.acts.map(a => '<span class="act-chip' + (a.ok ? "" : " warn") + '">' + a.text + '</span>').join("") + "</div>" : "";
-      return '<div class="msg ' + m.role + '">' + m.text + acts + '</div>';
+      const pending = (m.pending && m.pending.length)
+        ? '<div class="acts">' + m.pending.map(a => pendingChip(a)).join("")
+          + '<div style="display:flex;gap:6px;margin-top:6px"><button class="btn primary" data-confirm="' + idx + '">✓ 确认入库</button><button class="btn danger" data-cancel="' + idx + '">✕ 取消</button></div></div>'
+        : "";
+      return '<div class="msg ' + m.role + '">' + m.text + acts + pending + '</div>';
     }).join("");
   log.scrollTop = log.scrollHeight;
+}
+
+function pendingChip(a){
+  if(a.op === "add" && a.event) return '<span class="act-chip">＋ ' + a.event.date + " " + (a.event.start || "") + " " + a.event.title + " [" + (CATN[a.event.category] || a.event.category || "?") + ']</span>';
+  if(a.op === "update") return '<span class="act-chip">↻ 修改 ' + a.id + "：" + JSON.stringify(a.changes || {}) + '</span>';
+  if(a.op === "delete") return '<span class="act-chip warn">－ 删除 ' + a.id + '</span>';
+  if(a.op === "done") return '<span class="act-chip">✔ 完成 ' + a.id + '</span>';
+  return '<span class="act-chip warn">未知动作</span>';
 }
 
 function systemPrompt(){
@@ -1498,11 +1552,17 @@ function systemPrompt(){
   const events = state.events.filter(e => !e.ddl || e.ddl.slice(0,10) >= t || e.status !== "done").slice(-120);
   const horizon = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 7).toISOString().slice(0,10);
   const fixed = state.fixed.filter(f => f.date >= t && f.date <= horizon);
+  const dateMap = Array.from({length:14},(_,i) => {
+    const d = new Date(n.getFullYear(), n.getMonth(), n.getDate() + i);
+    return (d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate())).slice(5) + "=周" + WD[d.getDay()];
+  }).join("，");
   return [
     "你是「MASTER·BOARD」的个人排期助手。今天是 " + t + " 周" + WD[n.getDay()] + "，当前时间 " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + "。",
+    "日期对照表（用户说「这周X/下周X/明天」时严格按此换算，禁止自行推算）：" + dateMap + "。其中今天=" + t + "。",
     "用户是硕士生，同时在 TP（半导体数据公司）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
     "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 不要把活动排进固定块时间；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
-    "回复格式：先一句中文确认；若需改动排期，末尾输出 ```json 代码块（动作要精简，notes 不超过30字）：",
+    "重要：你输出的改动不会立即生效，会先以卡片形式请用户确认。所以直接给出你建议的完整动作，不要输出「确认添加」之类的空话。",
+    "回复格式：先一句中文说明你的安排和理由；末尾输出 ```json 代码块（动作要精简，notes 不超过30字）：",
     '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"}]}',
     "没有改动就不要输出 json 块。删除/改期前先在文本里说明原因。",
     "",
@@ -1579,15 +1639,11 @@ async function sendChat(){
     const reply = await callLlm(messages);
     const actions = extractActions(reply);
     const clean = reply.replace(/```json[\s\S]*?```/g, "").trim() || "（无回复）";
-    const results = applyActions(actions);
-    dirty = dirty || results.some(r => r.ok);
-    pushMsg("assistant", clean, results);
-    renderAll();
-    if(config.auto && dirty){
-      const r = await commitToGitHub();
-      chatNote(r.ok ? "↯ " + r.msg : "↯ " + r.msg);
-    } else if(dirty){
-      chatNote("已更新本机排期（未配置自动入库）。");
+    if(actions.length){
+      pushMsg("assistant", clean, [], actions);
+      chatNote("⇪ 请核对上面的改动，点「确认入库」后才会写入日程。");
+    } else {
+      pushMsg("assistant", clean);
     }
   } catch(err){
     chatNote("出错了：" + err.message);
@@ -1619,6 +1675,49 @@ async function genSummary(){
 }
 
 /* ---------- chrome ---------- */
+
+const mins = v => { const p = String(v).split(":").map(Number); return (p[0] || 0) * 60 + (p[1] || 0); };
+const addMin = (v, d) => { const t = Math.min(23 * 60 + 59, mins(v) + d); return pad(Math.floor(t / 60)) + ":" + pad(t % 60); };
+
+document.addEventListener("dragstart", e => {
+  const el = e.target.closest ? e.target.closest("[data-drag]") : null;
+  if(el) e.dataTransfer.setData("text/plain", el.dataset.drag);
+});
+document.addEventListener("dragover", e => {
+  const t = e.target.closest ? e.target.closest("[data-drop]") : null;
+  if(t){ e.preventDefault(); t.classList.add("drag-over"); }
+});
+document.addEventListener("dragleave", e => {
+  const t = e.target.closest ? e.target.closest("[data-drop]") : null;
+  if(t) t.classList.remove("drag-over");
+});
+document.addEventListener("drop", async e => {
+  const t = e.target.closest ? e.target.closest("[data-drop]") : null;
+  if(!t) return;
+  e.preventDefault();
+  t.classList.remove("drag-over");
+  const id = e.dataTransfer.getData("text/plain");
+  const ev = state.events.find(x => x.id === id);
+  if(!ev) return;
+  let changed = false, note = "";
+  if(t.dataset.seg){
+    const def = { "上午": "09:00", "下午": "14:00", "晚上": "20:00" }[t.dataset.seg];
+    if(segOf(ev.start) !== t.dataset.seg){
+      const dur = (ev.start && ev.end && mins(ev.end) > mins(ev.start)) ? mins(ev.end) - mins(ev.start) : 60;
+      ev.start = def; ev.end = addMin(def, dur);
+      changed = true; note = ev.title + " → " + ev.date + " " + ev.start + "（" + t.dataset.seg + "）";
+    }
+  }
+  if(t.dataset.day && t.dataset.day !== ev.date){
+    ev.date = t.dataset.day;
+    changed = true; note = ev.title + " → 挪到 " + ev.date;
+  }
+  if(changed){
+    dirty = true; renderAll();
+    const r = await commitToGitHub();
+    chatNote((r.ok ? "↯ 已同步：" : "↯ 本机已改：") + note + (r.ok ? "" : "（" + r.msg + "）"));
+  }
+});
 
 $("btnChat").addEventListener("click", () => { $("chatPanel").classList.add("open"); $("chatText").focus(); });
 $("btnCloseChat").addEventListener("click", () => $("chatPanel").classList.remove("open"));

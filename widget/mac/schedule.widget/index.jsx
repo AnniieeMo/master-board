@@ -2,6 +2,8 @@
 // 安装：brew install --cask übersicht
 // 然后把本文件夹复制/软链到 ~/Library/Application Support/Übersicht/widgets/
 
+import { run } from "uebersicht";
+
 export const refreshFrequency = 60000;
 
 export const command = `curl -s "https://anniieemo.github.io/master-board/data/schedule.json"`;
@@ -46,11 +48,14 @@ export const render = ({ output }) => {
   );
 
   return (
-    <div style={{
-      position: "fixed", top: 24, right: 28, width: 260,
+    <div
+      onClick={() => run("open 'https://anniieemo.github.io/master-board/'")}
+      style={{
+      position: "fixed", top: 24, left: 28, width: 260,
       background: "rgba(247,242,228,.94)", border: "2px solid #33312a",
       boxShadow: "4px 4px 0 rgba(51,49,42,.25)", padding: "10px 12px",
-      fontFamily: '"Fusion Pixel 12px Monospaced SC", Menlo, monospace', fontSize: 12
+      fontFamily: '"Fusion Pixel 12px Monospaced SC", Menlo, monospace', fontSize: 12,
+      cursor: "pointer"
     }}>
       <div style={{ color: "#33312a", fontSize: 11, letterSpacing: 2, borderBottom: "2px solid #33312a", paddingBottom: 4, marginBottom: 8, display: "flex", justifyContent: "space-between" }}>
         <b style={{ fontWeight: "normal" }}>▛▞ TODAY·{segName}</b>

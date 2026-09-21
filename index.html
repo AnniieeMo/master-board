@@ -1265,6 +1265,7 @@ async function init(){
   }
   state.events = state.events || []; state.fixed = state.fixed || []; state.summaries = state.summaries || [];
   state.ideas = state.ideas || [];
+  renderChatLog();
   renderAll(); tickClock();
   setInterval(tickClock, 1000);
   setInterval(renderAll, 60000);

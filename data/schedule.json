@@ -244,7 +244,8 @@
       "status": "todo",
       "notes": "管理学院一楼投票",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "undefined": "管理学院一楼投票"
     },
     {
       "id": "e-mucvb0te89",
@@ -270,7 +271,8 @@
       "status": "todo",
       "notes": "为11:30 Ema讨论做准备",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "undefined": "思考training的"
     },
     {
       "id": "e-mucvjiq770",

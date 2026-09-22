@@ -2028,23 +2028,20 @@ async function commitToGitHub(){
   try {
     const url = "https://api.github.com/repos/" + config.gh.repo + "/contents/data/schedule.json";
     const headers = { "Authorization": "Bearer " + config.gh.pat, "Accept": "application/vnd.github+json" };
-    let sha;
-    const get = await fetch(url, { headers });
-    if(get.ok) sha = (await get.json()).sha;
     const body = {
       message: "app: schedule update " + new Date().toISOString().slice(0,16),
-      content: btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2) + "\n"))),
-      sha
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2) + "\n")))
     };
-    const put = await fetch(url, { method: "PUT", headers, body: JSON.stringify(body) });
-    if(!put.ok){
-      const retry = await fetch(url, { headers });
-      if(retry.ok){
-        const body2 = { ...body, sha: (await retry.json()).sha };
-        const put2 = await fetch(url, { method: "PUT", headers, body: JSON.stringify(body2) });
-        if(!put2.ok) throw new Error("PUT " + put2.status);
-      } else throw new Error("PUT " + put.status);
+    let okPush = false, lastErr = "";
+    for(let attempt = 0; attempt < 3 && !okPush; attempt++){
+      const head = await fetch(url, { headers });
+      let sha; if(head.ok) sha = (await head.json()).sha;
+      try {
+        const put = await fetch(url, { method: "PUT", headers, body: JSON.stringify(Object.assign({}, body, { sha })) });
+        if(put.ok){ okPush = true; } else { lastErr = "PUT " + put.status; }
+      } catch(e){ lastErr = String(e.message || e); }
     }
+    if(!okPush) throw new Error(lastErr || "PUT failed");
     dirty = false;
     return { ok: true, msg: "已提交到 GitHub，全端约 1 分钟内同步" };
   } catch(err){
@@ -2245,7 +2242,8 @@ function systemPrompt(){
     "优先级梳理：当用户一次抛出多件事、或说「帮我理一下/排优先级/事情太多」时，不要急着生成排期动作。第一轮只输出文字方案：按「紧迫×重要」给出 ABC 分级（A=又急又重要，今天必须动；B=重要但不急，本周内安排；C=可以缓/可拆可委托），每件事一行：等级 + 事项 + 一句理由，结尾问「这样排行不行？要调整直接说」。用户确认后再输出 update 动作把对应任务的 priority 改为 high/normal/low（A=high，B=normal，C=low）；用户有异议就按反馈调整方案，仍然只给文字，直到用户同意。",
     "重要：你输出的改动不会立即生效，会先以卡片形式请用户确认。所以直接给出你建议的完整动作，不要输出「确认添加」之类的空话。每次声称改动时必须同时输出JSON动作块，否则用户的日程不会真的变化。",
     "回复格式：先一句中文说明你的安排和理由；末尾输出 ```json 代码块（动作要精简，notes 不超过30字）：",
-    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD或空字符串(有DDL未定时间时)","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","priority":"high|normal|low或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"...","priority":"high"}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"},{"op":"idea","text":"...","category":"..."}]}',
+    "要修改/改期某条已有任务时：先 delete 那条，再 add 新的一条（没有原地修改这种操作）。",
+    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD或空字符串(有DDL未定时间时)","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","priority":"high|normal|low或空","notes":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"},{"op":"idea","text":"...","category":"..."}]}',
     "没有改动就不要输出 json 块。删除/改期前先在文本里说明原因。",
     "",
     "当前活动列表(JSON)：",

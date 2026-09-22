@@ -1647,9 +1647,23 @@ async function init(){
   state.events = state.events || []; state.fixed = state.fixed || []; state.summaries = state.summaries || [];
   state.ideas = state.ideas || [];
   renderChatLog();
+  function refreshCds(){
+    document.querySelectorAll("[data-ddlref]").forEach(el => {
+      const ms = new Date(el.dataset.ddlref) - new Date();
+      let txt, cls;
+      if(ms <= 0){ txt = "已逾期"; cls = "late"; }
+      else {
+        const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
+        cls = ms < 864e5 ? "late" : d <= 2 ? "warn" : "ok";
+        txt = "DDL " + (d >= 1 ? d + "天" + h + "时" : h + "时");
+      }
+      el.textContent = txt;
+      el.className = "cd-inline " + cls;
+    });
+  }
   renderAll(); tickClock();
   setInterval(tickClock, 1000);
-  setInterval(renderAll, 60000);
+  setInterval(() => { renderDdl(); refreshCds(); }, 60000);
 }
 
 /* ---------- views ---------- */
@@ -1678,7 +1692,7 @@ function evOf(e){
     + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
     + (e.notes ? '<span class="meta"> · <span contenteditable="true" data-edit="notes" data-id="' + e.id + '" spellcheck="false">' + e.notes + '</span></span>' : "")
     + '</span>'
-    + (e.ddl ? cd : "")
+    + (e.ddl ? '<span class="cd-inline ' + cd.cls + '" data-ddlref="' + e.ddl + '">' + cd.t + '</span>' : "")
     + priBadge(e)
     + '<span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span></div>';
 }
@@ -1983,6 +1997,7 @@ document.addEventListener("focusout", e => {
 
 document.addEventListener("keydown", e => {
   if(e.target.closest && e.target.closest("[contenteditable='true']") && e.key === "Enter"){
+    if(e.isComposing || e.keyCode === 229) return;
     e.preventDefault();
     e.target.blur();
   }

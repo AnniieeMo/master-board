@@ -103,7 +103,8 @@ async function widgetMode(state) {
   const items = dayItems(state);
   const w = new ListWidget();
   w.backgroundColor = new Color("#f7f2e4");
-  w.url = WEB_URL;
+  // 点击行为不在脚本里写死：长按小组件 → 编辑 → 「When Tapped」自选
+  // 想点开打卡菜单：选 Run Script（本脚本）；想进网页：选 Open URL 填 WEB_URL
   w.useDefaultPadding();
   w.refreshAfterDate = new Date(Date.now() + 15 * 60 * 1000);
 

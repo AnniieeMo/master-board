@@ -1678,9 +1678,9 @@ function evOf(e){
     + '<span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span></div>';
 }
 
-function segOf(e){
-  if(!e.start) return "晚上";
-  const h = +e.start.slice(0,2);
+function segOf(start){
+  if(!start) return "晚上";
+  const h = +String(start).slice(0,2);
   return h < 12 ? "上午" : h < 18 ? "下午" : "晚上";
 }
 

@@ -1983,7 +1983,7 @@ function applyActions(actions){
       if(!/^\d{4}-\d{2}-\d{2}$/.test(ev.date) && ev.date !== "") continue;
       const clash = ev.date ? state.fixed.find(f => f.date === ev.date && ev.start && f.start < (ev.end || "24:00") && ev.start < f.end) : null;
       state.events.push(ev);
-      out.push({ ok: true, text: (ev.date ? "＋ " + ev.date.slice(5) + " " + (ev.start || "") : "＋ 未排期任务") + " " + ev.title + (clash ? "（⚠ 与「" + clash.title + "」时间重叠）" : "") });
+      out.push({ ok: true, text: (ev.date ? "＋ " + ev.date.slice(5) + " " + (ev.start || "") : "＋ 未排期任务") + " " + ev.title + (clash ? "（与「" + clash.title + "」时间重叠）" : "") });
     }
     if(a.op === "update" && a.id){
       const ev = state.events.find(e => e.id === a.id);
@@ -2240,7 +2240,7 @@ function systemPrompt(){
     "你是「MASTER·BOARD」的个人排期助手。今天是 " + t + " 周" + WD[n.getDay()] + "，当前时间 " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + "。",
     "日期对照表（用户说「这周X/下周X/明天」时严格按此换算，禁止自行推算）：" + dateMap + "。其中今天=" + t + "。",
     "用户是硕士生，同时在 TP（呼叫中心的数据分析部门）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
-    "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 不要把活动排进固定块时间；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
+    "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 活动与固定块或其它活动时间重叠是正常的，允许排期；若存在重叠，在回复里顺带提一句即可，没有重叠就不要提；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
     "储物舱（STASH）：用户的东西分三类存放。1) 已排期且有DDL的 event；2) 有DDL但还没定时间的任务——这类用 {\"op\":\"add\"} 但 date 留空字符串\"\"、只填 ddl；3) 没DDL也没时间的纯想法——用 {\"op\":\"idea\"}。用户说「先记一下/还没定时间/以后想」→ 看有没有DDL：有DDL走第2类，没有走第3类；不要强行编日期。考试/考核类固定日程（标题含考核、考试）已由系统单独管理，不要为它们建 event 或改它们，除非用户明确要求。",
     "优先级梳理：当用户一次抛出多件事、或说「帮我理一下/排优先级/事情太多」时，不要急着生成排期动作。第一轮只输出文字方案：按「紧迫×重要」给出 ABC 分级（A=又急又重要，今天必须动；B=重要但不急，本周内安排；C=可以缓/可拆可委托），每件事一行：等级 + 事项 + 一句理由，结尾问「这样排行不行？要调整直接说」。用户确认后再输出 update 动作把对应任务的 priority 改为 high/normal/low（A=high，B=normal，C=low）；用户有异议就按反馈调整方案，仍然只给文字，直到用户同意。",
     "重要：你输出的改动不会立即生效，会先以卡片形式请用户确认。所以直接给出你建议的完整动作，不要输出「确认添加」之类的空话。每次声称改动时必须同时输出JSON动作块，否则用户的日程不会真的变化。",

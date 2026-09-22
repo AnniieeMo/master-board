@@ -1726,6 +1726,14 @@ async function init(){
   }
   state.events = state.events || []; state.fixed = state.fixed || []; state.summaries = state.summaries || [];
   state.ideas = state.ideas || [];
+  const queued = localStorage.getItem("mb.pendingSync");
+  if(queued){
+    try {
+      const p = JSON.parse(queued);
+      if(p && Array.isArray(p.events)){ state = p; state.ideas = state.ideas || []; dirty = true; }
+    } catch(e){}
+    localStorage.removeItem("mb.pendingSync");
+  }
   renderChatLog();
   function refreshCds(){
     document.querySelectorAll("[data-ddlref]").forEach(el => {
@@ -1744,6 +1752,7 @@ async function init(){
   renderAll(); tickClock();
   setInterval(tickClock, 1000);
   setInterval(() => { renderDdl(); refreshCds(); }, 60000);
+  if(dirty) commitToGitHub().then(r => { chatNote("↯ 补推排队改动：" + r.msg); });
 }
 
 /* ---------- views ---------- */
@@ -2011,7 +2020,10 @@ function renderSync(){
 }
 
 async function commitToGitHub(){
-  if(!config.gh.pat || !config.gh.repo){ renderAll(); return { ok: false, msg: "未配置 PAT，仅保存在本机" }; }
+  if(!config.gh.pat || !config.gh.repo){
+    try { localStorage.setItem("mb.pendingSync", JSON.stringify(state)); } catch(e){}
+    renderAll(); return { ok: false, msg: "未配置 PAT，改动已排队，配置后自动补推" };
+  }
   syncing = true; renderSync();
   try {
     const url = "https://api.github.com/repos/" + config.gh.repo + "/contents/data/schedule.json";
@@ -2040,6 +2052,7 @@ async function commitToGitHub(){
     if(m.includes("401") || m.includes("403")) m = "认证失败：PAT 无效/过期/权限不足，请到设置里更新 Token";
     else if(m.includes("Failed to fetch") || m.includes("NetworkError") || m.includes("Load failed")) m = "网络连不上 GitHub（检查代理/网络）";
     alert("⚠ 同步失败：" + m + "\n（改动已保存在本机，修好后点击顶部状态点即可重试同步）");
+    try { localStorage.setItem("mb.pendingSync", JSON.stringify(state)); } catch(e){}
     return { ok: false, msg: m };
   } finally {
     syncing = false; renderSync();

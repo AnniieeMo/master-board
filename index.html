@@ -96,6 +96,11 @@ body{
 .wk-col.past{opacity:.55}
 .wk-h{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:5px;letter-spacing:1px}
 .wk-col.today .wk-h{color:var(--amber)}
+.ev-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.ev-row .ev{flex:1 1 240px;min-width:0;margin-bottom:0}
+[data-edit]{border-bottom:1px dashed transparent;cursor:text}
+[data-edit]:hover{border-bottom-color:var(--line-dash)}
+[contenteditable="true"]:focus{outline:none;background:#fff;box-shadow:0 0 0 2px var(--amber);border-bottom-color:transparent}
 .wk-seg{font-size:9px;color:var(--amber);letter-spacing:1px;margin:4px 0 2px;border-bottom:1px dotted var(--line)}
 .wk-ev{border:2px solid var(--ink);background:var(--panel2);padding:2px 5px;font-size:10px;margin-bottom:4px;box-shadow:1px 1px 0 var(--shadow);overflow:hidden}
 .wk-ev .t{color:var(--cyan)}
@@ -1669,9 +1674,9 @@ function evOf(e){
   }
   return '<div class="ev' + (done ? " done" : "") + '" draggable="true" data-drag="' + e.id + '">'
     + '<span class="tick" data-done="' + e.id + '">' + (done ? "◉" : "○") + '</span>'
-    + '<span class="tt"><b>' + e.title + '</b>'
+    + '<span class="tt"><b contenteditable="true" data-edit="title" data-id="' + e.id + '" spellcheck="false">' + e.title + '</b>'
     + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
-    + (e.notes ? '<span class="meta"> · ' + e.notes + "</span>" : "")
+    + (e.notes ? '<span class="meta"> · <span contenteditable="true" data-edit="notes" data-id="' + e.id + '" spellcheck="false">' + e.notes + '</span></span>' : "")
     + '</span>'
     + (e.ddl ? cd : "")
     + priBadge(e)
@@ -1716,12 +1721,21 @@ function renderToday(){
     const fixes = fixedToday.filter(f => segOf(f.start) === seg);
     const merged = [
       ...fixes.map(f => ({ fixed: true, start: f.start, end: f.end, title: f.title, kindTxt: f.kind === "class" ? "课程" : "会议" })),
-      ...tasks.map(e => ({ fixed: false, ev: e }))
-    ].sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
+      ...tasks.map(e => ({ fixed: false, start: e.start || "", end: e.end || "", ev: e }))
+    ].sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59") || mins(a.end || "23:59") - mins(b.end || "23:59"));
+    const rows = [];
+    let cur = null, curEnd = -1;
+    merged.forEach(it => {
+      const s = mins(it.start || "23:59");
+      const e2 = it.end ? mins(it.end) : s + 60;
+      if(!cur || s >= curEnd){ cur = []; rows.push(cur); curEnd = -1; }
+      cur.push(it);
+      curEnd = Math.max(curEnd, e2);
+    });
     h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
-    h += merged.length ? merged.map(it => it.fixed
+    h += rows.length ? rows.map(row => '<div class="ev-row">' + row.map(it => it.fixed
         ? '<div class="ev" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span><span class="tt"><b>' + it.title + '</b><span class="meta"> ' + it.start + "-" + it.end + '</span></span><span class="cat ' + (it.kindTxt === "课程" ? "course" : "work") + '">' + it.kindTxt + '</span></div>'
-        : evOf(it.ev)).join("")
+        : evOf(it.ev)).join("") + '</div>').join("")
       : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
     h += "</div>";
   }
@@ -1952,6 +1966,27 @@ async function applyPendingByIdx(idx){
     chatNote("没有实际改动。");
   }
 }
+
+document.addEventListener("focusout", e => {
+  const el = e.target.closest ? e.target.closest("[data-edit]") : null;
+  if(!el) return;
+  const id = el.dataset.id, field = el.dataset.field;
+  const ev = state.events.find(x => x.id === id);
+  if(!ev) return;
+  const val = el.textContent.replace(/^·\s*/, "").trim();
+  if(field === "title" && !val){ renderAll(); return; }
+  if(val === (ev[field] || "").trim()) return;
+  ev[field] = val;
+  dirty = true; renderAll();
+  commitToGitHub().then(r => { if(!r.ok) chatNote(r.msg); });
+});
+
+document.addEventListener("keydown", e => {
+  if(e.target.closest && e.target.closest("[contenteditable='true']") && e.key === "Enter"){
+    e.preventDefault();
+    e.target.blur();
+  }
+});
 
 document.addEventListener("click", async e => {
   if(e.target.id === "btnStop"){

@@ -57,10 +57,16 @@ body{
 .pb{padding:12px}
 
 .ddl-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-.ddl-chip{border:2px solid var(--red);background:var(--panel2);padding:2px 9px;font-size:11px;box-shadow:2px 2px 0 var(--shadow)}
-.ddl-chip b{color:var(--red);font-weight:normal}
+.ddl-chip{border:2px solid var(--line-dash);background:var(--panel2);padding:2px 9px;font-size:11px;box-shadow:2px 2px 0 var(--shadow);color:var(--text)}
+.ddl-chip b{color:var(--dim);font-weight:normal}
 .ddl-chip.warn{border-color:var(--amber)}
 .ddl-chip.warn b{color:var(--amber)}
+.ddl-chip.late{border-color:var(--red)}
+.ddl-chip.late b{color:var(--red)}
+.pri{font-size:9px;padding:0 5px;border:2px solid;white-space:nowrap;flex-shrink:0}
+.pri.p-high{color:var(--red);border-color:var(--red)}
+.pri.p-normal{color:var(--amber);border-color:var(--amber)}
+.pri.p-low{color:var(--dim);border-color:var(--dim)}
 
 .seg-title{color:var(--dim);font-size:11px;letter-spacing:2px;margin:10px 2px 6px}
 .ev{display:flex;gap:8px;align-items:flex-start;border:2px solid var(--line-dash);background:var(--panel2);padding:7px 10px;margin-bottom:7px;box-shadow:2px 2px 0 var(--shadow)}
@@ -1640,6 +1646,12 @@ async function init(){
 
 /* ---------- views ---------- */
 
+function priBadge(e){
+  const map = { high: "A", normal: "B", low: "C" };
+  if(!e.priority || !map[e.priority]) return "";
+  return '<span class="pri p-' + e.priority + '">' + map[e.priority] + '</span>';
+}
+
 function evOf(e){
   const done = e.status === "done";
   let cd = "";
@@ -1659,6 +1671,7 @@ function evOf(e){
     + (e.notes ? '<span class="meta"> · ' + e.notes + "</span>" : "")
     + '</span>'
     + (e.ddl ? cd : "")
+    + priBadge(e)
     + '<span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span></div>';
 }
 
@@ -1777,18 +1790,20 @@ function renderReview(){
 }
 
 function renderDdl(){
-  const t = todayIso();
+  const now = new Date();
+  const isExam = e => /考核|考试/.test(e.title || "");
   const list = state.events
     .filter(e => e.status !== "done")
-    .map(e => ({ e, ref: e.ddl || (e.date ? e.date + "T" + (e.start || "23:59") : "") }))
-    .filter(x => x.ref && x.ref.slice(0,10) >= t)
+    .map(e => ({ e, ref: e.ddl || (e.date ? e.date + "T" + (e.start || "23:59") : ""), exam: isExam(e) }))
+    .filter(x => x.ref && x.ref.slice(0,10) >= (new Date().toISOString().slice(0,10)))
+    .filter(x => (new Date(x.ref) - now) <= (x.exam ? 14 : 1) * 864e5)
     .sort((a,b) => a.ref < b.ref ? -1 : 1).slice(0,4);
-  $("ddlStrip").innerHTML = list.map(({e, ref}) => {
-    const ms = new Date(ref) - new Date();
+  $("ddlStrip").innerHTML = list.map(({e, ref, exam}) => {
+    const ms = new Date(ref) - now;
     const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
-    const cls = ms < 864e5 ? "" : d <= 2 ? "warn" : "";
-    const tag = e.ddl ? "DDL" : "日程";
-    return '<span class="ddl-chip ' + cls + '">' + tag + " " + ref.slice(5,10) + " · " + e.title + ' <b>' + (d >= 1 ? "剩" + d + "天" : "剩" + h + "小时") + '</b></span>';
+    const cls = ms < 864e5 ? "late" : (exam ? (d <= 3 ? "warn" : "") : (d <= 2 ? "warn" : "late"));
+    const tag = e.ddl ? "DDL" : (exam ? "考核" : "日程");
+    return '<span class="ddl-chip ' + cls + '">' + tag + " " + ref.slice(5,10) + " · " + e.title + ' <b>' + (ms < 864e5 ? "剩" + h + "小时" : "剩" + d + "天") + '</b></span>';
   }).join("");
 }
 
@@ -1827,7 +1842,8 @@ function applyActions(actions){
         id: "e-" + Date.now().toString(36) + Math.floor(Math.random()*999),
         title: a.event.title || "未命名", category: ["skill","course","work","life"].includes(a.event.category) ? a.event.category : "life",
         date: a.event.date, start: a.event.start || "", end: a.event.end || "", ddl: a.event.ddl || "",
-        status: "todo", notes: a.event.notes || "", source: "chat"
+        status: "todo", notes: a.event.notes || "", source: "chat",
+        priority: ["high","normal","low"].includes(a.event.priority) ? a.event.priority : ""
       };
       if(!/^\d{4}-\d{2}-\d{2}$/.test(ev.date) && ev.date !== "") continue;
       const clash = ev.date ? state.fixed.find(f => f.date === ev.date && ev.start && f.start < (ev.end || "24:00") && ev.start < f.end) : null;
@@ -2062,10 +2078,11 @@ function systemPrompt(){
     "日期对照表（用户说「这周X/下周X/明天」时严格按此换算，禁止自行推算）：" + dateMap + "。其中今天=" + t + "。",
     "用户是硕士生，同时在 TP（呼叫中心的数据分析部门）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
     "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 不要把活动排进固定块时间；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
-    "储物舱（STASH）：用户的东西分三类存放。1) 已排期且有DDL的 event；2) 有DDL但还没定时间的任务——这类用 {\"op\":\"add\"} 但 date 留空字符串\"\"、只填 ddl；3) 没DDL也没时间的纯想法——用 {\"op\":\"idea\"}。用户说「先记一下/还没定时间/以后想」→ 看有没有DDL：有DDL走第2类，没有走第3类；不要强行编日期。",
+    "储物舱（STASH）：用户的东西分三类存放。1) 已排期且有DDL的 event；2) 有DDL但还没定时间的任务——这类用 {\"op\":\"add\"} 但 date 留空字符串\"\"、只填 ddl；3) 没DDL也没时间的纯想法——用 {\"op\":\"idea\"}。用户说「先记一下/还没定时间/以后想」→ 看有没有DDL：有DDL走第2类，没有走第3类；不要强行编日期。考试/考核类固定日程（标题含考核、考试）已由系统单独管理，不要为它们建 event 或改它们，除非用户明确要求。",
+    "优先级梳理：当用户一次抛出多件事、或说「帮我理一下/排优先级/事情太多」时，不要急着生成排期动作。第一轮只输出文字方案：按「紧迫×重要」给出 ABC 分级（A=又急又重要，今天必须动；B=重要但不急，本周内安排；C=可以缓/可拆可委托），每件事一行：等级 + 事项 + 一句理由，结尾问「这样排行不行？要调整直接说」。用户确认后再输出 update 动作把对应任务的 priority 改为 high/normal/low（A=high，B=normal，C=low）；用户有异议就按反馈调整方案，仍然只给文字，直到用户同意。",
     "重要：你输出的改动不会立即生效，会先以卡片形式请用户确认。所以直接给出你建议的完整动作，不要输出「确认添加」之类的空话。每次声称改动时必须同时输出JSON动作块，否则用户的日程不会真的变化。",
     "回复格式：先一句中文说明你的安排和理由；末尾输出 ```json 代码块（动作要精简，notes 不超过30字）：",
-    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD或空字符串(有DDL未定时间时)","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"..."}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"},{"op":"idea","text":"...","category":"..."}]}',
+    '{"actions":[{"op":"add","event":{"title":"...","category":"skill|course|work|life","date":"YYYY-MM-DD或空字符串(有DDL未定时间时)","start":"HH:MM","end":"HH:MM","ddl":"YYYY-MM-DDTHH:MM或空","priority":"high|normal|low或空","notes":"..."}},{"op":"update","id":"e-xxx","changes":{"date":"...","start":"...","priority":"high"}},{"op":"delete","id":"e-xxx"},{"op":"done","id":"e-xxx"},{"op":"idea","text":"...","category":"..."}]}',
     "没有改动就不要输出 json 块。删除/改期前先在文本里说明原因。",
     "",
     "当前活动列表(JSON)：",
@@ -2350,11 +2367,13 @@ function submitQuick(p){
 function renderStash(){
   const box = $("view-ideas");
   const stashVal = $("stashText") ? $("stashText").value : "";
-  const ddlTasks = state.events.filter(e => !e.date && e.ddl && e.status !== "done");
+  const isExam = e => /考核|考试/.test(e.title || "");
   const refOf = e => e.ddl || (e.date ? e.date + "T" + (e.start || "23:59") : "9999-12-31");
-  const scheduled = state.events.filter(e => e.date && e.status !== "done")
+  const ddlTasks = state.events.filter(e => !e.date && e.ddl && e.status !== "done");
+  const scheduled = state.events.filter(e => e.date && e.status !== "done" && !isExam(e))
     .sort((a,b) => refOf(a) < refOf(b) ? -1 : 1);
-  const unscheduled = ddlTasks.filter(e => !e.date).sort((a,b) => a.ddl < b.ddl ? -1 : 1);
+  const exams = state.events.filter(e => e.date && e.status !== "done" && isExam(e))
+    .sort((a,b) => refOf(a) < refOf(b) ? -1 : 1);
   const openIdeas = state.ideas.filter(i => i.status === "open");
   const doneIdeas = state.ideas.filter(i => i.status === "done").slice(-8).reverse();
 
@@ -2363,7 +2382,7 @@ function renderStash(){
     if(ms <= 0) return '<span class="cd-inline late">已逾期</span>';
     const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
     const cls = ms < 864e5 ? "late" : d <= 2 ? "warn" : "ok";
-    return '<span class="cd-inline ' + cls + '">' + (d >= 1 ? "剩" + d + "天" : "剩" + h + "小时") + '</span>';
+    return '<span class="cd-inline ' + cls + '">' + (d >= 1 ? "剩 " + d + " 天" : "剩 " + h + " 小时") + '</span>';
   }
 
   let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> STASH // 储物舱</span><span class="r">有DDL的任务 + 没定时间的想法，都先放这儿</span></div><div class="pb">';
@@ -2378,6 +2397,7 @@ function renderStash(){
       '<div class="idea-row"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
       + '<span class="tt"><b>' + e.title + '</b><span class="meta"> ' + e.date.slice(5) + " " + (e.start || "") + '</span></span>'
       + cdChip(refOf(e))
+      + priBadge(e)
       + '<button class="btn" data-done="' + e.id + '">✔ 完成</button></div>').join("")
     : '<div class="empty">· 没有 ·</div>';
 
@@ -2387,6 +2407,7 @@ function renderStash(){
       + '<span class="tt"><b>' + e.title + '</b>' + (e.notes ? '<span class="meta"> · ' + e.notes + '</span>' : '') + '</span>'
       + '<span class="when">DDL ' + e.ddl.slice(5,10) + '</span>'
       + cdChip(e.ddl)
+      + priBadge(e)
       + '<button class="btn warn" data-task-schedule="' + e.id + '" title="排进日程">→ 排期</button>'
       + '<button class="btn" data-done="' + e.id + '">✔ 完成</button></div>').join("")
     : '<div class="empty">· 没有 ·</div>';
@@ -2405,6 +2426,14 @@ function renderStash(){
     h += '<div class="seg-title">▸ 已消化</div>';
     doneIdeas.forEach(i => { h += '<div class="idea-row done-item"><span class="tt">' + i.text + '</span><span class="when">' + (i.created_at || "").slice(5) + '</span></div>'; });
   }
+
+  h += '<div class="seg-title">▸ 固定日程 · 考试（只读，' + exams.length + '）</div>';
+  h += exams.length ? exams.map(e =>
+      '<div class="idea-row" style="opacity:.85"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
+      + '<span class="tt"><b>' + e.title + '</b><span class="meta"> ' + e.date.slice(5) + " " + (e.start || "") + (e.notes ? " · " + e.notes : "") + '</span></span>'
+      + cdChip(refOf(e)) + '</div>').join("")
+    : '<div class="empty">· 暂无考试 ·</div>';
+
   h += "</div></div>";
   box.innerHTML = h;
   if($("stashText")) $("stashText").value = stashVal;

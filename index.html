@@ -1983,7 +1983,20 @@ async function applyPendingByIdx(idx){
 
 document.addEventListener("click", async e => {
   const et = e.target.closest ? e.target.closest("[data-edit]") : null;
-  if(et && et.tagName !== "INPUT"){ startInlineEdit(et); return; }
+  if(et && et.tagName !== "INPUT"){
+    const id = et.dataset.id, field = et.dataset.field;
+    const ev = state.events.find(x => x.id === id);
+    if(!ev) return;
+    const val = prompt(field === "title" ? "修改任务标题：" : "修改备注：", ev[field] || "");
+    if(val === null) return;
+    const v = val.trim();
+    if(field === "title" && !v) return;
+    if(v === (ev[field] || "").trim()) return;
+    ev[field] = v;
+    dirty = true; renderAll();
+    commitToGitHub().then(r => { if(!r.ok) chatNote(r.msg); });
+    return;
+  }
   if(e.target.id === "btnStop"){
     streamCancelled = true;
     if(streamAbort) streamAbort.abort();

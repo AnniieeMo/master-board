@@ -100,7 +100,7 @@ body{
 .ev-row .ev{flex:1 1 240px;min-width:0;margin-bottom:0}
 .et{cursor:text;border-bottom:1px dashed transparent}
 .et:hover{border-bottom-color:var(--line-dash)}
-input.inline-edit{background:#fff;border:2px solid var(--amber);color:var(--text);font-family:inherit;font-size:12px;padding:0 4px;outline:none;font-weight:normal}
+
 .wk-seg{font-size:9px;color:var(--amber);letter-spacing:1px;margin:4px 0 2px;border-bottom:1px dotted var(--line)}
 .wk-ev{border:2px solid var(--ink);background:var(--panel2);padding:2px 5px;font-size:10px;margin-bottom:4px;box-shadow:1px 1px 0 var(--shadow);overflow:hidden}
 .wk-ev .t{color:var(--cyan)}
@@ -1980,45 +1980,6 @@ async function applyPendingByIdx(idx){
     chatNote("没有实际改动。");
   }
 }
-
-document.addEventListener("focusout", e => {
-  const t = e.target;
-  if(t && t.classList && t.classList.contains("inline-edit")) saveInlineEdit(t);
-});
-
-function startInlineEdit(el){
-  const id = el.dataset.id, field = el.dataset.field;
-  const ev = state.events.find(x => x.id === id);
-  if(!ev) return;
-  const input = document.createElement("input");
-  input.type = "text";
-  input.className = "inline-edit";
-  input.dataset.edit = field;
-  input.dataset.id = id;
-  input.value = ev[field] || "";
-  el.replaceWith(input);
-  input.focus();
-  input.select();
-}
-function saveInlineEdit(input){
-  const id = input.dataset.id, field = input.dataset.edit;
-  const ev = state.events.find(x => x.id === id);
-  if(!ev) return;
-  const val = input.value.trim();
-  if(field === "title" && !val) return;
-  if(val === (ev[field] || "").trim()) return;
-  ev[field] = val;
-  dirty = true; renderAll();
-  commitToGitHub().then(r => { if(!r.ok) chatNote(r.msg); });
-}
-document.addEventListener("keydown", e => {
-  const t = e.target;
-  if(t && t.classList && t.classList.contains("inline-edit") && e.key === "Enter"){
-    if(e.isComposing || e.keyCode === 229) return;
-    e.preventDefault();
-    saveInlineEdit(t);
-  }
-});
 
 document.addEventListener("click", async e => {
   const et = e.target.closest ? e.target.closest("[data-edit]") : null;

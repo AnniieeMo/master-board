@@ -57,7 +57,8 @@ function ddlLine(data) {
 
 function addRow(w, it) {
   const time = it.time + "-" + (it.end || "----");
-  const prefix = it.done ? "✓ " : it.now ? "▶ " : "";
+  const passed = it.done || (it.fixed && it.past);
+  const prefix = passed ? "✓ " : it.now ? "▶ " : "";
   const line = w.addText(time + "  " + prefix + it.title);
   line.font = it.fixed ? Font.systemFont(11) : Font.semiboldSystemFont(11);
   line.textColor = it.past ? new Color("#8f8871") : it.now ? new Color("#b9791f") : new Color("#33312a");

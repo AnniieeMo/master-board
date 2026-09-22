@@ -41,6 +41,8 @@ export const render = ({ output }) => {
     const m = mins(it.time), e2 = mins(it.end || "23:59");
     const past = e2 <= nowM || it.done;
     const now = !it.done && m <= nowM && nowM < e2;
+    const passed = it.done || (it.fixed && past);
+    const mark = passed ? "✓ " : now ? "◀ NOW " : "";
     return (
       <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 4, opacity: past ? 0.4 : 1 }}>
         <span style={{ color: "#8f8871", fontSize: 10, width: 78 }}>{it.time}-{it.end || "----"}</span>
@@ -48,10 +50,10 @@ export const render = ({ output }) => {
           color: it.fixed ? "#8f8871" : "#33312a", fontSize: 11,
           fontFamily: '"Fusion Pixel 12px Monospaced SC", Menlo, monospace',
           borderBottom: it.fixed ? "1px dashed #b3aa90" : "2px solid " + (it.done ? "#b3aa90" : catColor(it.cat)),
-          paddingBottom: 1, textDecoration: it.done ? "line-through" : "none"
-        }}>{it.title}</span>
-        {now && <span style={{ color: "#b9791f", fontSize: 9 }}>◀ NOW</span>}
-        {it.done && <span style={{ color: "#2f7d3c", fontSize: 9 }}>✓</span>}
+          paddingBottom: 1, textDecoration: passed ? "line-through" : "none"
+        }}>{mark}{it.title}</span>
+        {!passed && now && <span style={{ color: "#b9791f", fontSize: 9 }}>NOW</span>}
+        {!passed && it.done && <span style={{ color: "#2f7d3c", fontSize: 9 }}>✓</span>}
       </div>
     );
   };

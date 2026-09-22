@@ -232,6 +232,32 @@
       "status": "todo",
       "notes": "",
       "source": "manual"
+    },
+    {
+      "id": "e-mucvb0td422",
+      "title": "管理学院一楼投票",
+      "category": "life",
+      "date": "2026-09-23",
+      "start": "09:30",
+      "end": "10:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "管理学院一楼投票",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mucvb0te89",
+      "title": "Ema讨论",
+      "category": "work",
+      "date": "2026-09-23",
+      "start": "11:30",
+      "end": "12:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "Ema周会后接着讨论",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

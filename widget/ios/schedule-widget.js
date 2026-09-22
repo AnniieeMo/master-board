@@ -35,29 +35,36 @@ async function fetchData() {
   }
 }
 
+let lastError = "";
+
 async function commitSchedule(state) {
   if (!GITHUB_PAT) {
     const a = new Alert();
     a.title = "未配置 PAT";
-    a.message = "把你的 GitHub Fine-grained Token 粘贴到脚本开头的 GITHUB_PAT 引号里，才能从手机同步。改动已暂存在本机本次运行中。";
+    a.message = "把你的 GitHub Fine-grained Token 粘贴到脚本开头的 GITHUB_PAT 引号里，才能从手机同步。";
     a.addAction("知道了");
-    await a.present();
+    await a.presentAlert();
     return false;
   }
+  const url = "https://api.github.com/repos/" + REPO + "/contents/" + DATA_PATH;
+  lastError = "";
   try {
-    const head = await apiFetch("/contents/" + DATA_PATH);
-    const body = new Request("https://api.github.com/repos/" + REPO + "/contents/" + DATA_PATH, {
-      method: "PUT",
-      headers: { "Authorization": "Bearer " + GITHUB_PAT, "Accept": "application/vnd.github+json", "Content-Type": "application/json" },
-      body: JSON.stringify({
-        message: "iphone: update schedule " + new Date().toISOString().slice(0, 16),
-        content: Data.fromString(JSON.stringify(state, null, 2) + "\n").toBase64String(),
-        sha: head.sha
-      })
+    const getReq = new Request(url);
+    getReq.headers = { "Authorization": "Bearer " + GITHUB_PAT, "Accept": "application/vnd.github+json" };
+    let sha = undefined;
+    try { sha = (await getReq.loadJSON()).sha; } catch (e) {}
+    const putReq = new Request(url);
+    putReq.method = "PUT";
+    putReq.headers = { "Authorization": "Bearer " + GITHUB_PAT, "Accept": "application/vnd.github+json", "Content-Type": "application/json" };
+    putReq.body = JSON.stringify({
+      message: "iphone: update schedule " + new Date().toISOString().slice(0, 16),
+      content: Data.fromString(JSON.stringify(state, null, 2) + "\n").toBase64String(),
+      sha: sha
     });
-    const result = await body.loadJSON();
+    const result = await putReq.loadJSON();
     return !!result.commit;
   } catch (e) {
+    lastError = String(e);
     return false;
   }
 }
@@ -231,7 +238,7 @@ async function interactiveAdd(state) {
   const ok = await commitSchedule(state);
   const b = new Alert();
   b.title = ok ? "✅ 已加 " + lines.length + " 条并同步" : "⚠ 已在本机加入，同步失败";
-  b.message = ok ? "手机/电脑网页和桌面小组件稍后自动更新。" : "请检查网络 / PAT 配置。";
+  b.message = ok ? "手机/电脑网页和桌面小组件稍后自动更新。" : ("原因：" + lastError);
   b.addAction("好的");
   await b.presentAlert();
 }

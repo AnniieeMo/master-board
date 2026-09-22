@@ -2401,8 +2401,8 @@ function renderStash(){
       + '<button class="btn" data-done="' + e.id + '">✔ 完成</button></div>').join("")
     : '<div class="empty">· 没有 ·</div>';
 
-  h += '<div class="seg-title">▸ 有DDL · 未排期（' + unscheduled.length + '）</div>';
-  h += unscheduled.length ? unscheduled.map(e =>
+  h += '<div class="seg-title">▸ 有DDL · 未排期（' + ddlTasks.length + '）</div>';
+  h += ddlTasks.length ? ddlTasks.map(e =>
       '<div class="idea-row"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
       + '<span class="tt"><b>' + e.title + '</b>' + (e.notes ? '<span class="meta"> · ' + e.notes + '</span>' : '') + '</span>'
       + '<span class="when">DDL ' + e.ddl.slice(5,10) + '</span>'

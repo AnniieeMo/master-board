@@ -98,9 +98,9 @@ body{
 .wk-col.today .wk-h{color:var(--amber)}
 .ev-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .ev-row .ev{flex:1 1 240px;min-width:0;margin-bottom:0}
-[data-edit]{border-bottom:1px dashed transparent;cursor:text}
-[data-edit]:hover{border-bottom-color:var(--line-dash)}
-[contenteditable="true"]:focus{outline:none;background:#fff;box-shadow:0 0 0 2px var(--amber);border-bottom-color:transparent}
+.et{cursor:text;border-bottom:1px dashed transparent}
+.et:hover{border-bottom-color:var(--line-dash)}
+input.inline-edit{background:#fff;border:2px solid var(--amber);color:var(--text);font-family:inherit;font-size:12px;padding:0 4px;outline:none;font-weight:normal}
 .wk-seg{font-size:9px;color:var(--amber);letter-spacing:1px;margin:4px 0 2px;border-bottom:1px dotted var(--line)}
 .wk-ev{border:2px solid var(--ink);background:var(--panel2);padding:2px 5px;font-size:10px;margin-bottom:4px;box-shadow:1px 1px 0 var(--shadow);overflow:hidden}
 .wk-ev .t{color:var(--cyan)}
@@ -1688,9 +1688,9 @@ function evOf(e){
   }
   return '<div class="ev' + (done ? " done" : "") + '" draggable="true" data-drag="' + e.id + '">'
     + '<span class="tick" data-done="' + e.id + '">' + (done ? "◉" : "○") + '</span>'
-    + '<span class="tt"><b contenteditable="true" data-edit="title" data-id="' + e.id + '" spellcheck="false">' + e.title + '</b>'
+    + '<span class="tt"><b class="et" data-edit="title" data-id="' + e.id + '">' + e.title + '</b>'
     + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
-    + (e.notes ? '<span class="meta"> · <span contenteditable="true" data-edit="notes" data-id="' + e.id + '" spellcheck="false">' + e.notes + '</span></span>' : "")
+    + (e.notes ? '<span class="meta"> · <span class="et" data-edit="notes" data-id="' + e.id + '">' + e.notes + '</span></span>' : "")
     + '</span>'
     + (e.ddl ? '<span class="cd-inline ' + cd.cls + '" data-ddlref="' + e.ddl + '">' + cd.t + '</span>' : "")
     + priBadge(e)
@@ -1982,28 +1982,47 @@ async function applyPendingByIdx(idx){
 }
 
 document.addEventListener("focusout", e => {
-  const el = e.target.closest ? e.target.closest("[data-edit]") : null;
-  if(!el) return;
+  const t = e.target;
+  if(t && t.classList && t.classList.contains("inline-edit")) saveInlineEdit(t);
+});
+
+function startInlineEdit(el){
   const id = el.dataset.id, field = el.dataset.field;
   const ev = state.events.find(x => x.id === id);
   if(!ev) return;
-  const val = el.textContent.replace(/^·\s*/, "").trim();
-  if(field === "title" && !val){ renderAll(); return; }
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "inline-edit";
+  input.dataset.edit = field;
+  input.dataset.id = id;
+  input.value = ev[field] || "";
+  el.replaceWith(input);
+  input.focus();
+  input.select();
+}
+function saveInlineEdit(input){
+  const id = input.dataset.id, field = input.dataset.edit;
+  const ev = state.events.find(x => x.id === id);
+  if(!ev) return;
+  const val = input.value.trim();
+  if(field === "title" && !val) return;
   if(val === (ev[field] || "").trim()) return;
   ev[field] = val;
   dirty = true; renderAll();
   commitToGitHub().then(r => { if(!r.ok) chatNote(r.msg); });
-});
-
+}
 document.addEventListener("keydown", e => {
-  if(e.target.closest && e.target.closest("[contenteditable='true']") && e.key === "Enter"){
+  const t = e.target;
+  if(t && t.classList && t.classList.contains("inline-edit") && e.key === "Enter"){
     if(e.isComposing || e.keyCode === 229) return;
     e.preventDefault();
-    e.target.blur();
+    saveInlineEdit(t);
   }
 });
 
 document.addEventListener("click", async e => {
+  const et = e.target.closest ? e.target.closest("[data-edit]") : null;
+  if(et && et.tagName !== "INPUT"){ startInlineEdit(et); return; }
   if(e.target.id === "btnStop"){
     streamCancelled = true;
     if(streamAbort) streamAbort.abort();

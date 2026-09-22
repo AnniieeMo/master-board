@@ -96,6 +96,7 @@ body{
 .wk-col.past{opacity:.55}
 .wk-h{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:5px;letter-spacing:1px}
 .wk-col.today .wk-h{color:var(--amber)}
+.wk-seg{font-size:9px;color:var(--amber);letter-spacing:1px;margin:4px 0 2px;border-bottom:1px dotted var(--line)}
 .wk-ev{border:2px solid var(--ink);background:var(--panel2);padding:2px 5px;font-size:10px;margin-bottom:4px;box-shadow:1px 1px 0 var(--shadow);overflow:hidden}
 .wk-ev .t{color:var(--cyan)}
 .wk-ev.fixed{border-style:dashed;border-color:var(--line-dash);color:var(--dim);background:transparent;box-shadow:none}
@@ -1710,14 +1711,18 @@ function renderToday(){
   let h = "";
   h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r"><button class="btn" data-qtoggle="t">＋ 手动添加</button></span></div><div class="pb">'
     + quickFormHtml("t", t);
-  if(fixedToday.length){
-    h += '<div class="seg-title">▸ 固定安排（课/会）</div>' + fixedToday.map(f =>
-      '<div class="ev" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span><span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span><span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>').join("");
-  }
   for(const seg of ["上午","下午","晚上"]){
-    const list = evs.filter(e => segOf(e) === seg).sort((a,b) => (a.start||"99") < (b.start||"99") ? -1 : 1);
+    const tasks = evs.filter(e => segOf(e.start) === seg);
+    const fixes = fixedToday.filter(f => segOf(f.start) === seg);
+    const merged = [
+      ...fixes.map(f => ({ fixed: true, start: f.start, end: f.end, title: f.title, kindTxt: f.kind === "class" ? "课程" : "会议" })),
+      ...tasks.map(e => ({ fixed: false, ev: e }))
+    ].sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
     h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
-    h += list.length ? list.map(evOf).join("") : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
+    h += merged.length ? merged.map(it => it.fixed
+        ? '<div class="ev" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span><span class="tt"><b>' + it.title + '</b><span class="meta"> ' + it.start + "-" + it.end + '</span></span><span class="cat ' + (it.kindTxt === "课程" ? "course" : "work") + '">' + it.kindTxt + '</span></div>'
+        : evOf(it.ev)).join("")
+      : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
     h += "</div>";
   }
   h += "</div></div>";
@@ -1749,13 +1754,19 @@ function renderWeek(){
     });
     const items = [
       ...state.fixed.filter(f => f.date === d.iso).map(f => ({ fixed: true, start: f.start, end: f.end, title: f.title, done: false })),
-      ...state.events.filter(e => e.date === d.iso).map(e => ({ fixed: false, start: e.start || "", end: e.end || "", title: e.title, done: e.status === "done", id: e.id }))
+      ...state.events.filter(e => e.date === d.iso).map(e => ({ fixed: false, start: e.start || "23:59", rawStart: e.start || "", end: e.end || "", title: e.title, done: e.status === "done", id: e.id }))
     ].sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
+    let lastSeg = "";
     items.forEach(it => {
+      const seg = segOf(it.start);
+      if(seg !== lastSeg){
+        h += '<div class="wk-seg">' + seg + '</div>';
+        lastSeg = seg;
+      }
       if(it.fixed){
         h += '<div class="wk-ev fixed"><span class="t">' + it.start + "</span> " + it.title + "</div>";
       } else {
-        h += '<div class="wk-ev' + (it.done ? " done" : "") + '" draggable="true" data-drag="' + it.id + '"><span class="t">' + (it.start || "--:--") + '</span> ' + it.title + "</div>";
+        h += '<div class="wk-ev' + (it.done ? " done" : "") + '" draggable="true" data-drag="' + it.id + '"><span class="t">' + (it.rawStart || "--:--") + '</span> ' + it.title + "</div>";
       }
     });
     h += "</div>";

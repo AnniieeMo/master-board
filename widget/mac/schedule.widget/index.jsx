@@ -1,4 +1,4 @@
-// MASTER·BOARD 桌面小组件 — Übersicht（全天版）
+// 万事屋 YOROZUYA 桌面小组件 — Übersicht（全天版）
 // 安装：brew install --cask ubersicht
 // 把本文件夹复制/软链到 ~/Library/Application Support/Übersicht/widgets/
 // 点击小组件直达工作台；每 60 秒自动刷新
@@ -75,7 +75,7 @@ export const render = ({ output }) => {
       {shown.map(it => row(it))}
       {items.length === 0 && <div style={{ color: "#8f8871", fontSize: 11, padding: "6px 0" }}>· 今天没有安排 ·</div>}
       {hidden > 0 && <div style={{ color: "#8f8871", fontSize: 9 }}>… 还有 {hidden} 条，点击查看</div>}
-      <div style={{ color: "#8f8871", fontSize: 9, marginTop: 6, letterSpacing: 1, borderTop: "1px dotted #b3aa90", paddingTop: 4 }}>MASTER·BOARD WIDGET / 虚线=固定</div>
+      <div style={{ color: "#8f8871", fontSize: 9, marginTop: 6, letterSpacing: 1, borderTop: "1px dotted #b3aa90", paddingTop: 4 }}>万事屋 WIDGET / 虚线=固定</div>
     </div>
   );
 };

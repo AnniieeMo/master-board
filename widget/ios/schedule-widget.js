@@ -1,4 +1,4 @@
-// MASTER·BOARD iPhone 三合一脚本 — Scriptable
+// 万事屋 YOROZUYA iPhone 三合一脚本 — Scriptable
 // 桌面小组件：全天日程显示，点按直达工作台网页
 // 在 Scriptable 里运行本脚本：可打卡完成今天的任务、快速加任务（多行、支持 HH:MM 前缀）
 // 同步通道：GitHub API（与网页版同一份 schedule.json）
@@ -162,7 +162,7 @@ async function widgetMode(state) {
   }
 
   const now2 = new Date();
-  const foot = w.addText("更新 " + pad(now2.getHours()) + ":" + pad(now2.getMinutes()) + " · MASTER·BOARD");
+  const foot = w.addText("更新 " + pad(now2.getHours()) + ":" + pad(now2.getMinutes()) + " · 万事屋 YOROZUYA");
   foot.font = Font.systemFont(8);
   foot.textColor = new Color("#8f8871");
   return w;
@@ -262,7 +262,7 @@ if (config.runsInWidget) {
   const state = data;
   state.events = state.events || [];
   const menu = new Alert();
-  menu.title = "▛▞ MASTER·BOARD";
+  menu.title = "▛▞ 万事屋";
   menu.message = "今天 " + state.events.filter(e => e.date === todayIso()).length + " 项安排";
   menu.addAction("✔ 打卡完成任务");
   menu.addAction("＋ 快速加任务");

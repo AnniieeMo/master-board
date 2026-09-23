@@ -69,7 +69,7 @@ def main() -> int:
     for _, title, msg in unique[:3]:
         text = esc(f"{title} {msg}")
         subprocess.run(
-            ["osascript", "-e", f'display notification "{text}" with title "硕士工作台·DDL提醒" sound name "Glass"'],
+            ["osascript", "-e", f'display notification "{text}" with title "万事屋·DDL提醒" sound name "Glass"'],
             check=False,
         )
     return 0

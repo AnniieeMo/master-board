@@ -295,7 +295,7 @@
       "start": "14:00",
       "end": "15:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "与统计课时段重叠，注意确认",
       "source": "chat",
       "priority": ""

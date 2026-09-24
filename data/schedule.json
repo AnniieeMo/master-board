@@ -314,32 +314,6 @@
       "priority": ""
     },
     {
-      "id": "e-mudl99u3254",
-      "title": "test Michelin workflow",
-      "category": "work",
-      "date": "2026-09-23",
-      "start": "16:00",
-      "end": "17:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "下午4-5点，测试Michelin workflow",
-      "source": "chat",
-      "priority": ""
-    },
-    {
-      "id": "e-mudl99u4821",
-      "title": "test categorizer workflow",
-      "category": "work",
-      "date": "2026-09-23",
-      "start": "17:00",
-      "end": "18:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "下午5-6点，测试categorizer workflow",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-muey3kg3664",
       "title": "html repackage deck",
       "category": "work",
@@ -363,6 +337,32 @@
       "status": "todo",
       "notes": "",
       "source": "manual"
+    },
+    {
+      "id": "e-mueydjsz195",
+      "title": "test Michelin workflow",
+      "category": "work",
+      "date": "2026-09-24",
+      "start": "10:00",
+      "end": "11:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "从昨天挪来，测Michelin workflow",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mueydjt0354",
+      "title": "test categorizer workflow",
+      "category": "work",
+      "date": "2026-09-24",
+      "start": "11:00",
+      "end": "12:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "从昨天挪来，测categorizer workflow",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

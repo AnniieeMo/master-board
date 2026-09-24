@@ -340,19 +340,6 @@
       "priority": ""
     },
     {
-      "id": "e-muey0y5q315",
-      "title": "经济管理统计分析作业",
-      "category": "course",
-      "date": "",
-      "start": "",
-      "end": "",
-      "ddl": "2026-09-29T23:59",
-      "status": "todo",
-      "notes": "周三下午课作业，9/29截止",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-muey3kg3664",
       "title": "html repackage deck",
       "category": "work",
@@ -364,6 +351,18 @@
       "notes": "重新打包html deck，15-16点",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-muey4edv291",
+      "title": "经济管理统计分析作业",
+      "category": "course",
+      "date": "2026-09-24",
+      "start": "14:00",
+      "end": "15:00",
+      "ddl": "2026-09-29T23:59",
+      "status": "todo",
+      "notes": "",
+      "source": "manual"
     }
   ],
   "fixed": [

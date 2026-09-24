@@ -351,6 +351,19 @@
       "notes": "周三下午课作业，9/29截止",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-muey3kg3664",
+      "title": "html repackage deck",
+      "category": "work",
+      "date": "2026-09-24",
+      "start": "15:00",
+      "end": "16:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "重新打包html deck，15-16点",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

@@ -368,13 +368,6 @@
   "fixed": [
     {
       "date": "2026-09-28",
-      "start": "13:00",
-      "end": "14:00",
-      "title": "tr",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-09-28",
       "start": "14:00",
       "end": "17:00",
       "title": "会计大数据管理分析",
@@ -399,13 +392,6 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-09-29",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -431,6 +417,13 @@
     },
     {
       "date": "2026-10-01",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-01",
       "start": "16:00",
       "end": "17:00",
       "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
@@ -438,10 +431,31 @@
     },
     {
       "date": "2026-10-02",
-      "start": "16:00",
+      "start": "14:00",
       "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-05",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-05",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-10-06",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-10-06",
@@ -452,10 +466,10 @@
     },
     {
       "date": "2026-10-06",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-10-07",
@@ -465,6 +479,13 @@
       "kind": "meeting"
     },
     {
+      "date": "2026-10-07",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
       "date": "2026-10-08",
       "start": "09:00",
       "end": "12:00",
@@ -484,13 +505,6 @@
       "end": "17:00",
       "title": "财务会计理论与实务",
       "kind": "class"
-    },
-    {
-      "date": "2026-10-09",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
     },
     {
       "date": "2026-10-12",
@@ -518,13 +532,6 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-13",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -570,13 +577,6 @@
       "kind": "class"
     },
     {
-      "date": "2026-10-16",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-10-19",
       "start": "14:00",
       "end": "17:00",
@@ -602,13 +602,6 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-20",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -654,13 +647,6 @@
       "kind": "class"
     },
     {
-      "date": "2026-10-23",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-10-26",
       "start": "14:00",
       "end": "17:00",
@@ -686,13 +672,6 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-27",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -717,13 +696,6 @@
       "kind": "class"
     },
     {
-      "date": "2026-10-28",
-      "start": "14:00",
-      "end": "15:00",
-      "title": "CORE Monthly Transformation Review",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-10-29",
       "start": "09:00",
       "end": "12:00",
@@ -743,13 +715,6 @@
       "end": "17:00",
       "title": "财务会计理论与实务",
       "kind": "class"
-    },
-    {
-      "date": "2026-10-30",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
     },
     {
       "date": "2026-11-02",
@@ -777,13 +742,6 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-11-03",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -829,13 +787,6 @@
       "kind": "class"
     },
     {
-      "date": "2026-11-06",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-11-09",
       "start": "14:00",
       "end": "17:00",
@@ -861,13 +812,6 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-11-10",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -913,13 +857,6 @@
       "kind": "class"
     },
     {
-      "date": "2026-11-13",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-11-16",
       "start": "14:00",
       "end": "17:00",
@@ -930,7 +867,7 @@
       "date": "2026-11-16",
       "start": "18:00",
       "end": "21:00",
-      "title": "管理经济学（考试/考核周）",
+      "title": "管理经济学",
       "kind": "class"
     },
     {
@@ -949,16 +886,9 @@
     },
     {
       "date": "2026-11-17",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-11-17",
       "start": "18:00",
       "end": "21:00",
-      "title": "内部控制理论与实务（考试/考核周）",
+      "title": "内部控制理论与实务",
       "kind": "class"
     },
     {
@@ -972,7 +902,7 @@
       "date": "2026-11-18",
       "start": "14:00",
       "end": "17:00",
-      "title": "经济管理统计分析（考试/考核周）",
+      "title": "经济管理统计分析",
       "kind": "class"
     },
     {
@@ -995,13 +925,6 @@
       "end": "17:00",
       "title": "财务会计理论与实务",
       "kind": "class"
-    },
-    {
-      "date": "2026-11-20",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
     },
     {
       "date": "2026-11-23",
@@ -1011,6 +934,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-11-23",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
       "date": "2026-11-24",
       "start": "14:00",
       "end": "17:00",
@@ -1026,10 +956,10 @@
     },
     {
       "date": "2026-11-24",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-11-25",
@@ -1041,9 +971,9 @@
     {
       "date": "2026-11-25",
       "start": "14:00",
-      "end": "15:00",
-      "title": "CORE Monthly Transformation Review",
-      "kind": "meeting"
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
     },
     {
       "date": "2026-11-26",
@@ -1065,13 +995,6 @@
       "end": "17:00",
       "title": "财务会计理论与实务",
       "kind": "class"
-    },
-    {
-      "date": "2026-11-27",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
     },
     {
       "date": "2026-11-30",
@@ -1081,6 +1004,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-11-30",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
       "date": "2026-12-01",
       "start": "14:00",
       "end": "17:00",
@@ -1096,10 +1026,10 @@
     },
     {
       "date": "2026-12-01",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-02",
@@ -1109,6 +1039,13 @@
       "kind": "meeting"
     },
     {
+      "date": "2026-12-02",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
       "date": "2026-12-03",
       "start": "09:00",
       "end": "12:00",
@@ -1130,17 +1067,17 @@
       "kind": "class"
     },
     {
-      "date": "2026-12-04",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-12-07",
       "start": "14:00",
       "end": "17:00",
       "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-07",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
       "kind": "class"
     },
     {
@@ -1159,10 +1096,10 @@
     },
     {
       "date": "2026-12-08",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-09",
@@ -1170,6 +1107,13 @@
       "end": "11:30",
       "title": "Weekly | Ema Discovery & Insights",
       "kind": "meeting"
+    },
+    {
+      "date": "2026-12-09",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
     },
     {
       "date": "2026-12-10",
@@ -1193,24 +1137,24 @@
       "kind": "class"
     },
     {
-      "date": "2026-12-11",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-12-14",
       "start": "14:00",
       "end": "17:00",
-      "title": "会计大数据管理分析（考试/考核周）",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-14",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
       "kind": "class"
     },
     {
       "date": "2026-12-15",
       "start": "14:00",
       "end": "17:00",
-      "title": "财务管理理论与实务（考试/考核周）",
+      "title": "财务管理理论与实务",
       "kind": "class"
     },
     {
@@ -1222,10 +1166,10 @@
     },
     {
       "date": "2026-12-15",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-16",
@@ -1235,10 +1179,17 @@
       "kind": "meeting"
     },
     {
+      "date": "2026-12-16",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
       "date": "2026-12-17",
       "start": "09:00",
       "end": "12:00",
-      "title": "审计理论与实务（考试/考核周）",
+      "title": "审计理论与实务",
       "kind": "class"
     },
     {
@@ -1256,11 +1207,25 @@
       "kind": "class"
     },
     {
-      "date": "2026-12-18",
-      "start": "16:00",
+      "date": "2026-12-21",
+      "start": "14:00",
       "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-21",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-22",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-22",
@@ -1271,10 +1236,10 @@
     },
     {
       "date": "2026-12-22",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-23",
@@ -1286,9 +1251,16 @@
     {
       "date": "2026-12-23",
       "start": "14:00",
-      "end": "15:00",
-      "title": "CORE Monthly Transformation Review",
-      "kind": "meeting"
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-24",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-24",
@@ -1301,15 +1273,29 @@
       "date": "2026-12-25",
       "start": "14:00",
       "end": "17:00",
-      "title": "财务会计理论与实务（考试/考核周）",
+      "title": "财务会计理论与实务",
       "kind": "class"
     },
     {
-      "date": "2026-12-25",
-      "start": "16:00",
+      "date": "2026-12-28",
+      "start": "14:00",
       "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-28",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-29",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-29",
@@ -1320,10 +1306,10 @@
     },
     {
       "date": "2026-12-29",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-30",
@@ -1331,6 +1317,20 @@
       "end": "11:30",
       "title": "Weekly | Ema Discovery & Insights",
       "kind": "meeting"
+    },
+    {
+      "date": "2026-12-30",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2026-12-31",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2026-12-31",
@@ -1341,10 +1341,31 @@
     },
     {
       "date": "2027-01-01",
-      "start": "16:00",
+      "start": "14:00",
       "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-04",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-04",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-05",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
     },
     {
       "date": "2027-01-05",
@@ -1355,10 +1376,10 @@
     },
     {
       "date": "2027-01-05",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2027-01-06",
@@ -1366,6 +1387,20 @@
       "end": "11:30",
       "title": "Weekly | Ema Discovery & Insights",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-06",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-07",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
     },
     {
       "date": "2027-01-07",
@@ -1376,10 +1411,31 @@
     },
     {
       "date": "2027-01-08",
-      "start": "16:00",
+      "start": "14:00",
       "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "title": "财务会计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-11",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "会计大数据管理分析",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-11",
+      "start": "18:00",
+      "end": "21:00",
+      "title": "管理经济学",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-12",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "财务管理理论与实务",
+      "kind": "class"
     },
     {
       "date": "2027-01-12",
@@ -1390,10 +1446,10 @@
     },
     {
       "date": "2027-01-12",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
+      "start": "18:00",
+      "end": "21:00",
+      "title": "内部控制理论与实务",
+      "kind": "class"
     },
     {
       "date": "2027-01-13",
@@ -1401,13 +1457,20 @@
       "end": "11:30",
       "title": "Weekly | Ema Discovery & Insights",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-13",
+      "start": "14:00",
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
     }
   ],
   "summaries": [],
   "fixed_meta": {
-    "generated_at": "2026-09-26T07:36:43+08:00",
-    "source": "apple_calendar",
-    "count": 148,
+    "generated_at": "2026-09-26T07:36:54+08:00",
+    "source": "course_fallback",
+    "count": 157,
     "horizon_days": 110
   },
   "ideas": [

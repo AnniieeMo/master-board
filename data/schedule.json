@@ -1461,6 +1461,23 @@
     {
       "date": "2027-01-13",
       "start": "14:00",
+<<<<<<< HEAD
+=======
+      "end": "17:00",
+      "title": "经济管理统计分析",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-14",
+      "start": "09:00",
+      "end": "12:00",
+      "title": "审计理论与实务",
+      "kind": "class"
+    },
+    {
+      "date": "2027-01-14",
+      "start": "16:00",
+>>>>>>> 1bbe39d (chore: refresh fixed blocks)
       "end": "17:00",
       "title": "经济管理统计分析",
       "kind": "class"
@@ -1468,9 +1485,15 @@
   ],
   "summaries": [],
   "fixed_meta": {
+<<<<<<< HEAD
     "generated_at": "2026-09-26T07:36:54+08:00",
     "source": "course_fallback",
     "count": 157,
+=======
+    "generated_at": "2026-09-27T07:30:27+08:00",
+    "source": "course_fallback",
+    "count": 159,
+>>>>>>> 1bbe39d (chore: refresh fixed blocks)
     "horizon_days": 110
   },
   "ideas": [

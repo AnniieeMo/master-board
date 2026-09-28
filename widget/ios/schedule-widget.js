@@ -219,11 +219,19 @@ async function interactiveAdd(state) {
   a.addAction("完成");
   a.addCancelAction("取消");
   const idx = await a.presentAlert();
-  const raw = a.textFieldFieldValue;
+  const rawField = a.textFieldFieldValue;
+  const raw = typeof rawField === "string" ? rawField : "";
   if (idx !== 0) return;
   const t = todayIso();
   const lines = raw.split("\n").map(s => s.trim()).filter(s => s);
-  if (lines.length === 0) return;
+  if (lines.length === 0) {
+    const e2 = new Alert();
+    e2.title = "没有输入内容";
+    e2.message = "文本框读取失败或为空，请再试一次。";
+    e2.addAction("好的");
+    await e2.presentAlert();
+    return;
+  }
   lines.forEach(line => {
     const m = line.match(/^(?:([01]?\d|2[0-3]):([0-5]\d))\s+(.+)$/);
     const ev = {

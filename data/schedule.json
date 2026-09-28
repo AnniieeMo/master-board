@@ -389,6 +389,18 @@
       "notes": "明早9点协助整理党员档案",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mul4orf7237",
+      "title": "Ema Chinese UI review",
+      "category": "work",
+      "date": "2026-09-28",
+      "start": "20:00",
+      "end": "21:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "",
+      "source": "manual"
     }
   ],
   "fixed": [
@@ -1533,8 +1545,9 @@
       "text": "Ema Chinese UI review",
       "category": "work",
       "created_at": "2026-09-23",
-      "status": "open"
+      "status": "done"
     }
   ],
-  "_pendingTaskId": null
+  "_pendingTaskId": null,
+  "_linkedIdea": null
 }

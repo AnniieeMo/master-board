@@ -1757,7 +1757,20 @@ body{
       "kind": "class"
     }
   ],
-  "summaries": [],
+  "summaries": [
+    {
+      "week": "2026-W0914",
+      "generated_at": "2026-09-28T19:40",
+      "source": "backfill",
+      "text": "【本周完成】开荒首周全部清账：会计大数据作业两轮（周三/周五晚）、统计作业案例1+2（周六上下午集中攻坚）、小组展示首次推进（周日上午）。【时间占比】学习 100%（共 7 小时，全部为课业任务），工作 0%——TP 事务本周未占用的记录。【未完成顺延】无，所有 DDL 按时清零。【下周建议】储物仓功能下周上线，先把零散想法往里扔；晚间课业时段的模式可保持，周末上午适合整块攻坚。"
+    },
+    {
+      "week": "2026-W0921",
+      "generated_at": "2026-09-28T19:40",
+      "source": "backfill",
+      "text": "【本周完成】11 项全部清账：统计作业收尾提交、两场党课、中文论文精读一篇（读 on the folly）、TP 侧 Ema 全链条（思考→讨论→CORE meeting→training 大纲准备）、管院投票。【时间占比】学习 62%（约 6.5h：课业+论文精读）· 工作 33%（约 3.5h：Ema/CORE）· 生活 5%。【未完成顺延】html repackage deck、test Michelin workflow、test categorizer workflow 三项 TP 任务未动，已顺延到下周一上午集中处理。【下周建议】储物仓里的「Ema Chinese UI review」和本周 Ema 工作流强相关，建议优先排进周中；「管院卓越杯」可再放一周。规划改进：workflow 测试类任务建议预留整块 2 小时，避免被切割。"
+    }
+  ],
   "fixed_meta": {
     "generated_at": "2026-09-28T07:50:58+08:00",
     "source": "course_fallback",
@@ -2006,22 +2019,33 @@ function weekKey(d = new Date()){
   return monday.getFullYear() + "-W" + pad(monday.getMonth()+1) + pad(monday.getDate());
 }
 
+function isoOf(d){ return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()); }
+function weekKeyOf(d){
+  const m = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
+  return m.getFullYear() + "-W" + pad(m.getMonth()+1) + pad(m.getDate());
+}
+function reviewRange(){
+  const now = new Date();
+  const isMon = now.getDay() === 1;
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (isMon ? 7 : (now.getDay() + 6) % 7));
+  const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
+  return { start: isoOf(start), end: isoOf(end), key: weekKeyOf(start), label: isMon ? "上周" : "本周" };
+}
 function renderReview(){
-  const t = todayIso();
   const box = $("view-review");
-  const monday = weekDates()[0].iso, sunday = weekDates()[6].iso;
-  const weekEvs = state.events.filter(e => e.date >= monday && e.date <= sunday);
+  const range = reviewRange();
+  const weekEvs = state.events.filter(e => e.date >= range.start && e.date <= range.end);
   const done = weekEvs.filter(e => e.status === "done").length;
-  const current = state.summaries.find(s => s.week === weekKey());
-  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> REVIEW // ' + weekKey() + '</span>'
-    + '<span class="r"><button class="btn primary" id="btnGenSummary">' + (current ? "重新生成" : "生成本周汇总") + '</button></span></div><div class="pb">';
-  h += '<div class="hint" style="margin-bottom:8px">本周 ' + weekEvs.length + " 项安排，已完成 " + done + " 项。" + (["周六","周日"].includes("周" + WD[new Date().getDay()]) ? "" : "周日晚自动出汇总（现在也可以手动生成）。") + '</div>';
+  const current = state.summaries.find(s => s.week === range.key);
+  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> REVIEW // ' + range.key + (range.label === "上周" ? "（上周）" : "") + '</span>'
+    + '<span class="r"><button class="btn primary" id="btnGenSummary">' + (current ? "重新生成" : (range.label === "上周" ? "生成上周汇总" : "生成本周汇总")) + '</button></span></div><div class="pb">';
+  h += '<div class="hint" style="margin-bottom:8px">' + range.label + '共 ' + weekEvs.length + ' 项安排，已完成 ' + done + ' 项。' + (new Date().getDay() === 1 ? "周一早上自动生成上周周报。" : "周一早上自动出上周汇总（现在也可以手动生成）。") + '</div>';
   if(current){
     h += '<div class="rev-card">' + current.text + '</div>';
   } else {
-    h += '<div class="empty">· 本周汇总尚未生成 ·</div>';
+    h += '<div class="empty">· 汇总尚未生成 ·</div>';
   }
-  const olds = state.summaries.filter(s => s.week !== weekKey()).sort((a,b) => b.week < a.week ? -1 : 1).slice(0,6);
+  const olds = state.summaries.filter(s => s.week !== range.key).sort((a,b) => b.week < a.week ? -1 : 1).slice(0,8);
   if(olds.length){
     h += '<div class="seg-title">▸ 往期</div>';
     olds.forEach(s => { h += '<div class="rev-old">' + s.text + '<div class="rev-week">' + s.week + '</div></div>'; });
@@ -2592,16 +2616,34 @@ async function sendChat(){
 
 async function genSummary(){
   if(!config.llm.key){ chatNote("生成周报需要先在「设置」填 API Key。"); openSettings(); return; }
-  setStatus("正在汇总本周日程…");
+  const range = reviewRange();
+  setStatus("正在生成" + range.label + "周报…");
   try {
-    const monday = weekDates()[0].iso, sunday = weekDates()[6].iso;
-    const weekEvs = state.events.filter(e => e.date >= monday && e.date <= sunday);
-    const fixed = state.fixed.filter(f => f.date >= monday && f.date <= sunday);
-    const prompt = "以下是本周（" + monday + " 到 " + sunday + "）的日程数据。请用中文写一段150字以内的周汇总，口吻轻松直接：完成了什么、推进了什么、下周要注意的DDL。不要列表，写自然的短段落。\n活动：" + JSON.stringify(weekEvs) + "\n固定：" + JSON.stringify(fixed);
+    const evs = state.events.filter(e => e.date >= range.start && e.date <= range.end);
+    const done = evs.filter(e => e.status === "done");
+    const carried = evs.filter(e => e.status !== "done");
+    let studyMin = 0, workMin = 0;
+    const durOf = e => {
+      if(!e.start || !e.end) return 60;
+      const p1 = e.start.split(":"), p2 = e.end.split(":");
+      return Math.max(0, (+p2[0]*60 + +p2[1]) - (+p1[0]*60 + +p1[1]));
+    };
+    done.forEach(e => {
+      const d = durOf(e);
+      if(e.category === "work" || e.category === "life") workMin += d; else studyMin += d;
+    });
+    const tot = (studyMin + workMin) || 1;
+    const stashOpen = state.ideas.filter(i => i.status === "open").map(i => i.text);
+    const unsched = state.events.filter(e => !e.date && e.ddl && e.status !== "done").map(e => e.title);
+    const prompt = "以下是 " + range.start + " 到 " + range.end + "（" + range.label + "）的日程数据。请写一份中文周报，250 字以内，用【】小节标题分四段："
+      + "【本周完成】列关键事项；"
+      + "【时间占比】按已记录时长写：工作 " + Math.round(workMin/tot*100) + "% / 学习 " + Math.round(studyMin/tot*100) + "%（学习含课业与自学），各配一句说明；"
+      + "【未完成顺延】" + (carried.length ? "列出这 " + carried.length + " 项：" + JSON.stringify(carried.map(e => e.title)) : "无，全部清账") + "；"
+      + "【下周建议】储物仓想法 " + JSON.stringify(stashOpen) + " 里挑 1-2 个建议优先的，另给 1-2 条时间规划改进建议。"
+      + "语气轻松直接，数据要引用上面的。\n活动数据：" + JSON.stringify(evs) + "\n未排期DDL：" + JSON.stringify(unsched);
     const text = await callLlm([{ role: "user", content: prompt }]);
-    const week = weekKey();
-    state.summaries = state.summaries.filter(s => s.week !== week);
-    state.summaries.push({ week, text, generated_at: new Date().toISOString().slice(0,16) });
+    state.summaries = state.summaries.filter(s => s.week !== range.key);
+    state.summaries.push({ week: range.key, text, generated_at: new Date().toISOString().slice(0,16), source: "manual" });
     dirty = true; renderReview();
     const r = await commitToGitHub();
     chatNote(r.ok ? "↯ 周报已生成并同步" : "↯ 周报已生成（" + r.msg + "）");

@@ -359,7 +359,7 @@
       "start": "11:00",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "从9/24挪来，测categorizer workflow",
       "source": "chat",
       "priority": ""

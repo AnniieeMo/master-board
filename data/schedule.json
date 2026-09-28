@@ -1525,7 +1525,20 @@
       "kind": "class"
     }
   ],
-  "summaries": [],
+  "summaries": [
+    {
+      "week": "2026-W0914",
+      "generated_at": "2026-09-28T19:40",
+      "source": "backfill",
+      "text": "【本周完成】开荒首周全部清账：会计大数据作业两轮（周三/周五晚）、统计作业案例1+2（周六上下午集中攻坚）、小组展示首次推进（周日上午）。【时间占比】学习 100%（共 7 小时，全部为课业任务），工作 0%——TP 事务本周未占用的记录。【未完成顺延】无，所有 DDL 按时清零。【下周建议】储物仓功能下周上线，先把零散想法往里扔；晚间课业时段的模式可保持，周末上午适合整块攻坚。"
+    },
+    {
+      "week": "2026-W0921",
+      "generated_at": "2026-09-28T19:40",
+      "source": "backfill",
+      "text": "【本周完成】11 项全部清账：统计作业收尾提交、两场党课、中文论文精读一篇（读 on the folly）、TP 侧 Ema 全链条（思考→讨论→CORE meeting→training 大纲准备）、管院投票。【时间占比】学习 62%（约 6.5h：课业+论文精读）· 工作 33%（约 3.5h：Ema/CORE）· 生活 5%。【未完成顺延】html repackage deck、test Michelin workflow、test categorizer workflow 三项 TP 任务未动，已顺延到下周一上午集中处理。【下周建议】储物仓里的「Ema Chinese UI review」和本周 Ema 工作流强相关，建议优先排进周中；「管院卓越杯」可再放一周。规划改进：workflow 测试类任务建议预留整块 2 小时，避免被切割。"
+    }
+  ],
   "fixed_meta": {
     "generated_at": "2026-09-28T07:50:58+08:00",
     "source": "course_fallback",

@@ -333,7 +333,7 @@
       "start": "09:00",
       "end": "10:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "从9/24挪来，重打包html deck",
       "source": "chat",
       "priority": ""

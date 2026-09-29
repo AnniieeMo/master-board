@@ -405,32 +405,11 @@
   ],
   "fixed": [
     {
-      "date": "2026-09-29",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "财务管理理论与实务",
-      "kind": "class"
-    },
-    {
-      "date": "2026-09-29",
-      "start": "15:00",
-      "end": "16:00",
-      "title": "APAC Analytics team weekly meeting",
+      "date": "2026-09-30",
+      "start": "10:08",
+      "end": "10:08",
+      "title": "【佛山】那英「我来，因为你在」巡回演唱会-佛山站",
       "kind": "meeting"
-    },
-    {
-      "date": "2026-09-29",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-09-29",
-      "start": "18:00",
-      "end": "21:00",
-      "title": "内部控制理论与实务",
-      "kind": "class"
     },
     {
       "date": "2026-09-30",
@@ -507,6 +486,13 @@
       "start": "16:00",
       "end": "17:00",
       "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-10-12",
+      "start": "13:30",
+      "end": "14:30",
+      "title": "TP.ai Operate Insights Observation session on Amazon account",
       "kind": "meeting"
     },
     {
@@ -1449,9 +1435,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-09-29T07:37:11+08:00",
+    "generated_at": "2026-09-30T07:30:06+08:00",
     "source": "apple_calendar",
-    "count": 147,
+    "count": 145,
     "horizon_days": 110
   },
   "ideas": [

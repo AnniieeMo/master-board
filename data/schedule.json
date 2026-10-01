@@ -405,13 +405,6 @@
   ],
   "fixed": [
     {
-      "date": "2026-10-01",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
       "date": "2026-10-02",
       "start": "16:00",
       "end": "17:00",
@@ -1397,6 +1390,20 @@
       "end": "17:00",
       "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-19",
+      "start": "15:00",
+      "end": "16:00",
+      "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-19",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
     }
   ],
   "summaries": [
@@ -1414,9 +1421,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-01T07:30:11+08:00",
+    "generated_at": "2026-10-02T07:47:41+08:00",
     "source": "apple_calendar",
-    "count": 142,
+    "count": 143,
     "horizon_days": 110
   },
   "ideas": [

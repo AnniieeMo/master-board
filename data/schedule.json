@@ -1404,6 +1404,13 @@
       "end": "11:30",
       "title": "Weekly | Ema Discovery & Insights",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-21",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
+      "kind": "meeting"
     }
   ],
   "summaries": [
@@ -1421,9 +1428,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-03T07:53:25+08:00",
+    "generated_at": "2026-10-04T08:02:20+08:00",
     "source": "apple_calendar",
-    "count": 143,
+    "count": 144,
     "horizon_days": 110
   },
   "ideas": [

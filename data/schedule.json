@@ -1411,6 +1411,13 @@
       "end": "17:00",
       "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-22",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
     }
   ],
   "summaries": [
@@ -1428,9 +1435,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-04T08:02:20+08:00",
+    "generated_at": "2026-10-05T07:33:56+08:00",
     "source": "apple_calendar",
-    "count": 144,
+    "count": 145,
     "horizon_days": 110
   },
   "ideas": [

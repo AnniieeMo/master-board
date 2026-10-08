@@ -440,6 +440,58 @@
       "notes": "rerun完所有已feedback的call",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-muyu8w02950",
+      "title": "重新评估职业路径，筛选2-3个规划节点",
+      "category": "life",
+      "date": "",
+      "start": "",
+      "end": "",
+      "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "职业规划梳理，10-13前完成",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-muyu8w09984",
+      "title": "独立负责项目能力拆解，观察+1做法",
+      "category": "skill",
+      "date": "",
+      "start": "",
+      "end": "",
+      "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "观察+1可模仿学习点",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-muyu8w0921",
+      "title": "了解两个+1绩效，绑定自己工作",
+      "category": "work",
+      "date": "",
+      "start": "",
+      "end": "",
+      "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "绩效绑定思路",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-muyu8w09427",
+      "title": "北极星继续提炼简化",
+      "category": "life",
+      "date": "",
+      "start": "",
+      "end": "",
+      "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "北极星表述精简",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

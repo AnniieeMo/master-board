@@ -104,7 +104,12 @@ body{
 .col-h{font-size:10px;color:var(--dim);letter-spacing:1px;margin-bottom:5px}
 .st-now{border-color:var(--amber);box-shadow:0 0 0 2px rgba(255,180,84,.3)}
 .nowchip{display:inline-block;color:var(--amber);font-size:9px;border:2px solid var(--amber);padding:0 5px;white-space:nowrap;animation:blink 1.4s steps(1) infinite}
-@media (max-width:720px){.seg-cols{grid-template-columns:1fr}}
+.cal{position:relative;border-left:2px dotted var(--line-dash);margin:4px 0 2px}
+.cal .ev{box-shadow:1px 1px 0 var(--shadow)}
+@media (max-width:720px){
+  .cal{height:auto !important}
+  .cal .ev{position:static !important;width:auto !important;height:auto !important;margin-bottom:6px}
+}
 .et{cursor:text;border-bottom:1px dashed transparent}
 .et:hover{border-bottom-color:var(--line-dash)}
 
@@ -1844,7 +1849,7 @@ function priBadge(e){
   return '<span class="pri p-' + e.priority + '">' + map[e.priority] + '</span>';
 }
 
-function evOf(e){
+function evOf(e, pos){
   const done = e.status === "done";
   let cd = "";
   if(e.ddl && !done){
@@ -1856,13 +1861,16 @@ function evOf(e){
       cd = '<span class="cd-inline ' + cls + '">DDL ' + (d >= 1 ? d + "天" + h + "时" : h + "时") + '</span>';
     }
   }
-  return '<div class="ev' + (done ? " done" : "") + '" draggable="true" data-drag="' + e.id + '">'
+  const isNow = !done && e.start && isNowRange(e.start, e.end || "23:59");
+  const posStyle = pos ? "position:absolute;" + pos + ";margin:0;" : "";
+  return '<div class="ev' + (done ? " done" : "") + (isNow ? " st-now" : "") + '" style="' + posStyle + '" draggable="true" data-drag="' + e.id + '">'
     + '<span class="tick" data-done="' + e.id + '">' + (done ? "◉" : "○") + '</span>'
     + '<span class="tt"><b class="et" data-edit="title" data-id="' + e.id + '">' + e.title + '</b>'
     + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
     + (e.notes ? '<span class="meta"> · <span class="et" data-edit="notes" data-id="' + e.id + '">' + e.notes + '</span></span>' : "")
     + '</span>'
     + (e.ddl ? '<span class="cd-inline ' + cd.cls + '" data-ddlref="' + e.ddl + '">' + cd.t + '</span>' : "")
+    + (isNow ? '<span class="nowchip">▶ 进行中</span>' : "")
     + priBadge(e)
     + '<span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span></div>';
 }
@@ -1900,23 +1908,58 @@ function renderToday(){
   let h = "";
   h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r"><button class="btn" data-qtoggle="t">＋ 手动添加</button></span></div><div class="pb">'
     + quickFormHtml("t", t);
-  const nowM = new Date().getHours() * 60 + new Date().getMinutes();
-  const isNow = (s, e2) => { const m = mins(s || "23:59"); return m <= nowM && nowM < mins(e2 || "23:59"); };
+  function fixedEv(f, pos){
+    const now = isNowRange(f.start, f.end);
+    const base = 'border-style:dashed' + (pos ? ";" + pos : "");
+    return '<div class="ev' + (now ? " st-now" : "") + '" style="' + base + '">'
+      + '<span class="tick" style="visibility:hidden">○</span>'
+      + '<span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span>'
+      + (now ? '<span class="nowchip">▶ 进行中</span>' : "")
+      + '<span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>';
+  }
   for(const seg of ["上午","下午","晚上"]){
     const fixes = fixedToday.filter(f => segOf(f.start) === seg).sort((a,b) => mins(a.start) - mins(b.start));
     const tasks = evs.filter(e => segOf(e.start) === seg).sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
-    const fixedHtml = fixes.map(f => {
-      const now = isNow(f.start, f.end);
-      return '<div class="ev' + (now ? " st-now" : "") + '" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span>'
-        + '<span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span>'
-        + (now ? '<span class="nowchip">▶ 进行中</span>' : "")
-        + '<span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>';
-    }).join("");
-    const taskHtml = tasks.map(evOf).join("");
-    h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div><div class="seg-cols">'
-      + '<div class="seg-col"><div class="col-h">固定（课/会）</div>' + (fixedHtml || '<div class="empty">—</div>') + '</div>'
-      + '<div class="seg-col"><div class="col-h">灵活任务（点击标题/备注可改）</div>' + (taskHtml || '<div class="empty">—</div>') + '</div>'
-      + '</div></div>';
+    const overlap = fixes.some(f => tasks.some(t => mins(t.start || "23:59") < mins(f.end) && mins(t.end || t.start || "23:59") > mins(f.start)));
+    h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
+    if(!overlap){
+      const merged = [...fixes.map(f => ({ f })), ...tasks.map(e => ({ e }))]
+        .sort((a,b) => mins(a.f ? a.f.start : (a.e.start || "23:59")) - mins(b.f ? b.f.start : (b.e.start || "23:59")));
+      h += merged.length ? merged.map(it => it.f ? fixedEv(it.f) : evOf(it.ev)).join("")
+        : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
+    } else {
+      const all = [
+        ...fixes.map(f => ({ f, fixed: true, s: mins(f.start), e2: mins(f.end) })),
+        ...tasks.map(e => ({ e, fixed: false, s: mins(e.start || "23:59"), e2: mins(e.end || "") || mins(e.start || "23:59") + 60 }))
+      ];
+      const segStart = Math.min(...all.map(x => x.s));
+      const segEnd = Math.max(...all.map(x => x.e2));
+      const span = Math.max(segEnd - segStart, 150);
+      const PPM = 1.15;
+      const H = Math.round(span * PPM);
+      const topPx = it => Math.round((it.s - segStart) * PPM);
+      const hPx = it => Math.max(40, Math.round((it.e2 - it.s) * PPM) - 4);
+      const clusters = [];
+      tasks.forEach(e => {
+        const s = mins(e.start || "23:59"), e2 = mins(e.end || "") || s + 60;
+        const c = clusters.find(c => s < c.end && e2 > c.start);
+        if(c){ c.items.push({ e, s, e2 }); c.start = Math.min(c.start, s); c.end = Math.max(c.end, e2); }
+        else clusters.push({ start: s, end: e2, items: [{ e, s, e2 }] });
+      });
+      let cal = '';
+      fixes.forEach(f => {
+        const it = { s: mins(f.start), e2: mins(f.end) };
+        cal += fixedEv(f, 'left:0;width:47%;top:' + topPx(it) + 'px;height:' + hPx(it) + 'px');
+      });
+      clusters.forEach(c => {
+        const w = Math.floor(47 / c.items.length);
+        c.items.forEach((o, i) => {
+          cal += evOf(o.e, 'left:' + (53 + i * w) + '%;width:' + (w - 2) + '%;top:' + topPx(o) + 'px;height:' + hPx(o) + 'px');
+        });
+      });
+      h += '<div class="cal" style="height:' + (H + 6) + 'px">' + cal + '</div>';
+    }
+    h += "</div>";
   }
   h += "</div></div>";
   box.innerHTML = h;
@@ -2613,6 +2656,11 @@ async function genSummary(){
 
 const mins = v => { const p = String(v).split(":").map(Number); return (p[0] || 0) * 60 + (p[1] || 0); };
 const addMin = (v, d) => { const t = Math.min(23 * 60 + 59, mins(v) + d); return pad(Math.floor(t / 60)) + ":" + pad(t % 60); };
+function isNowRange(s, e2){
+  const nowM = new Date().getHours() * 60 + new Date().getMinutes();
+  const m = mins(s || "23:59");
+  return m <= nowM && nowM < mins(e2 || "23:59");
+}
 
 function quickFormHtml(p, defDate){
   return '<div class="form-row" id="qform_' + p + '" style="display:none">'

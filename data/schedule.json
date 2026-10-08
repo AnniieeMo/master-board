@@ -410,7 +410,7 @@
       "start": "09:00",
       "end": "10:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "上午第一项，审核完feedback improvement",
       "source": "chat",
       "priority": ""

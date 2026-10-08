@@ -99,6 +99,12 @@ body{
 .wk-col.today .wk-h{color:var(--amber)}
 .ev-row{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
 .ev-row .ev{flex:1 1 240px;min-width:0;margin-bottom:0}
+.seg-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+.seg-col{min-width:0}
+.col-h{font-size:10px;color:var(--dim);letter-spacing:1px;margin-bottom:5px}
+.st-now{border-color:var(--amber);box-shadow:0 0 0 2px rgba(255,180,84,.3)}
+.nowchip{display:inline-block;color:var(--amber);font-size:9px;border:2px solid var(--amber);padding:0 5px;white-space:nowrap;animation:blink 1.4s steps(1) infinite}
+@media (max-width:720px){.seg-cols{grid-template-columns:1fr}}
 .et{cursor:text;border-bottom:1px dashed transparent}
 .et:hover{border-bottom-color:var(--line-dash)}
 
@@ -1894,28 +1900,23 @@ function renderToday(){
   let h = "";
   h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r"><button class="btn" data-qtoggle="t">＋ 手动添加</button></span></div><div class="pb">'
     + quickFormHtml("t", t);
+  const nowM = new Date().getHours() * 60 + new Date().getMinutes();
+  const isNow = (s, e2) => { const m = mins(s || "23:59"); return m <= nowM && nowM < mins(e2 || "23:59"); };
   for(const seg of ["上午","下午","晚上"]){
-    const tasks = evs.filter(e => segOf(e.start) === seg);
-    const fixes = fixedToday.filter(f => segOf(f.start) === seg);
-    const merged = [
-      ...fixes.map(f => ({ fixed: true, start: f.start, end: f.end, title: f.title, kindTxt: f.kind === "class" ? "课程" : "会议" })),
-      ...tasks.map(e => ({ fixed: false, start: e.start || "", end: e.end || "", ev: e }))
-    ].sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59") || mins(a.end || "23:59") - mins(b.end || "23:59"));
-    const rows = [];
-    let cur = null, curEnd = -1;
-    merged.forEach(it => {
-      const s = mins(it.start || "23:59");
-      const e2 = it.end ? mins(it.end) : s + 60;
-      if(!cur || s >= curEnd){ cur = []; rows.push(cur); curEnd = -1; }
-      cur.push(it);
-      curEnd = Math.max(curEnd, e2);
-    });
-    h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
-    h += rows.length ? rows.map(row => '<div class="ev-row">' + row.map(it => it.fixed
-        ? '<div class="ev" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span><span class="tt"><b>' + it.title + '</b><span class="meta"> ' + it.start + "-" + it.end + '</span></span><span class="cat ' + (it.kindTxt === "课程" ? "course" : "work") + '">' + it.kindTxt + '</span></div>'
-        : evOf(it.ev)).join("") + '</div>').join("")
-      : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
-    h += "</div>";
+    const fixes = fixedToday.filter(f => segOf(f.start) === seg).sort((a,b) => mins(a.start) - mins(b.start));
+    const tasks = evs.filter(e => segOf(e.start) === seg).sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
+    const fixedHtml = fixes.map(f => {
+      const now = isNow(f.start, f.end);
+      return '<div class="ev' + (now ? " st-now" : "") + '" style="border-style:dashed"><span class="tick" style="visibility:hidden">○</span>'
+        + '<span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span>'
+        + (now ? '<span class="nowchip">▶ 进行中</span>' : "")
+        + '<span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>';
+    }).join("");
+    const taskHtml = tasks.map(evOf).join("");
+    h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div><div class="seg-cols">'
+      + '<div class="seg-col"><div class="col-h">固定（课/会）</div>' + (fixedHtml || '<div class="empty">—</div>') + '</div>'
+      + '<div class="seg-col"><div class="col-h">灵活任务（点击标题/备注可改）</div>' + (taskHtml || '<div class="empty">—</div>') + '</div>'
+      + '</div></div>';
   }
   h += "</div></div>";
   box.innerHTML = h;

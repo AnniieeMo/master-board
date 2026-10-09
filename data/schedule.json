@@ -544,6 +544,19 @@
       "notes": "周日晚前完成，审计课准备",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv14wp6n855",
+      "title": "入团申请书",
+      "category": "life",
+      "date": "2026-10-11",
+      "start": "19:00",
+      "end": "20:30",
+      "ddl": "2026-10-12T09:00",
+      "status": "todo",
+      "notes": "落款写入团时间",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

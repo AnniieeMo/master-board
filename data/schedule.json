@@ -531,6 +531,19 @@
       "notes": "周二晚内部控制课18:00前备好",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv14rh8c430",
+      "title": "找审计热点案例论文",
+      "category": "course",
+      "date": "",
+      "start": "",
+      "end": "",
+      "ddl": "2026-10-11T23:59",
+      "status": "todo",
+      "notes": "周日晚前完成，审计课准备",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

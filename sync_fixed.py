@@ -22,7 +22,7 @@ def load_schedule() -> dict:
     return {"events": [], "fixed": [], "summaries": [], "ideas": []}
 
 
-def calendar_events(today: date) -> list[dict]:
+def calendar_events(today: date, data: dict) -> list[dict]:
     from engine.apple_calendar import AppleCalendarError, list_apple_calendar_events
 
     start = datetime(today.year, today.month, today.day)
@@ -32,9 +32,13 @@ def calendar_events(today: date) -> list[dict]:
     except (AppleCalendarError, OSError) as error:
         print("calendar unavailable:", error, file=sys.stderr)
         return []
+    skip_rules = data.get("calendar_skip", [])
     fixed = []
     for event in raw:
         if event.get("all_day") or not event.get("scheduled_start") or not event.get("scheduled_end"):
+            continue
+        wd = date.fromisoformat(event["scheduled_date"]).weekday() + 1
+        if any(r.get("title_contains", "") in str(event.get("title", "")) and wd in r.get("weekdays", []) for r in skip_rules):
             continue
         fixed.append({
             "date": event["scheduled_date"],
@@ -86,7 +90,7 @@ def main() -> int:
     data = json.loads((PROJECT_DIR / "data.json").read_text(encoding="utf-8"))
     schedule = load_schedule()
 
-    fixed = calendar_events(today)
+    fixed = calendar_events(today, data)
     source = "apple_calendar"
     if not fixed:
         fixed = course_fallback(data, today)

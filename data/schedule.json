@@ -520,19 +520,6 @@
       "priority": ""
     },
     {
-      "id": "e-mv14q702113",
-      "title": "准备财会PPT",
-      "category": "course",
-      "date": "2026-10-14",
-      "start": "10:00",
-      "end": "11:00",
-      "ddl": "2026-10-14T18:00",
-      "status": "todo",
-      "notes": "周二晚内部控制课18:00前备好",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-mv14wp6n855",
       "title": "入团申请书",
       "category": "life",
@@ -556,6 +543,19 @@
       "status": "todo",
       "notes": "",
       "source": "manual"
+    },
+    {
+      "id": "e-mv1502ef395",
+      "title": "准备财会PPT",
+      "category": "course",
+      "date": "2026-10-10",
+      "start": "19:00",
+      "end": "20:00",
+      "ddl": "2026-10-14T18:00",
+      "status": "todo",
+      "notes": "改到周六晚做，周二内部控制课前交",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

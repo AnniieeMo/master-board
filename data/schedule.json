@@ -505,6 +505,19 @@
       "notes": "已完成，印尼客户XL Smart投标deck",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv0ojxqp9",
+      "title": "Epson一页时间表slide设计",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "10:00",
+      "end": "11:00",
+      "ddl": "2026-10-12T18:00",
+      "status": "todo",
+      "notes": "DDL周一18:00，一页时间表slide",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

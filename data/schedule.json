@@ -342,9 +342,9 @@
       "id": "e-mukqqhe4497",
       "title": "test Michelin workflow",
       "category": "work",
-      "date": "2026-09-28",
-      "start": "10:00",
-      "end": "11:00",
+      "date": "2026-10-10",
+      "start": "09:00",
+      "end": "10:00",
       "ddl": "",
       "status": "todo",
       "notes": "从9/24挪来，测Michelin workflow",
@@ -497,9 +497,9 @@
       "id": "e-mv0omtis548",
       "title": "ema 提交修改 feedback",
       "category": "work",
-      "date": "2026-10-09",
-      "start": "14:00",
-      "end": "15:00",
+      "date": "2026-10-10",
+      "start": "12:00",
+      "end": "13:00",
       "ddl": "",
       "status": "todo",
       "notes": "昨天未完成，挪到今天下午",
@@ -510,9 +510,9 @@
       "id": "e-mv0omtix886",
       "title": "rerun 已feedback的call",
       "category": "work",
-      "date": "2026-10-09",
-      "start": "15:00",
-      "end": "17:00",
+      "date": "2026-10-10",
+      "start": "13:00",
+      "end": "15:00",
       "ddl": "",
       "status": "todo",
       "notes": "昨天未完成，挪到今天下午",
@@ -556,35 +556,40 @@
       "notes": "改到周六晚做，周二内部控制课前交",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-muyu7sf5432",
+      "title": "ema 提交修改 feedback",
+      "category": "work",
+      "date": "2026-10-10",
+      "start": "10:00",
+      "end": "11:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "在ema上提交修改后的feedback （自动顺延自 10-09）",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-muyu7sf5786",
+      "title": "rerun 已feedback的call",
+      "category": "work",
+      "date": "2026-10-10",
+      "start": "11:00",
+      "end": "12:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "rerun完所有已feedback的call （自动顺延自 10-09）",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [
     {
-      "date": "2026-10-08",
-      "start": "09:00",
+      "date": "2026-10-12",
+      "start": "11:30",
       "end": "12:00",
-      "title": "审计理论与实务",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-08",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-09",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "财务会计理论与实务",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-09",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "title": "Alicloud Real-Time QA Demo & Next step Discussion",
       "kind": "meeting"
     },
     {
@@ -1552,6 +1557,34 @@
       "end": "17:00",
       "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-26",
+      "start": "15:00",
+      "end": "16:00",
+      "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-26",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-27",
+      "start": "11:00",
+      "end": "11:30",
+      "title": "Weekly | Ema Discovery & Insights",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-27",
+      "start": "14:00",
+      "end": "15:00",
+      "title": "CORE Monthly Transformation Review",
+      "kind": "meeting"
     }
   ],
   "summaries": [
@@ -1632,5 +1665,6 @@
     }
   ],
   "_pendingTaskId": null,
-  "_linkedIdea": null
+  "_linkedIdea": null,
+  "routines": []
 }

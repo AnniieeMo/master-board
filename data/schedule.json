@@ -518,6 +518,19 @@
       "notes": "昨天未完成，挪到今天下午",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv14q702113",
+      "title": "准备财会PPT",
+      "category": "course",
+      "date": "2026-10-14",
+      "start": "10:00",
+      "end": "11:00",
+      "ddl": "2026-10-14T18:00",
+      "status": "todo",
+      "notes": "周二晚内部控制课18:00前备好",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

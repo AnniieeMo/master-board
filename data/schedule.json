@@ -416,32 +416,6 @@
       "priority": ""
     },
     {
-      "id": "e-muyu7sf5432",
-      "title": "ema 提交修改 feedback",
-      "category": "work",
-      "date": "2026-10-08",
-      "start": "10:00",
-      "end": "11:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "在ema上提交修改后的feedback",
-      "source": "chat",
-      "priority": ""
-    },
-    {
-      "id": "e-muyu7sf5786",
-      "title": "rerun 已feedback的call",
-      "category": "work",
-      "date": "2026-10-08",
-      "start": "11:00",
-      "end": "12:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "rerun完所有已feedback的call",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-muyu8w02950",
       "title": "重新评估职业路径，筛选2-3个规划节点",
       "category": "life",
@@ -516,6 +490,32 @@
       "ddl": "2026-10-12T18:00",
       "status": "todo",
       "notes": "DDL周一18:00，一页时间表slide",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv0omtis548",
+      "title": "ema 提交修改 feedback",
+      "category": "work",
+      "date": "2026-10-09",
+      "start": "14:00",
+      "end": "15:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "昨天未完成，挪到今天下午",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv0omtix886",
+      "title": "rerun 已feedback的call",
+      "category": "work",
+      "date": "2026-10-09",
+      "start": "15:00",
+      "end": "17:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "昨天未完成，挪到今天下午",
       "source": "chat",
       "priority": ""
     }

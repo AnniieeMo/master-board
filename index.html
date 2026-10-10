@@ -104,6 +104,23 @@ body{
 .col-h{font-size:10px;color:var(--dim);letter-spacing:1px;margin-bottom:5px}
 .st-now{border-color:var(--amber);box-shadow:0 0 0 2px rgba(255,180,84,.3)}
 .nowchip{display:inline-block;color:var(--amber);font-size:9px;border:2px solid var(--amber);padding:0 5px;white-space:nowrap;animation:blink 1.4s steps(1) infinite}
+.mo-nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mo-nav .mo-title{color:var(--ink);letter-spacing:1px}
+.mo-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.mo-head{font-size:10px;color:var(--dim);text-align:center;letter-spacing:1px;padding-bottom:2px}
+.mo-cell{border:2px solid var(--line-dash);background:var(--panel2);min-height:56px;padding:3px 4px;cursor:pointer}
+.mo-cell.blank{border-color:transparent;background:transparent;cursor:default}
+.mo-cell:hover{border-color:var(--ink)}
+.mo-cell.today{border-color:var(--amber)}
+.mo-cell.sel{background:#f8eed8;border-color:var(--amber);box-shadow:2px 2px 0 var(--shadow)}
+.mo-cell.hasddl{border-color:var(--red)}
+.mo-d{font-size:11px;color:var(--ink)}
+.mo-cell.today .mo-d{color:var(--amber)}
+.mo-marks{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}
+.mk{font-size:8px;border:1px solid;padding:0 3px;line-height:1.4}
+.mk-f{color:var(--cyan);border-color:var(--cyan)}
+.mk-e{color:var(--ink);border-color:var(--ink)}
+.mk-d{color:var(--red);border-color:var(--red)}
 .cal{position:relative;border-left:2px dotted var(--line-dash);margin:4px 0 2px}
 .cal .ev{box-shadow:1px 1px 0 var(--shadow)}
 @media (max-width:720px){
@@ -209,12 +226,14 @@ body{
   <div class="tabs">
     <button class="tab active" data-view="today">▚ TODAY // 今日</button>
     <button class="tab" data-view="week">▚ WEEK // 本周</button>
+    <button class="tab" data-view="month">▚ MONTH // 本月</button>
     <button class="tab" data-view="ideas">▚ STASH // 储物舱</button>
     <button class="tab" data-view="review">▚ REVIEW // 周报</button>
   </div>
 
   <div id="view-today"></div>
   <div id="view-week" style="display:none"></div>
+  <div id="view-month" style="display:none"></div>
   <div id="view-ideas" style="display:none"></div>
   <div id="view-review" style="display:none"></div>
 
@@ -2038,6 +2057,15 @@ function priBadge(e){
   return '<span class="pri p-' + e.priority + '">' + map[e.priority] + '</span>';
 }
 
+function fixedEv(f, pos){
+  const now = isNowRange(f.start, f.end);
+  const base = 'border-style:dashed' + (pos ? ";" + pos : "");
+  return '<div class="ev' + (now ? " st-now" : "") + '" style="' + base + '">'
+    + '<span class="tick" style="visibility:hidden">○</span>'
+    + '<span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span>'
+    + (now ? '<span class="nowchip">▶ 进行中</span>' : "")
+    + '<span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>';
+}
 function evOf(e, pos){
   const done = e.status === "done";
   let cd = "";
@@ -2097,15 +2125,6 @@ function renderToday(){
   let h = "";
   h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> TODAY // ' + t.slice(5) + " 周" + WD[new Date().getDay()] + '</span><span class="r"><button class="btn" data-qtoggle="t">＋ 手动添加</button></span></div><div class="pb">'
     + quickFormHtml("t", t);
-  function fixedEv(f, pos){
-    const now = isNowRange(f.start, f.end);
-    const base = 'border-style:dashed' + (pos ? ";" + pos : "");
-    return '<div class="ev' + (now ? " st-now" : "") + '" style="' + base + '">'
-      + '<span class="tick" style="visibility:hidden">○</span>'
-      + '<span class="tt"><b>' + f.title + '</b><span class="meta"> ' + f.start + "-" + f.end + '</span></span>'
-      + (now ? '<span class="nowchip">▶ 进行中</span>' : "")
-      + '<span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>';
-  }
   for(const seg of ["上午","下午","晚上"]){
     const fixes = fixedToday.filter(f => segOf(f.start) === seg).sort((a,b) => mins(a.start) - mins(b.start));
     const tasks = evs.filter(e => segOf(e.start) === seg).sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
@@ -2211,6 +2230,82 @@ function weekKeyOf(d){
   const m = new Date(d.getFullYear(), d.getMonth(), d.getDate() - ((d.getDay() + 6) % 7));
   return m.getFullYear() + "-W" + pad(m.getMonth()+1) + pad(m.getDate());
 }
+let monthOffset = 0;
+let monthSel = "";
+
+function renderMonth(){
+  const box = $("view-month");
+  const base = new Date();
+  const first = new Date(base.getFullYear(), base.getMonth() + monthOffset, 1);
+  const y = first.getFullYear(), m = first.getMonth();
+  const monthIso = y + "-" + pad(m + 1);
+  const daysInMonth = new Date(y, m + 1, 0).getDate();
+  const lead = (new Date(y, m, 1).getDay() + 6) % 7;
+  const t = todayIso();
+
+  if(monthSel && !monthSel.startsWith(monthIso)) monthSel = "";
+  const sel = monthSel || (monthOffset === 0 ? t : "");
+
+  let cells = "";
+  for(let i = 0; i < lead; i++) cells += '<div class="mo-cell blank"></div>';
+  for(let dnum = 1; dnum <= daysInMonth; dnum++){
+    const d = y + "-" + pad(m + 1) + "-" + pad(dnum);
+    const fx = state.fixed.filter(f => f.date === d).length;
+    const evn = state.events.filter(e => e.date === d && e.status !== "done").length;
+    const ddl = state.events.filter(e => e.ddl && e.ddl.slice(0,10) === d && e.status !== "done").length;
+    const cls = (d === t ? " today" : "") + (d === sel ? " sel" : "") + (ddl ? " hasddl" : "");
+    cells += '<div class="mo-cell' + cls + '" data-day="' + d + '">'
+      + '<div class="mo-d">' + dnum + '</div><div class="mo-marks">'
+      + (fx ? '<span class="mk mk-f">' + fx + '</span>' : '')
+      + (evn ? '<span class="mk mk-e">' + evn + '</span>' : '')
+      + (ddl ? '<span class="mk mk-d">⏳</span>' : '')
+      + '</div></div>';
+  }
+
+  const selIso = sel || "";
+  const fixes = state.fixed.filter(f => f.date === selIso).sort((a,b) => mins(a.start) - mins(b.start));
+  const evs = state.events.filter(e => e.date === selIso).sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
+
+  const monthEvs = state.events.filter(e => (e.date || "").slice(0,7) === monthIso || (e.ddl || "").slice(0,7) === monthIso);
+  const exams = monthEvs.filter(e => e.status !== "done" && /考核|考试/.test(e.title || "")).sort((a,b) => (a.date||a.ddl) < (b.date||b.ddl) ? -1 : 1);
+  const ddls = monthEvs.filter(e => e.ddl && e.ddl.slice(0,7) === monthIso && e.status !== "done").sort((a,b) => a.ddl < b.ddl ? -1 : 1);
+
+  let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> MONTH // ' + monthIso + '</span>'
+    + '<span class="mo-nav"><button class="btn" data-mo="-1">‹ 上月</button><span class="mo-title">' + y + "年" + (m+1) + '月</span><button class="btn" data-mo="1">下月 ›</button></span></div><div class="pb">';
+  h += '<div class="mo-grid"><div class="mo-head">一</div><div class="mo-head">二</div><div class="mo-head">三</div><div class="mo-head">四</div><div class="mo-head">五</div><div class="mo-head">六</div><div class="mo-head">日</div>' + cells + '</div>';
+  h += '<div class="hint" style="margin-top:8px">数字 = 固定块数 <span style="color:var(--cyan)">青</span> / 任务数 <span style="color:var(--ink)">墨</span>；红框 = 当天有 DDL。点某天看详情。</div>';
+  h += '</div></div>';
+
+  h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> DAY // ' + (selIso ? selIso.slice(5) + " 周" + WD[new Date(selIso).getDay()] : "选择日期") + '</span></div><div class="pb">';
+  if(!selIso){
+    h += '<div class="empty">· 点上方日期查看当天安排 ·</div>';
+  } else {
+    h += fixes.length ? fixes.map(f => fixedEv(f)).join("") : "";
+    h += evs.length ? evs.map(e => evOf(e)).join("") : (fixes.length ? "" : '<div class="empty">· 当天没有安排 ·</div>');
+  }
+  h += '</div></div>';
+
+  h += '<div class="panel"><div class="ph"><span><span class="lead">■</span> KEY // 本月重点</span></div><div class="pb">';
+  let any = false;
+  if(exams.length){
+    any = true;
+    exams.forEach(e => {
+      const ref = (e.date || e.ddl || "").slice(0,10);
+      h += '<div class="exam-row"><span class="exam-d">' + ref.slice(5) + '</span><span class="exam-n">' + e.title + '</span><span class="cd ' + cdInfo(e.date || e.ddl).cls + '">' + cdInfo(e.date || e.ddl).t + '</span></div>';
+    });
+  }
+  if(ddls.length){
+    any = true;
+    ddls.forEach(e => {
+      h += '<div class="exam-row"><span class="exam-d">' + e.ddl.slice(5,10) + '</span><span class="exam-n">DDL · ' + e.title + '</span><span class="cd ' + cdInfo(e.ddl).cls + '">' + cdInfo(e.ddl).t + '</span></div>';
+    });
+  }
+  if(!any) h += '<div class="empty">· 本月暂无考试和 DDL ·</div>';
+  h += '</div></div>';
+
+  box.innerHTML = h;
+}
+
 function reviewRange(){
   const now = new Date();
   const isMon = now.getDay() === 1;
@@ -2267,7 +2362,7 @@ function renderMeta(){
 }
 
 function renderAll(){
-  const jobs = { renderToday, renderWeek, renderStash, renderReview, renderDdl, renderMeta, renderSync };
+  const jobs = { renderToday, renderWeek, renderMonth, renderStash, renderReview, renderDdl, renderMeta, renderSync };
   for(const [name, fn] of Object.entries(jobs)){
     try { fn(); } catch(err){ console.error(name + " failed: " + (err && err.stack ? err.stack : err)); }
   }
@@ -2395,6 +2490,10 @@ async function applyPendingByIdx(idx){
 }
 
 document.addEventListener("click", async e => {
+  const mo = e.target.closest ? e.target.closest("[data-mo]") : null;
+  if(mo){ monthOffset += parseInt(mo.dataset.mo, 10); renderMonth(); return; }
+  const cell = e.target.closest ? e.target.closest(".mo-cell[data-day]") : null;
+  if(cell){ monthSel = cell.dataset.day; renderMonth(); return; }
   const et = e.target.closest ? e.target.closest("[data-edit]") : null;
   if(et && et.tagName !== "INPUT"){
     const id = et.dataset.id, field = et.dataset.field;
@@ -2504,7 +2603,7 @@ document.addEventListener("click", async e => {
   if(tab){
     document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
     tab.classList.add("active");
-    for(const v of ["today","week","ideas","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
+    for(const v of ["today","week","month","ideas","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
   }
 });
 
@@ -2845,6 +2944,13 @@ async function genSummary(){
 
 const mins = v => { const p = String(v).split(":").map(Number); return (p[0] || 0) * 60 + (p[1] || 0); };
 const addMin = (v, d) => { const t = Math.min(23 * 60 + 59, mins(v) + d); return pad(Math.floor(t / 60)) + ":" + pad(t % 60); };
+function cdInfo(due){
+  const ms = new Date(due) - new Date();
+  if(ms <= 0) return { t: "已逾期", cls: "late" };
+  const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5);
+  const cls = ms < 864e5 ? "late" : d <= 2 ? "warn" : "ok";
+  return { t: "剩 " + (d >= 1 ? d + " 天" : h + " 小时"), cls };
+}
 function isNowRange(s, e2){
   const nowM = new Date().getHours() * 60 + new Date().getMinutes();
   const m = mins(s || "23:59");

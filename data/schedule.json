@@ -565,7 +565,7 @@
       "start": "10:00",
       "end": "11:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "在ema上提交修改后的feedback （自动顺延自 10-09）",
       "source": "chat",
       "priority": ""

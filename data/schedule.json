@@ -621,6 +621,19 @@
       "notes": "问转出章如何寄回、能否代盖章",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv2hcf01183",
+      "title": "统计学作业",
+      "category": "course",
+      "date": "2026-10-10",
+      "start": "23:00",
+      "end": "24:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "今晚11点做统计学作业",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

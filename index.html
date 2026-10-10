@@ -3027,7 +3027,7 @@ function renderStash(){
 
   h += '<div class="seg-title">▸ 已排期 · 未完成（' + scheduled.length + '）</div>';
   h += scheduled.length ? scheduled.map(e =>
-      '<div class="idea-row"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
+      '<div class="idea-row"><span class="cat ' + (["skill","course","work","life"].includes(e.category) ? e.category : "life") + '">' + (CATN[e.category] || "任务") + '</span>'
       + '<span class="tt"><b>' + e.title + '</b><span class="meta"> ' + e.date.slice(5) + " " + (e.start || "") + '</span></span>'
       + cdChip(refOf(e))
       + priBadge(e)
@@ -3036,7 +3036,7 @@ function renderStash(){
 
   h += '<div class="seg-title">▸ 有DDL · 未排期（' + ddlTasks.length + '）</div>';
   h += ddlTasks.length ? ddlTasks.map(e =>
-      '<div class="idea-row"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
+      '<div class="idea-row"><span class="cat ' + (["skill","course","work","life"].includes(e.category) ? e.category : "life") + '">' + (CATN[e.category] || "任务") + '</span>'
       + '<span class="tt"><b>' + e.title + '</b>' + (e.notes ? '<span class="meta"> · ' + e.notes + '</span>' : '') + '</span>'
       + '<span class="when">DDL ' + e.ddl.slice(5,10) + '</span>'
       + cdChip(e.ddl)
@@ -3062,7 +3062,7 @@ function renderStash(){
 
   h += '<div class="seg-title">▸ 固定日程 · 考试（只读，' + exams.length + '）</div>';
   h += exams.length ? exams.map(e =>
-      '<div class="idea-row" style="opacity:.85"><span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span>'
+      '<div class="idea-row" style="opacity:.85"><span class="cat ' + (["skill","course","work","life"].includes(e.category) ? e.category : "life") + '">' + (CATN[e.category] || "任务") + '</span>'
       + '<span class="tt"><b>' + e.title + '</b><span class="meta"> ' + e.date.slice(5) + " " + (e.start || "") + (e.notes ? " · " + e.notes : "") + '</span></span>'
       + cdChip(refOf(e)) + '</div>').join("")
     : '<div class="empty">· 暂无考试 ·</div>';

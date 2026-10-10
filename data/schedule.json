@@ -501,7 +501,7 @@
       "start": "12:00",
       "end": "13:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "昨天未完成，挪到今天下午",
       "source": "chat",
       "priority": ""

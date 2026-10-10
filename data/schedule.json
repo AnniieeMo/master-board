@@ -342,12 +342,12 @@
       "id": "e-mukqqhe4497",
       "title": "test Michelin workflow",
       "category": "work",
-      "date": "2026-10-10",
+      "date": "2026-10-11",
       "start": "09:00",
       "end": "10:00",
       "ddl": "",
       "status": "todo",
-      "notes": "从9/24挪来，测Michelin workflow",
+      "notes": "从9/24挪来，测Michelin workflow （自动顺延自 10-10）",
       "source": "chat",
       "priority": ""
     },
@@ -522,12 +522,12 @@
       "id": "e-mv1502ef395",
       "title": "准备财会PPT",
       "category": "course",
-      "date": "2026-10-10",
-      "start": "19:00",
-      "end": "20:00",
+      "date": "2026-10-11",
+      "start": "10:00",
+      "end": "11:00",
       "ddl": "2026-10-14T18:00",
       "status": "todo",
-      "notes": "改到周六晚做，周二内部控制课前交",
+      "notes": "改到周六晚做，周二内部控制课前交 （自动顺延自 10-10）",
       "source": "chat",
       "priority": ""
     },
@@ -1689,6 +1689,13 @@
       "end": "15:00",
       "title": "CORE Monthly Transformation Review",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-01-28",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
+      "kind": "meeting"
     }
   ],
   "summaries": [
@@ -1712,9 +1719,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-08T07:30:08+08:00",
+    "generated_at": "2026-10-11T07:30:03+08:00",
     "source": "apple_calendar",
-    "count": 142,
+    "count": 144,
     "horizon_days": 110
   },
   "ideas": [

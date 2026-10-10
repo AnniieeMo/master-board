@@ -514,7 +514,7 @@
       "start": "20:00",
       "end": "21:00",
       "ddl": "2026-10-11T23:59",
-      "status": "todo",
+      "status": "done",
       "notes": "",
       "source": "manual"
     },

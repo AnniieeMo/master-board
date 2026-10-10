@@ -647,6 +647,32 @@
       "notes": "讨论PPT分工与页面设置，已完成",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv2hqp6w819",
+      "title": "给思思过阿里云demo",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "11:30",
+      "end": "12:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "Alicloud QA demo与下一步讨论",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv2hqp6w261",
+      "title": "Amazon TP系统观察会",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "13:30",
+      "end": "14:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "TP.ai Operate Insights观察session",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

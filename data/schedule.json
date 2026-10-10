@@ -578,7 +578,7 @@
       "start": "11:00",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "rerun完所有已feedback的call （自动顺延自 10-09）",
       "source": "chat",
       "priority": ""

@@ -2061,7 +2061,7 @@ function evOf(e, pos){
     + (e.ddl ? '<span class="cd-inline ' + cd.cls + '" data-ddlref="' + e.ddl + '">' + cd.t + '</span>' : "")
     + (isNow ? '<span class="nowchip">▶ 进行中</span>' : "")
     + priBadge(e)
-    + '<span class="cat ' + e.category + '">' + (CATN[e.category] || e.category) + '</span></div>';
+    + '<span class="cat ' + (["skill","course","work","life"].includes(e.category) ? e.category : "life") + '">' + (CATN[e.category] || e.category || "任务") + '</span></div>';
 }
 
 function segOf(start){
@@ -2112,8 +2112,8 @@ function renderToday(){
     const overlap = fixes.some(f => tasks.some(t => mins(t.start || "23:59") < mins(f.end) && mins(t.end || t.start || "23:59") > mins(f.start)));
     h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
     if(!overlap){
-      const merged = [...fixes.map(f => ({ f })), ...tasks.map(e => ({ e }))]
-        .sort((a,b) => mins(a.f ? a.f.start : (a.e.start || "23:59")) - mins(b.f ? b.f.start : (b.e.start || "23:59")));
+      const merged = [...fixes.map(f => ({ f })), ...tasks.map(e => ({ ev: e }))]
+        .sort((a,b) => mins(a.f ? a.f.start : (a.ev.start || "23:59")) - mins(b.f ? b.f.start : (b.ev.start || "23:59")));
       h += merged.length ? merged.map(it => it.f ? fixedEv(it.f) : evOf(it.ev)).join("")
         : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
     } else {
@@ -2269,7 +2269,7 @@ function renderMeta(){
 function renderAll(){
   const jobs = { renderToday, renderWeek, renderStash, renderReview, renderDdl, renderMeta, renderSync };
   for(const [name, fn] of Object.entries(jobs)){
-    try { fn(); } catch(err){ console.error(name + " failed:", err); }
+    try { fn(); } catch(err){ console.error(name + " failed: " + (err && err.stack ? err.stack : err)); }
   }
   $("weekTag") && ($("weekTag").textContent = "第 " + semesterWeek() + " 周");
 }

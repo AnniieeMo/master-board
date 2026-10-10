@@ -673,6 +673,19 @@
       "notes": "TP.ai Operate Insights观察session",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv2hrngw24",
+      "title": "测试阿里云系统",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "09:30",
+      "end": "10:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "为11:30 demo提前测试阿里云",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

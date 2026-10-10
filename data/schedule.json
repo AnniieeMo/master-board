@@ -565,8 +565,47 @@
       "start": "09:00",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "周四上午全程审核，已完成",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv2h46mg327",
+      "title": "XL Smart投标deck",
+      "category": "work",
+      "date": "2026-10-08",
+      "start": "14:00",
+      "end": "18:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "周四下午制作投标deck，已完成",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv2h46mj649",
+      "title": "XL Smart投标deck",
+      "category": "work",
+      "date": "2026-10-09",
+      "start": "09:00",
+      "end": "12:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "周五上午继续投标deck，已完成",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv2h46mj953",
+      "title": "MRT 修改 feedback",
+      "category": "work",
+      "date": "2026-10-09",
+      "start": "13:00",
+      "end": "18:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "分多轮持续修改，整个下午做完",
       "source": "chat",
       "priority": ""
     }

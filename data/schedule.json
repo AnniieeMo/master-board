@@ -634,6 +634,19 @@
       "notes": "今晚11点做统计学作业",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv2hfgnx22",
+      "title": "讨论管理经济学PPT分工与页面设置",
+      "category": "course",
+      "date": "2026-10-10",
+      "start": "21:00",
+      "end": "22:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "讨论PPT分工与页面设置，已完成",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

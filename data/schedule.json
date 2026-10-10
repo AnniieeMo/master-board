@@ -608,6 +608,19 @@
       "notes": "分多轮持续修改，整个下午做完",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv2hbcl4847",
+      "title": "咨询团员证转出章事宜",
+      "category": "life",
+      "date": "2026-10-12",
+      "start": "09:00",
+      "end": "09:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "问转出章如何寄回、能否代盖章",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

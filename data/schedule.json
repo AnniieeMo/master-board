@@ -403,19 +403,6 @@
       "source": "manual"
     },
     {
-      "id": "e-muyu8w09984",
-      "title": "独立负责项目能力拆解，观察+1做法",
-      "category": "skill",
-      "date": "",
-      "start": "",
-      "end": "",
-      "ddl": "2026-10-13T18:00",
-      "status": "todo",
-      "notes": "观察+1可模仿学习点",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-muyu8w0921",
       "title": "了解两个+1绩效，绑定自己工作",
       "category": "work",
@@ -675,13 +662,25 @@
       "priority": ""
     },
     {
-      "id": "e-mv41hn48601",
+      "id": "e-mv41g0c4501",
       "title": "重新评估职业路径，筛选2-3个规划节点",
       "category": "life",
       "date": "2026-10-13",
-      "start": "19:00",
-      "end": "20:00",
+      "start": "18:30",
+      "end": "19:30",
       "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "",
+      "source": "manual"
+    },
+    {
+      "id": "e-mv41jj7i692",
+      "title": "独立负责项目能力拆解，观察+1做法",
+      "category": "skill",
+      "date": "2026-10-13",
+      "start": "20:30",
+      "end": "21:30",
+      "ddl": "2026-10-13T21:00",
       "status": "todo",
       "notes": "",
       "source": "manual"

@@ -684,6 +684,32 @@
       "notes": "原10-11时段已过，挪到周三上午，DDL周三18:00",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv41py1o84",
+      "title": "秋招岗位匹配分析：AI agent经验对标+薪资期望",
+      "category": "life",
+      "date": "2026-10-13",
+      "start": "19:00",
+      "end": "20:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "看岗位匹配、薪资范围、校招vs社招",
+      "source": "chat",
+      "priority": ""
+    },
+    {
+      "id": "e-mv41py1q524",
+      "title": "总结可变现能力亮点，过简历",
+      "category": "life",
+      "date": "2026-10-13",
+      "start": "20:00",
+      "end": "21:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "结合秋招结果梳理亮点看简历",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

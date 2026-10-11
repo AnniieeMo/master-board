@@ -526,7 +526,7 @@
       "start": "10:00",
       "end": "11:00",
       "ddl": "2026-10-14T18:00",
-      "status": "todo",
+      "status": "done",
       "notes": "改到周六晚做，周二内部控制课前交 （自动顺延自 10-10）",
       "source": "chat",
       "priority": ""

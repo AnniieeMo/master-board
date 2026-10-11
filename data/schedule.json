@@ -709,6 +709,19 @@
       "status": "todo",
       "notes": "",
       "source": "manual"
+    },
+    {
+      "id": "e-mv41tn18357",
+      "title": "Emma feedback approve 及 rerun calls",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "14:00",
+      "end": "17:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "处理emma feedback审批与rerun，与会计课重叠",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

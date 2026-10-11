@@ -642,14 +642,15 @@ body{
       "id": "e-mukqqhe4497",
       "title": "test Michelin workflow",
       "category": "work",
-      "date": "2026-10-11",
-      "start": "09:00",
-      "end": "10:00",
+      "date": "2026-10-12",
+      "start": "12:00",
+      "end": "13:00",
       "ddl": "",
       "status": "todo",
-      "notes": "从9/24挪来，测Michelin workflow （自动顺延自 10-10）",
+      "notes": "从9/24挪来，测Michelin workflow （自动顺延自 10-11）",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "carries": 1
     },
     {
       "id": "e-mukqqhe4576",
@@ -797,14 +798,15 @@ body{
       "id": "e-mv14wp6n855",
       "title": "入团申请书",
       "category": "life",
-      "date": "2026-10-11",
-      "start": "19:00",
-      "end": "20:30",
+      "date": "2026-10-12",
+      "start": "21:00",
+      "end": "22:30",
       "ddl": "2026-10-12T09:00",
       "status": "todo",
-      "notes": "落款写入团时间",
+      "notes": "落款写入团时间 （自动顺延自 10-11）",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "carries": 1
     },
     {
       "id": "e-mv14xvgq871",
@@ -822,14 +824,15 @@ body{
       "id": "e-mv1502ef395",
       "title": "准备财会PPT",
       "category": "course",
-      "date": "2026-10-11",
-      "start": "10:00",
-      "end": "11:00",
+      "date": "2026-10-12",
+      "start": "17:00",
+      "end": "18:00",
       "ddl": "2026-10-14T18:00",
       "status": "todo",
-      "notes": "改到周六晚做，周二内部控制课前交 （自动顺延自 10-10）",
+      "notes": "改到周六晚做，周二内部控制课前交 （自动顺延自 10-11）",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "carries": 1
     },
     {
       "id": "e-muyu7sf5432",
@@ -986,6 +989,18 @@ body{
       "notes": "为11:30 demo提前测试阿里云",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "p-1791737848",
+      "title": "准备 · APAC Analytics team weekly meeting",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "22:30",
+      "end": "23:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "例会前自动预留",
+      "source": "prep"
     }
   ],
   "fixed": [
@@ -2162,6 +2177,12 @@ async function init(){
 
 /* ---------- views ---------- */
 
+function carryBadge(e){
+  const c = e.carries || 0;
+  if(c < 2) return "";
+  const cls = c >= 4 ? "late" : "warn";
+  return '<span class="cd-inline ' + cls + '" style="font-size:9px">顺延×' + c + '</span>';
+}
 function priBadge(e){
   const map = { high: "A", normal: "B", low: "C" };
   if(!e.priority || !map[e.priority]) return "";
@@ -2199,7 +2220,8 @@ function evOf(e, pos){
     + '</span>'
     + (e.ddl ? '<span class="cd-inline ' + cd.cls + '" data-ddlref="' + e.ddl + '">' + cd.t + '</span>' : "")
     + (isNow ? '<span class="nowchip">▶ 进行中</span>' : "")
-    + priBadge(e)
+    + carryBadge(e)
+    + (e.project ? '<span class="tag c-cyan" style="font-size:9px">📌 ' + e.project + '</span>' : "")
     + '<span class="cat ' + (["skill","course","work","life"].includes(e.category) ? e.category : "life") + '">' + (CATN[e.category] || e.category || "任务") + '</span></div>';
 }
 
@@ -2439,6 +2461,7 @@ function renderReview(){
   let h = '<div class="panel"><div class="ph"><span><span class="lead">■</span> REVIEW // ' + range.key + (range.label === "上周" ? "（上周）" : "") + '</span>'
     + '<span class="r"><button class="btn primary" id="btnGenSummary">' + (current ? "重新生成" : (range.label === "上周" ? "生成上周汇总" : "生成本周汇总")) + '</button></span></div><div class="pb">';
   h += '<div class="hint" style="margin-bottom:8px">' + range.label + '共 ' + weekEvs.length + ' 项安排，已完成 ' + done + ' 项。' + (new Date().getDay() === 1 ? "周一早上自动生成上周周报。" : "周一早上自动出上周汇总（现在也可以手动生成）。") + '</div>';
+  h += '<div style="margin-bottom:8px"><button class="btn warn" id="btnPlanNext">🗓 规划下周（储物舱+顺延+例会 → 草稿）</button></div>';
   if(current){
     h += '<div class="rev-card">' + current.text + '</div>';
   } else {
@@ -2453,6 +2476,8 @@ function renderReview(){
   box.innerHTML = h;
   const btn = $("btnGenSummary");
   if(btn) btn.addEventListener("click", genSummary);
+  const pb = $("btnPlanNext");
+  if(pb) pb.addEventListener("click", planNextWeek);
 }
 
 function renderDdl(){
@@ -2514,7 +2539,8 @@ function applyActions(actions){
         title: a.event.title || "未命名", category: ["skill","course","work","life"].includes(a.event.category) ? a.event.category : "life",
         date: a.event.date, start: a.event.start || "", end: a.event.end || "", ddl: a.event.ddl || "",
         status: "todo", notes: a.event.notes || "", source: "chat",
-        priority: ["high","normal","low"].includes(a.event.priority) ? a.event.priority : ""
+        priority: ["high","normal","low"].includes(a.event.priority) ? a.event.priority : "",
+        project: a.event.project || ""
       };
       if(!/^\d{4}-\d{2}-\d{2}$/.test(ev.date) && ev.date !== "") continue;
       const clash = ev.date ? state.fixed.find(f => f.date === ev.date && ev.start && f.start < (ev.end || "24:00") && ev.start < f.end) : null;
@@ -2532,7 +2558,7 @@ function applyActions(actions){
     }
     if(a.op === "done" && a.id){
       const ev = state.events.find(e => e.id === a.id);
-      if(ev){ ev.status = "done"; out.push({ ok: true, text: "✔ " + ev.title + " 已完成" }); }
+      if(ev){ ev.status = "done"; ev.done_at = new Date().toISOString().slice(0,16); out.push({ ok: true, text: "✔ " + ev.title + " 已完成" }); }
     }
     if(a.op === "idea" && a.text){
       state.ideas.push({
@@ -2715,7 +2741,10 @@ document.addEventListener("click", async e => {
   if(tick){
     const ev = state.events.find(x => x.id === tick.dataset.done);
     if(ev){
-      ev.status = ev.status === "done" ? "todo" : "done";
+      const wasDone = ev.status === "done";
+      ev.status = wasDone ? "todo" : "done";
+      if(!wasDone) ev.done_at = new Date().toISOString().slice(0,16);
+      else delete ev.done_at;
       dirty = true; renderAll();
       const r = await commitToGitHub();
       if(!r.ok) chatNote(r.msg);
@@ -2776,6 +2805,7 @@ function systemPrompt(){
   return [
     "你是「万事屋」的个人助手。今天是 " + t + " 周" + WD[n.getDay()] + "，当前时间 " + pad(n.getHours()) + ":" + pad(n.getMinutes()) + "。",
     "日期对照表（用户说「这周X/下周X/明天」时严格按此换算，禁止自行推算）：" + dateMap + "。其中今天=" + t + "。",
+    "打卡哲学：任务的勾代表该时段达成了预期结果，不代表任务终结——feedback/approve/迭代类工作会延续多周，用户会为同一事项反复安排时间，这是正常的。任务可能带 carries（被自动顺延的次数）和 project（所属项目，如 Ema）字段：carries ≥ 3 的任务要在对话中主动过问一句——是拆小、委托还是放弃；project 相同的任务属于同一项目线，add 时可带 project 字段帮助聚合。",
     "用户在读研究生，同时在 TP（呼叫中心的数据分析部门）工作。活动分类：skill=技能培养/好奇想学的东西，course=硕士课程作业/讲座，work=TP工作任务，life=日常安排（看病/约会等）。",
     "规则：1) 信息够就直接排，缺细节用合理默认（学习60分钟、日常按需），不要反复追问；2) 活动与固定块或其它活动时间重叠是正常的，允许排期；若存在重叠，在回复里顺带提一句即可，没有重叠就不要提；3) 有 DDL 的任务尽量在截止前分散安排；4) 用户已完成的别重排。",
     "储物舱（STASH）：用户的东西分三类存放。1) 已排期且有DDL的 event；2) 有DDL但还没定时间的任务——这类用 {\"op\":\"add\"} 但 date 留空字符串\"\"、只填 ddl；3) 没DDL也没时间的纯想法——用 {\"op\":\"idea\"}。用户说「先记一下/还没定时间/以后想」→ 看有没有DDL：有DDL走第2类，没有走第3类；不要强行编日期。考试/考核类固定日程（标题含考核、考试）已由系统单独管理，不要为它们建 event 或改它们，除非用户明确要求。",
@@ -3046,7 +3076,7 @@ async function genSummary(){
     const prompt = "以下是 " + range.start + " 到 " + range.end + "（" + range.label + "）的日程数据。请写一份中文周报，250 字以内，用【】小节标题分四段："
       + "【本周完成】列关键事项；"
       + "【时间占比】按已记录时长写：工作 " + Math.round(workMin/tot*100) + "% / 学习 " + Math.round(studyMin/tot*100) + "%（学习含课业与自学），各配一句说明；"
-      + "【未完成顺延】" + (carried.length ? "列出这 " + carried.length + " 项：" + JSON.stringify(carried.map(e => e.title)) : "无，全部清账") + "；"
+      + "【未完成顺延】" + (carried.length ? "列出这 " + carried.length + " 项：" + JSON.stringify(carried.map(e => ({ title: e.title, carries: e.carries || 0 }))) + "；carries ≥ 3 的进【拖延黑名单】并各配一句追问（拆小/委托/放弃？）" : "无，全部清账") + "；"
       + "【下周建议】储物仓想法 " + JSON.stringify(stashOpen) + " 里挑 1-2 个建议优先的，另给 1-2 条时间规划改进建议。"
       + "语气轻松直接，数据要引用上面的。\n活动数据：" + JSON.stringify(evs) + "\n未排期DDL：" + JSON.stringify(unsched);
     const text = await callLlm([{ role: "user", content: prompt }]);
@@ -3057,6 +3087,45 @@ async function genSummary(){
     chatNote(r.ok ? "↯ 周报已生成并同步" : "↯ 周报已生成（" + r.msg + "）");
   } catch(err){
     chatNote("周报生成失败：" + err.message);
+  } finally {
+    $("typing").style.display = "none";
+  }
+}
+
+async function planNextWeek(){
+  if(!config.llm.key){ chatNote("规划下周需要先在「设置」填 API Key。"); openSettings(); return; }
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (8 - now.getDay()) % 7);
+  const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
+  const si = start.getFullYear() + "-" + pad(start.getMonth()+1) + "-" + pad(start.getDate());
+  const ei = end.getFullYear() + "-" + pad(end.getMonth()+1) + "-" + pad(end.getDate());
+  setStatus("起草下周规划…", true);
+  try {
+    const carried = state.events.filter(e => e.date && e.date < si && e.status !== "done" && e.start).map(e => ({ title: e.title, category: e.category, date: e.date, carries: e.carries || 0 }));
+    const stash = state.ideas.filter(i => i.status === "open").map(i => i.text);
+    const unsched = state.events.filter(e => !e.date && e.ddl && e.status !== "done").map(e => ({ title: e.title, ddl: e.ddl }));
+    const nextFixed = state.fixed.filter(f => f.date >= si && f.date <= ei).map(f => ({ date: f.date, start: f.start, end: f.end, title: f.title }));
+    const prompt = "用户想做下周（" + si + " 到 " + ei + "）的规划。请起草一版下周安排："
+      + "1) 把顺延任务安排进下周的具体时间块（用户习惯晚上学习 19:00-24:00，工作类任务优先白天）；"
+      + "2) 从储物仓想法里挑适合下周推进的，安排时间块或说明为什么先不排；"
+      + "3) 未排期但有 DDL 的任务必须安排在 DDL 前；"
+      + "4) 避开下周的固定块；"
+      + "5) 先用文字简述你的安排逻辑和总体节奏判断，然后输出 actions JSON（全部为 add，date 在下周内）。"
+      + "\n顺延任务：" + JSON.stringify(carried)
+      + "\n储物仓：" + JSON.stringify(stash)
+      + "\n未排期DDL：" + JSON.stringify(unsched)
+      + "\n下周固定块：" + JSON.stringify(nextFixed);
+    const reply = await callLlm([{ role: "user", content: prompt }]);
+    const actions = extractActions(reply);
+    const clean = reply.replace(/```json[\s\S]*?```/g, "").trim() || "（无回复）";
+    if(actions.length){
+      pushMsg("assistant", clean, [], actions);
+      chatNote("⇪ 下周规划草稿已出，请核对卡片并确认入库。");
+    } else {
+      pushMsg("assistant", clean);
+    }
+  } catch(err){
+    chatNote("规划失败：" + err.message);
   } finally {
     $("typing").style.display = "none";
   }

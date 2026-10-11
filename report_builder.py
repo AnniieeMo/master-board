@@ -54,7 +54,8 @@ def main() -> int:
                 f"【时间占比】工作 {round(work/tot*100)}% / 学习 {round(study/tot*100)}%（按已记录时长），各配一句有观点的点评，不要只报数字；"
                 f"【未完成顺延】{'列出这 ' + str(len(carried)) + ' 项：' + json.dumps([e['title'] for e in carried], ensure_ascii=False) if carried else '无，全部清账'}；"
                 f"【下周建议】储物仓想法 {json.dumps(stash, ensure_ascii=False)} 里挑 1-2 个建议优先的，另给 1-2 条具体可执行的时间规划改进建议。"
-                f"风格要求：像朋友帮你写的周报，不是机器人汇报——开头可以有一句轻松的观察或小吐槽，点评带点态度，避免'保持良好''继续努力'这类空话。活动数据：{json.dumps(evs, ensure_ascii=False)}"
+                + (f"【拖延黑名单】以下任务被顺延 ≥3 次，各配一句追问（拆小/委托/放弃？）：{json.dumps([{'title': e['title'], 'carries': e.get('carries')} for e in blacklist], ensure_ascii=False)}" if blacklist else "")
+                + f"风格要求：像朋友帮你写的周报，不是机器人汇报——开头可以有一句轻松的观察或小吐槽，点评带点态度，避免'保持良好''继续努力'这类空话。活动数据：{json.dumps(evs, ensure_ascii=False)}"
             )
             try:
                 req = urllib.request.Request(

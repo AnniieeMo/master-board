@@ -5,7 +5,7 @@ the next free slots, avoiding fixed blocks and existing events."""
 import json
 import re
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -65,6 +65,7 @@ def main() -> int:
             e["date"] = day_iso
             e["start"] = fmt(start)
             e["end"] = fmt(start + dur)
+            e["carries"] = (e.get("carries") or 0) + 1
             notes = re.sub(r"（自动顺延自 [\d-]+）", "", e.get("notes") or "").strip()
             e["notes"] = (notes + f" （自动顺延自 {orig[5:]}）").strip()
             placed = True
@@ -73,8 +74,45 @@ def main() -> int:
         if not placed:
             print(f"rollover: could not place '{e['title']}' within {MAX_DAYS} days", file=sys.stderr)
 
+    # 会前准备块：明天的例会 -> 今天傍晚插一个 30 分钟准备块
+    tomorrow = (today + timedelta(days=1)).isoformat()
+    prep = int(s.get("prep_minutes", 30))
+    prep_made = 0
+    for f in s.get("fixed", []):
+        if f.get("date") != tomorrow or f.get("kind") != "meeting":
+            continue
+        title = "准备 · " + f["title"]
+        if any(e.get("title") == title and e.get("date") == today.isoformat() for e in s.get("events", [])):
+            continue
+        busy = []
+        for o in s.get("events", []):
+            if o.get("date") == today.isoformat() and o.get("start") and o.get("end"):
+                busy.append((to_m(o["start"]), to_m(o["end"])))
+        for f2 in s.get("fixed", []):
+            if f2["date"] == today.isoformat():
+                busy.append((to_m(f2["start"]), to_m(f2["end"])))
+        busy.sort()
+        slots = []
+        cur = 19 * 60
+        for b0, b1 in busy:
+            if b0 - cur >= prep:
+                slots.append((cur, b0))
+            cur = max(cur, b1)
+        if 23 * 60 - cur >= prep:
+            slots.append((cur, 23 * 60))
+        if not slots:
+            continue
+        start = slots[0][0]
+        s["events"].append({
+            "id": "p-" + str(int(datetime.now().timestamp())),
+            "title": title, "category": "work",
+            "date": today.isoformat(), "start": fmt(start), "end": fmt(start + prep),
+            "ddl": "", "status": "todo", "notes": "例会前自动预留", "source": "prep"
+        })
+        prep_made += 1
+
     SCHEDULE.write_text(json.dumps(s, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"rollover moved {moved} task(s)")
+    print(f"rollover moved {moved} task(s), prep blocks {prep_made}")
     return 0
 
 

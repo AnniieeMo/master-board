@@ -501,7 +501,7 @@
       "start": "19:00",
       "end": "20:30",
       "ddl": "2026-10-12T09:00",
-      "status": "todo",
+      "status": "done",
       "notes": "落款写入团时间",
       "source": "chat",
       "priority": ""

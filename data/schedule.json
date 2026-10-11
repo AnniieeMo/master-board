@@ -403,19 +403,6 @@
       "source": "manual"
     },
     {
-      "id": "e-muyu8w02950",
-      "title": "重新评估职业路径，筛选2-3个规划节点",
-      "category": "life",
-      "date": "",
-      "start": "",
-      "end": "",
-      "ddl": "2026-10-13T18:00",
-      "status": "todo",
-      "notes": "职业规划梳理，10-13前完成",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-muyu8w09984",
       "title": "独立负责项目能力拆解，观察+1做法",
       "category": "skill",
@@ -686,6 +673,18 @@
       "notes": "为11:30 demo提前测试阿里云",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv41g0c4501",
+      "title": "重新评估职业路径，筛选2-3个规划节点",
+      "category": "life",
+      "date": "2026-10-13",
+      "start": "18:30",
+      "end": "19:30",
+      "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "",
+      "source": "manual"
     }
   ],
   "fixed": [

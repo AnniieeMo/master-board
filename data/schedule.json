@@ -339,19 +339,6 @@
       "priority": ""
     },
     {
-      "id": "e-mukqqhe4497",
-      "title": "test Michelin workflow",
-      "category": "work",
-      "date": "2026-10-11",
-      "start": "09:00",
-      "end": "10:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "从9/24挪来，测Michelin workflow （自动顺延自 10-10）",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-mukqqhe4576",
       "title": "test categorizer workflow",
       "category": "work",
@@ -684,6 +671,19 @@
       "status": "todo",
       "notes": "",
       "source": "manual"
+    },
+    {
+      "id": "e-mv41nxqd327",
+      "title": "test Michelin workflow",
+      "category": "work",
+      "date": "2026-10-14",
+      "start": "09:00",
+      "end": "10:00",
+      "ddl": "2026-10-14T18:00",
+      "status": "todo",
+      "notes": "原10-11时段已过，挪到周三上午，DDL周三18:00",
+      "source": "chat",
+      "priority": ""
     }
   ],
   "fixed": [

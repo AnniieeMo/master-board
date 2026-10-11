@@ -339,23 +339,6 @@
       "priority": ""
     },
     {
-<<<<<<< HEAD
-=======
-      "id": "e-mukqqhe4497",
-      "title": "test Michelin workflow",
-      "category": "work",
-      "date": "2026-10-12",
-      "start": "12:00",
-      "end": "13:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "从9/24挪来，测Michelin workflow （自动顺延自 10-11）",
-      "source": "chat",
-      "priority": "",
-      "carries": 1
-    },
-    {
->>>>>>> a27b97b (feat: carry counter + blacklist, meeting prep auto-block, plan-next-week ritual, done_at + project fields)
       "id": "e-mukqqhe4576",
       "title": "test categorizer workflow",
       "category": "work",
@@ -462,20 +445,14 @@
       "id": "e-mv14wp6n855",
       "title": "入团申请书",
       "category": "life",
-      "date": "2026-10-12",
-      "start": "21:00",
-      "end": "22:30",
+      "date": "2026-10-11",
+      "start": "19:00",
+      "end": "20:30",
       "ddl": "2026-10-12T09:00",
-<<<<<<< HEAD
       "status": "done",
       "notes": "落款写入团时间",
-=======
-      "status": "todo",
-      "notes": "落款写入团时间 （自动顺延自 10-11）",
->>>>>>> a27b97b (feat: carry counter + blacklist, meeting prep auto-block, plan-next-week ritual, done_at + project fields)
       "source": "chat",
-      "priority": "",
-      "carries": 1
+      "priority": ""
     },
     {
       "id": "e-mv14xvgq871",
@@ -493,20 +470,14 @@
       "id": "e-mv1502ef395",
       "title": "准备财会PPT",
       "category": "course",
-      "date": "2026-10-12",
-      "start": "17:00",
-      "end": "18:00",
+      "date": "2026-10-11",
+      "start": "10:00",
+      "end": "11:00",
       "ddl": "2026-10-14T18:00",
-<<<<<<< HEAD
       "status": "done",
       "notes": "改到周六晚做，周二内部控制课前交 （自动顺延自 10-10）",
-=======
-      "status": "todo",
-      "notes": "改到周六晚做，周二内部控制课前交 （自动顺延自 10-11）",
->>>>>>> a27b97b (feat: carry counter + blacklist, meeting prep auto-block, plan-next-week ritual, done_at + project fields)
       "source": "chat",
-      "priority": "",
-      "carries": 1
+      "priority": ""
     },
     {
       "id": "e-muyu7sf5432",
@@ -665,7 +636,6 @@
       "priority": ""
     },
     {
-<<<<<<< HEAD
       "id": "e-mv41g0c4501",
       "title": "重新评估职业路径，筛选2-3个规划节点",
       "category": "life",
@@ -752,18 +722,6 @@
       "notes": "处理emma feedback审批与rerun，与会计课重叠",
       "source": "chat",
       "priority": ""
-=======
-      "id": "p-1791737848",
-      "title": "准备 · APAC Analytics team weekly meeting",
-      "category": "work",
-      "date": "2026-10-12",
-      "start": "22:30",
-      "end": "23:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "例会前自动预留",
-      "source": "prep"
->>>>>>> a27b97b (feat: carry counter + blacklist, meeting prep auto-block, plan-next-week ritual, done_at + project fields)
     }
   ],
   "fixed": [

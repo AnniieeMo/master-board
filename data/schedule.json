@@ -390,19 +390,6 @@
       "source": "manual"
     },
     {
-      "id": "e-muyu8w0921",
-      "title": "了解两个+1绩效，绑定自己工作",
-      "category": "work",
-      "date": "",
-      "start": "",
-      "end": "",
-      "ddl": "2026-10-13T18:00",
-      "status": "todo",
-      "notes": "绩效绑定思路",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-muyu8w09427",
       "title": "北极星继续提炼简化",
       "category": "life",
@@ -710,6 +697,18 @@
       "notes": "结合秋招结果梳理亮点看简历",
       "source": "chat",
       "priority": ""
+    },
+    {
+      "id": "e-mv41rdfi621",
+      "title": "了解两个+1绩效，绑定自己工作",
+      "category": "work",
+      "date": "2026-10-13",
+      "start": "18:30",
+      "end": "19:30",
+      "ddl": "2026-10-13T18:00",
+      "status": "todo",
+      "notes": "",
+      "source": "manual"
     }
   ],
   "fixed": [

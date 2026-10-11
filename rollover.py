@@ -33,7 +33,6 @@ def main() -> int:
                and e.get("status") != "done" and e.get("start")]
     if not carried:
         print("rollover: nothing to carry")
-        return 0
 
     moved = 0
     for e in sorted(carried, key=lambda x: (x["date"], x.get("start") or "99:99")):

@@ -657,14 +657,13 @@
       "id": "e-mv41jj7i692",
       "title": "独立负责项目能力拆解，观察+1做法",
       "category": "skill",
-      "date": "2026-10-13",
-      "start": "11:00",
-      "end": "12:00",
+      "date": "2026-10-12",
+      "start": "20:30",
+      "end": "21:30",
       "ddl": "2026-10-13T21:00",
       "status": "todo",
-      "notes": "（自动顺延自 10-12）",
-      "source": "manual",
-      "carries": 1
+      "notes": "",
+      "source": "manual"
     },
     {
       "id": "e-mv41nxqd327",
@@ -738,10 +737,21 @@
       "start": "21:30",
       "end": "22:00",
       "ddl": "",
-      "status": "done",
+      "status": "todo",
       "notes": "例会前自动预留",
-      "source": "prep",
-      "done_at": "2026-10-12T16:49"
+      "source": "prep"
+    },
+    {
+      "id": "p-1791738154",
+      "title": "准备 · Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "22:00",
+      "end": "22:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "例会前自动预留",
+      "source": "prep"
     },
     {
       "id": "e-mv4qqym3120",
@@ -801,18 +811,6 @@
       "priority": "",
       "project": "",
       "done_at": "2026-10-12T10:13"
-    },
-    {
-      "id": "p-1791824340-0",
-      "title": "准备 · Weekly | Ema Discovery & Insights",
-      "category": "work",
-      "date": "2026-10-13",
-      "start": "21:00",
-      "end": "21:30",
-      "ddl": "",
-      "status": "todo",
-      "notes": "例会前自动预留",
-      "source": "prep"
     }
   ],
   "fixed": [
@@ -860,6 +858,13 @@
     },
     {
       "date": "2026-10-13",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-10-13",
       "start": "18:00",
       "end": "21:00",
       "title": "内部控制理论与实务",
@@ -901,6 +906,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-10-16",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-10-19",
       "start": "14:00",
       "end": "17:00",
@@ -926,6 +938,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-10-20",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -971,6 +990,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-10-23",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-10-26",
       "start": "14:00",
       "end": "17:00",
@@ -996,6 +1022,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-10-27",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1048,6 +1081,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-10-30",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-11-02",
       "start": "14:00",
       "end": "17:00",
@@ -1073,6 +1113,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-11-03",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1118,6 +1165,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-11-06",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-11-09",
       "start": "14:00",
       "end": "17:00",
@@ -1143,6 +1197,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-11-10",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1188,6 +1249,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-11-13",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-11-16",
       "start": "14:00",
       "end": "17:00",
@@ -1213,6 +1281,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-11-17",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1258,6 +1333,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-11-20",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-11-23",
       "start": "14:00",
       "end": "17:00",
@@ -1276,6 +1358,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-11-24",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1314,6 +1403,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-11-27",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-11-30",
       "start": "14:00",
       "end": "17:00",
@@ -1332,6 +1428,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-12-01",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1363,6 +1466,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-12-04",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-12-07",
       "start": "14:00",
       "end": "17:00",
@@ -1381,6 +1491,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-12-08",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1412,6 +1529,13 @@
       "kind": "class"
     },
     {
+      "date": "2026-12-11",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-12-14",
       "start": "14:00",
       "end": "17:00",
@@ -1430,6 +1554,13 @@
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-12-15",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1461,10 +1592,24 @@
       "kind": "class"
     },
     {
+      "date": "2026-12-18",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-12-22",
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-12-22",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1496,10 +1641,24 @@
       "kind": "class"
     },
     {
+      "date": "2026-12-25",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2026-12-29",
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-12-29",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1517,10 +1676,24 @@
       "kind": "meeting"
     },
     {
+      "date": "2027-01-01",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2027-01-05",
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-05",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1538,10 +1711,24 @@
       "kind": "meeting"
     },
     {
+      "date": "2027-01-08",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2027-01-12",
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-12",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1559,10 +1746,24 @@
       "kind": "meeting"
     },
     {
+      "date": "2027-01-15",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2027-01-19",
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-19",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1580,10 +1781,24 @@
       "kind": "meeting"
     },
     {
+      "date": "2027-01-22",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
       "date": "2027-01-26",
       "start": "15:00",
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-01-26",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "Fab Operate Insights | APAC | Bi-Weekly Touchbase",
       "kind": "meeting"
     },
     {
@@ -1687,26 +1902,5 @@
   ],
   "_pendingTaskId": null,
   "_linkedIdea": null,
-  "routines": [],
-  "calendar_skip": [
-    {
-      "title_contains": "TP.ai Operate Insights",
-      "weekdays": [
-        3,
-        5
-      ]
-    },
-    {
-      "title_contains": "Fab Operate Insights",
-      "weekdays": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ]
-    }
-  ]
+  "routines": []
 }

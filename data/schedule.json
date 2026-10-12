@@ -410,10 +410,11 @@
       "start": "10:00",
       "end": "11:00",
       "ddl": "2026-10-12T18:00",
-      "status": "todo",
+      "status": "done",
       "notes": "DDL周一18:00，一页时间表slide",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "done_at": "2026-10-12T03:07"
     },
     {
       "id": "e-mv0omtis548",

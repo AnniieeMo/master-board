@@ -714,9 +714,10 @@
       "start": "18:30",
       "end": "19:30",
       "ddl": "2026-10-13T18:00",
-      "status": "todo",
+      "status": "done",
       "notes": "",
-      "source": "manual"
+      "source": "manual",
+      "done_at": "2026-10-12T17:18"
     },
     {
       "id": "e-mv41tn18357",

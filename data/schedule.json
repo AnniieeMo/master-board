@@ -661,10 +661,11 @@
       "start": "11:00",
       "end": "12:00",
       "ddl": "2026-10-13T21:00",
-      "status": "todo",
+      "status": "done",
       "notes": "（自动顺延自 10-12）",
       "source": "manual",
-      "carries": 1
+      "carries": 1,
+      "done_at": "2026-10-12T17:18"
     },
     {
       "id": "e-mv41nxqd327",

@@ -780,6 +780,34 @@
       "source": "chat",
       "priority": "",
       "project": ""
+    },
+    {
+      "id": "e-mv4yxzd7431",
+      "title": "会议纪要整理",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "16:10",
+      "end": "16:40",
+      "ddl": "",
+      "status": "todo",
+      "notes": "Amazon观察会开了2h，整理纪要",
+      "source": "chat",
+      "priority": "",
+      "project": ""
+    },
+    {
+      "id": "e-mv4yxzd7102",
+      "title": "测试Teams共享屏幕",
+      "category": "work",
+      "date": "2026-10-12",
+      "start": "16:40",
+      "end": "17:10",
+      "ddl": "",
+      "status": "todo",
+      "notes": "测共享屏幕功能，30分钟",
+      "source": "chat",
+      "priority": "",
+      "project": ""
     }
   ],
   "fixed": [

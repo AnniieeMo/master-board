@@ -620,10 +620,11 @@
       "start": "13:30",
       "end": "14:30",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "TP.ai Operate Insights观察session",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "done_at": "2026-10-12T07:59"
     },
     {
       "id": "e-mv2hrngw24",

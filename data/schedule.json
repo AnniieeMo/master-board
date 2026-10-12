@@ -751,6 +751,20 @@
       "status": "todo",
       "notes": "例会前自动预留",
       "source": "prep"
+    },
+    {
+      "id": "e-mv4qqym3120",
+      "title": "QAT report deck定制版slide制作",
+      "category": "work",
+      "date": "2026-10-13",
+      "start": "09:30",
+      "end": "11:00",
+      "ddl": "2026-10-14T11:00",
+      "status": "todo",
+      "notes": "rolebased页4方块换截图+前页solution卖点，共2页",
+      "source": "chat",
+      "priority": "normal",
+      "project": ""
     }
   ],
   "fixed": [

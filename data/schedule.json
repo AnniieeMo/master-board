@@ -816,6 +816,20 @@
       "notes": "例会前自动预留",
       "source": "prep",
       "done_at": "2026-10-12T17:18"
+    },
+    {
+      "id": "e-mv5iq533964",
+      "title": "会计大数据作业：AI Agent上市公司财务指标分析",
+      "category": "course",
+      "date": "2026-10-13",
+      "start": "19:00",
+      "end": "20:00",
+      "ddl": "2026-10-18T23:59",
+      "status": "todo",
+      "notes": "王新路课程作业，截止10-18晚",
+      "source": "chat",
+      "priority": "",
+      "project": ""
     }
   ],
   "fixed": [

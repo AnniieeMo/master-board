@@ -775,11 +775,12 @@
       "start": "12:00",
       "end": "12:30",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "中午听的史铁生散文《好运设计》",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-12T10:13"
     },
     {
       "id": "e-mv4yxzd7431",

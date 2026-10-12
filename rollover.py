@@ -103,7 +103,7 @@ def main() -> int:
             continue
         start = slots[0][0]
         s["events"].append({
-            "id": "p-" + str(int(datetime.now().timestamp())),
+            "id": "p-" + str(int(datetime.now().timestamp())) + "-" + str(prep_made),
             "title": title, "category": "work",
             "date": today.isoformat(), "start": fmt(start), "end": fmt(start + prep),
             "ddl": "", "status": "todo", "notes": "例会前自动预留", "source": "prep"

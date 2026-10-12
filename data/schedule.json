@@ -736,9 +736,10 @@
       "start": "21:30",
       "end": "22:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "例会前自动预留",
-      "source": "prep"
+      "source": "prep",
+      "done_at": "2026-10-12T08:02"
     },
     {
       "id": "p-1791738154",
@@ -764,6 +765,20 @@
       "notes": "rolebased页4方块换截图+前页solution卖点，共2页",
       "source": "chat",
       "priority": "normal",
+      "project": ""
+    },
+    {
+      "id": "e-mv4yvzs3867",
+      "title": "听散文《好运设计》",
+      "category": "life",
+      "date": "2026-10-12",
+      "start": "12:00",
+      "end": "12:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "中午听的史铁生散文《好运设计》",
+      "source": "chat",
+      "priority": "",
       "project": ""
     }
   ],

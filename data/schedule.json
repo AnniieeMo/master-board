@@ -804,11 +804,12 @@
       "start": "16:40",
       "end": "17:10",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "测共享屏幕功能，30分钟",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-12T10:13"
     }
   ],
   "fixed": [

@@ -606,10 +606,11 @@
       "start": "11:30",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "Alicloud QA demo与下一步讨论",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "done_at": "2026-10-12T04:16"
     },
     {
       "id": "e-mv2hqp6w261",

@@ -850,34 +850,6 @@
   ],
   "fixed": [
     {
-      "date": "2026-10-12",
-      "start": "11:30",
-      "end": "12:00",
-      "title": "Alicloud Real-Time QA Demo & Next step Discussion",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-12",
-      "start": "13:30",
-      "end": "14:30",
-      "title": "TP.ai Operate Insights Observation session on Amazon account",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-12",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "会计大数据管理分析",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-12",
-      "start": "18:00",
-      "end": "21:00",
-      "title": "管理经济学",
-      "kind": "class"
-    },
-    {
       "date": "2026-10-13",
       "start": "14:00",
       "end": "17:00",
@@ -911,6 +883,20 @@
       "end": "17:00",
       "title": "经济管理统计分析",
       "kind": "class"
+    },
+    {
+      "date": "2026-10-14",
+      "start": "14:30",
+      "end": "15:00",
+      "title": "Discussion about CSAT AI-analytics opportunity",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-10-14",
+      "start": "15:00",
+      "end": "16:00",
+      "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
     },
     {
       "date": "2026-10-15",
@@ -1662,9 +1648,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-11T07:30:03+08:00",
+    "generated_at": "2026-10-13T07:32:03+08:00",
     "source": "apple_calendar",
-    "count": 144,
+    "count": 111,
     "horizon_days": 110
   },
   "ideas": [

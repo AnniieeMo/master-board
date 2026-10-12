@@ -775,12 +775,11 @@
       "start": "12:00",
       "end": "12:30",
       "ddl": "",
-      "status": "done",
+      "status": "todo",
       "notes": "中午听的史铁生散文《好运设计》",
       "source": "chat",
       "priority": "",
-      "project": "",
-      "done_at": "2026-10-12T08:09"
+      "project": ""
     },
     {
       "id": "e-mv4yxzd7431",
@@ -790,11 +789,12 @@
       "start": "16:10",
       "end": "16:40",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "Amazon观察会开了2h，整理纪要",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-12T10:02"
     },
     {
       "id": "e-mv4yxzd7102",

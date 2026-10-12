@@ -9,6 +9,7 @@ schedule = (
     if schedule_path.exists()
     else {"events": [], "fixed": [], "summaries": []}
 )
+schedule["calendar_skip"] = json.loads((root / "data.json").read_text(encoding="utf-8")).get("calendar_skip", [])
 
 html_path = root / "index.html"
 html = html_path.read_text(encoding="utf-8")

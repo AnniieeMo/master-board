@@ -631,10 +631,11 @@
       "start": "09:30",
       "end": "10:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "为11:30 demo提前测试阿里云",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "done_at": "2026-10-12T02:40"
     },
     {
       "id": "e-mv41g0c4501",

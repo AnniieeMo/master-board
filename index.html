@@ -2117,8 +2117,10 @@ function priBadge(e){
 
 function fixedEv(f, pos){
   const now = isNowRange(f.start, f.end);
+  const pastM = mins(f.end || "23:59") <= new Date().getHours() * 60 + new Date().getMinutes();
+  const pastCls = (!now && pastM) ? " past" : "";
   const base = 'border-style:dashed' + (pos ? ";" + pos : "");
-    return '<div class="ev' + (now ? " st-now" : "") + '" style="' + base + '">'
+    return '<div class="ev' + (now ? " st-now" : "") + pastCls + '" style="' + base + '">'
     + '<span class="tick" style="visibility:hidden">○</span>'
     + '<span class="t-rail"><b>' + f.start + '</b><span>- ' + f.end + '</span></span>'
     + '<span class="tt"><b>' + f.title + '</b></span>'

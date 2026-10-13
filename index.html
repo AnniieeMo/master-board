@@ -121,12 +121,7 @@ body{
 .mk-f{color:var(--cyan);border-color:var(--cyan)}
 .mk-e{color:var(--ink);border-color:var(--ink)}
 .mk-d{color:var(--red);border-color:var(--red)}
-.cal{position:relative;border-left:2px dotted var(--line-dash);margin:4px 0 2px}
-.cal .ev{box-shadow:1px 1px 0 var(--shadow)}
-@media (max-width:720px){
-  .cal{height:auto !important}
-  .cal .ev{position:static !important;width:auto !important;height:auto !important;margin-bottom:6px}
-}
+
 .et{cursor:text;border-bottom:1px dashed transparent}
 .et:hover{border-bottom-color:var(--line-dash)}
 
@@ -2188,47 +2183,16 @@ function renderToday(){
   for(const seg of ["上午","下午","晚上"]){
     const fixes = fixedToday.filter(f => segOf(f.start) === seg).sort((a,b) => mins(a.start) - mins(b.start));
     const tasks = evs.filter(e => segOf(e.start) === seg).sort((a,b) => mins(a.start || "23:59") - mins(b.start || "23:59"));
-    const overlap = fixes.some(f => tasks.some(t => mins(t.start || "23:59") < mins(f.end) && mins(t.end || t.start || "23:59") > mins(f.start)));
     h += '<div data-drop data-seg="' + seg + '"><div class="seg-title">▸ ' + seg + '</div>';
-    if(!overlap){
-      const merged = [...fixes.map(f => ({ f })), ...tasks.map(e => ({ ev: e }))]
-        .sort((a,b) => mins(a.f ? a.f.start : (a.ev.start || "23:59")) - mins(b.f ? b.f.start : (b.ev.start || "23:59")));
-      h += merged.length ? merged.map(it => it.f ? fixedEv(it.f) : evOf(it.ev, "")).join("")
-        : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
-    } else {
-      const all = [
-        ...fixes.map(f => ({ f, fixed: true, s: mins(f.start), e2: mins(f.end) })),
-        ...tasks.map(e => ({ e, fixed: false, s: mins(e.start || "23:59"), e2: mins(e.end || "") || mins(e.start || "23:59") + 60 }))
-      ];
-      const segStart = Math.min(...all.map(x => x.s));
-      const segEnd = Math.max(...all.map(x => x.e2));
-      const span = Math.max(segEnd - segStart, 150);
-      const PPM = 2;
-      const H = Math.round(span * PPM);
-      const topPx = it => Math.round((it.s - segStart) * PPM);
-      const hPx = it => Math.max(46, Math.round((it.e2 - it.s) * PPM) - 4);
-      const lanes = [];
-      tasks.forEach(e => {
-        const s = mins(e.start || "23:59"), e2 = mins(e.end || "") || s + 60;
-        let lane = lanes.find(l => s >= l.end);
-        if(!lane){ lane = { end: 0, items: [] }; lanes.push(lane); }
-        lane.items.push({ e, s, e2 });
-        lane.end = Math.max(lane.end, e2);
-      });
-      const laneW = 47 / lanes.length;
-      let cal = '';
-      fixes.forEach(f => {
-        const it = { s: mins(f.start), e2: mins(f.end) };
-        cal += fixedEv(f, 'left:0;width:47%;top:' + topPx(it) + 'px;height:' + hPx(it) + 'px');
-      });
-      lanes.forEach((lane, li) => {
-        lane.items.forEach(o => {
-          cal += evOf(o.e, 'left:' + (53 + li * laneW) + '%;width:' + (laneW - 2) + '%;top:' + topPx(o) + 'px;height:' + hPx(o) + 'px');
-        });
-      });
-      h += '<div class="cal" style="height:' + (H + 6) + 'px">' + cal + '</div>';
-    }
+    const merged = [...fixes.map(f => ({ f })), ...tasks.map(e => ({ ev: e }))]
+      .sort((a,b) => mins(a.f ? a.f.start : (a.ev.start || "23:59")) - mins(b.f ? b.f.start : (b.ev.start || "23:59")));
+    h += merged.length ? merged.map(it => {
+      if(it.f) return fixedEv(it.f);
+      const clash = fixes.find(f => mins(it.ev.start || "23:59") < mins(f.end) && mins(it.ev.end || it.ev.start || "23:59") > mins(f.start));
+      return evOf(it.ev, "", clash ? clash.title : "");
+    }).join("") : '<div class="empty">· 空闲 · 拖入卡片可调整 ·</div>';
     h += "</div>";
+
   }
   h += "</div></div>";
   box.innerHTML = h;

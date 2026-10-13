@@ -714,10 +714,11 @@
       "start": "14:00",
       "end": "17:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "处理emma feedback审批与rerun，与会计课重叠",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "done_at": "2026-10-13T10:55"
     },
     {
       "id": "p-1791738154",

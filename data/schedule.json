@@ -753,11 +753,12 @@
       "start": "09:30",
       "end": "11:00",
       "ddl": "2026-10-14T11:00",
-      "status": "todo",
+      "status": "done",
       "notes": "rolebased页4方块换截图+前页solution卖点，共2页",
       "source": "chat",
       "priority": "normal",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-13T03:50"
     },
     {
       "id": "e-mv4yvzs3867",

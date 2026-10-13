@@ -681,19 +681,6 @@
       "priority": ""
     },
     {
-      "id": "e-mv41py1o84",
-      "title": "秋招岗位匹配分析：AI agent经验对标+薪资期望",
-      "category": "life",
-      "date": "2026-10-13",
-      "start": "19:00",
-      "end": "20:00",
-      "ddl": "",
-      "status": "todo",
-      "notes": "看岗位匹配、薪资范围、校招vs社招",
-      "source": "chat",
-      "priority": ""
-    },
-    {
       "id": "e-mv41py1q524",
       "title": "总结可变现能力亮点，过简历",
       "category": "life",
@@ -828,6 +815,20 @@
       "ddl": "2026-10-18T23:59",
       "status": "todo",
       "notes": "王新路课程作业，截止10-18晚",
+      "source": "chat",
+      "priority": "",
+      "project": ""
+    },
+    {
+      "id": "e-mv6auwva750",
+      "title": "秋招岗位匹配分析：AI agent经验对标+薪资期望",
+      "category": "life",
+      "date": "2026-10-13",
+      "start": "19:00",
+      "end": "20:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "看匹配、薪资、校招vs社招；定投递方向（大厂/四大/外企）",
       "source": "chat",
       "priority": "",
       "project": ""

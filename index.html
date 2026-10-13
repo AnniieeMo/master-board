@@ -76,6 +76,10 @@ body{
 .ev.done .tt{text-decoration:line-through;color:var(--dim)}
 .ev.done{opacity:.55}
 .ev .tick{cursor:pointer;user-select:none;font-size:12px;line-height:1.5;width:18px;flex-shrink:0;text-align:center;color:var(--green-dim)}
+.t-rail{width:58px;flex-shrink:0;text-align:center;border-right:1px dotted var(--line-dash);margin-right:6px;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.t-rail b{font-size:14px;color:var(--ink);font-weight:normal;display:block;line-height:1.3}
+.t-rail span{font-size:10px;color:var(--dim);display:block;line-height:1.3}
+.ev.st-now .t-rail b{color:var(--amber);text-shadow:0 0 8px rgba(255,180,84,.45)}
 .ev .tick:hover{color:var(--green)}
 .tt{flex:1;min-width:0}
 .tt b{color:var(--ink);font-weight:normal}
@@ -2116,7 +2120,7 @@ function fixedEv(f, pos){
   const base = 'border-style:dashed' + (pos ? ";" + pos : "");
     return '<div class="ev' + (now ? " st-now" : "") + '" style="' + base + '">'
     + '<span class="tick" style="visibility:hidden">○</span>'
-    + '<span class="t-rail"><b>' + f.start + '</b><span>' + f.end + '</span></span>'
+    + '<span class="t-rail"><b>' + f.start + '</b><span>- ' + f.end + '</span></span>'
     + '<span class="tt"><b>' + f.title + '</b></span>'
     + (now ? '<span class="nowchip">▶ 进行中</span>' : "")
     + '<span class="cat ' + (f.kind === "class" ? "course" : "work") + '">' + (f.kind === "class" ? "课程" : "会议") + '</span></div>';
@@ -2137,8 +2141,8 @@ function evOf(e, pos){
   const posStyle = pos ? "position:absolute;" + pos + ";margin:0;" : "";
   return '<div class="ev' + (done ? " done" : "") + (isNow ? " st-now" : "") + '" style="' + posStyle + '" draggable="true" data-drag="' + e.id + '">'
     + '<span class="tick" data-done="' + e.id + '">' + (done ? "◉" : "○") + '</span>'
+    + '<span class="t-rail"><b>' + (e.start || "--:--") + '</b><span>' + (e.end ? "-" + e.end : "") + '</span></span>'
     + '<span class="tt"><b class="et" data-edit="title" data-id="' + e.id + '">' + e.title + '</b>'
-    + (e.start ? '<span class="meta"> ' + e.start + "-" + (e.end || "?") + "</span>" : "")
     + (e.notes ? '<span class="meta"> · <span class="et" data-edit="notes" data-id="' + e.id + '">' + e.notes + '</span></span>' : "")
     + '</span>'
     + (e.ddl && cd ? '<span class="cd-inline ' + cd.cls + '" data-ddlref="' + e.ddl + '">' + cd.t + '</span>' : "")

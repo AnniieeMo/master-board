@@ -847,6 +847,20 @@
       "source": "chat",
       "priority": "",
       "project": "Ema"
+    },
+    {
+      "id": "e-mv6knscq291",
+      "title": "ema feedback approve 及 rerun call",
+      "category": "work",
+      "date": "2026-10-14",
+      "start": "10:00",
+      "end": "11:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "继续approve与rerun，接着10-13那轮",
+      "source": "chat",
+      "priority": "",
+      "project": "Ema"
     }
   ],
   "fixed": [

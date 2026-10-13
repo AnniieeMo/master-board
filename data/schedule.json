@@ -832,6 +832,20 @@
       "source": "chat",
       "priority": "",
       "project": ""
+    },
+    {
+      "id": "e-mv6b6tbs115",
+      "title": "Ema 逆向工程",
+      "category": "work",
+      "date": "2026-10-13",
+      "start": "21:00",
+      "end": "22:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "逆向研究Ema实现，衔接build ema想法",
+      "source": "chat",
+      "priority": "",
+      "project": "Ema"
     }
   ],
   "fixed": [

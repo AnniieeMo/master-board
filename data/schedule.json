@@ -861,6 +861,20 @@
       "source": "chat",
       "priority": "",
       "project": "Ema"
+    },
+    {
+      "id": "e-mv6qclm4557",
+      "title": "寄学生证",
+      "category": "life",
+      "date": "2026-10-14",
+      "start": "10:00",
+      "end": "10:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "明天上午10点寄出学生证",
+      "source": "chat",
+      "priority": "",
+      "project": ""
     }
   ],
   "fixed": [

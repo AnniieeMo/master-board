@@ -946,11 +946,12 @@
       "start": "17:30",
       "end": "18:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "会后整理纪要",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-15T08:45"
     },
     {
       "id": "e-mv8uhg2b755",

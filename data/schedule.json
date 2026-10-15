@@ -946,6 +946,20 @@
       "source": "chat",
       "priority": "",
       "project": ""
+    },
+    {
+      "id": "e-mv8uhg2b755",
+      "title": "RD",
+      "category": "work",
+      "date": "2026-10-15",
+      "start": "19:00",
+      "end": "20:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "晚间 RD 工作时段",
+      "source": "chat",
+      "priority": "",
+      "project": ""
     }
   ],
   "fixed": [

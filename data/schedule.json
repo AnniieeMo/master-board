@@ -899,11 +899,12 @@
       "start": "14:00",
       "end": "15:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "下午例行weekly",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-15T08:45"
     },
     {
       "id": "e-mv8uf8pv149",

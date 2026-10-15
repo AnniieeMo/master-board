@@ -960,6 +960,20 @@
       "source": "chat",
       "priority": "",
       "project": ""
+    },
+    {
+      "id": "e-mv8w62ne431",
+      "title": "会计大数据作业组队",
+      "category": "course",
+      "date": "2026-10-15",
+      "start": "22:00",
+      "end": "23:00",
+      "ddl": "2026-10-18T23:59",
+      "status": "todo",
+      "notes": "王新路作业组队，DDL 10-18晚",
+      "source": "chat",
+      "priority": "",
+      "project": ""
     }
   ],
   "fixed": [

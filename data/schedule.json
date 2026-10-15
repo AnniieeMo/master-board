@@ -886,11 +886,12 @@
       "start": "10:00",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "探索罗技feedback instructions，与审计课重叠",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-15T08:45"
     },
     {
       "id": "e-mv8uf8pv302",
@@ -930,11 +931,12 @@
       "start": "16:00",
       "end": "17:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "与TP.ai Weekly Touchbase重叠",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-15T08:45"
     },
     {
       "id": "e-mv8uf8pv53",

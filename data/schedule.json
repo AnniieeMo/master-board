@@ -871,11 +871,12 @@
       "start": "09:00",
       "end": "10:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "自10-14挪来，与审计课重叠",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-15T08:45"
     },
     {
       "id": "e-mv8uf8pv976",
@@ -885,11 +886,12 @@
       "start": "10:00",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "探索罗技feedback instructions，与审计课重叠",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-15T08:45"
     },
     {
       "id": "e-mv8uf8pv302",

@@ -989,11 +989,12 @@
       "start": "09:00",
       "end": "12:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "上午持续做rerun，已结束",
       "source": "chat",
       "priority": "",
-      "project": "Ema"
+      "project": "Ema",
+      "done_at": "2026-10-16T08:04"
     },
     {
       "id": "e-mvaipcq6766",

@@ -980,6 +980,62 @@
       "source": "chat",
       "priority": "",
       "project": ""
+    },
+    {
+      "id": "e-mvaipcq6429",
+      "title": "ema feedback rerun",
+      "category": "work",
+      "date": "2026-10-16",
+      "start": "09:00",
+      "end": "12:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "上午持续做rerun，已结束",
+      "source": "chat",
+      "priority": "",
+      "project": "Ema"
+    },
+    {
+      "id": "e-mvaipcq6766",
+      "title": "ema feedback rerun",
+      "category": "work",
+      "date": "2026-10-16",
+      "start": "14:00",
+      "end": "17:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "下午继续rerun，与财务会计课重叠",
+      "source": "chat",
+      "priority": "",
+      "project": "Ema"
+    },
+    {
+      "id": "e-mvaipcq6670",
+      "title": "职业陪跑教练咨询",
+      "category": "life",
+      "date": "2026-10-16",
+      "start": "18:30",
+      "end": "20:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "晚间教练咨询",
+      "source": "chat",
+      "priority": "",
+      "project": ""
+    },
+    {
+      "id": "e-mvaipcq6957",
+      "title": "王新路作业",
+      "category": "course",
+      "date": "2026-10-16",
+      "start": "21:00",
+      "end": "22:00",
+      "ddl": "2026-10-18T23:59",
+      "status": "todo",
+      "notes": "会计大数据作业，DDL 10-18晚",
+      "source": "chat",
+      "priority": "",
+      "project": ""
     }
   ],
   "fixed": [

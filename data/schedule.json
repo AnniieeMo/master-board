@@ -675,10 +675,11 @@
       "start": "20:00",
       "end": "21:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "结合秋招结果梳理亮点看简历",
       "source": "chat",
-      "priority": ""
+      "priority": "",
+      "done_at": "2026-10-18T18:29"
     },
     {
       "id": "e-mv41rdfi621",
@@ -816,11 +817,12 @@
       "start": "19:00",
       "end": "20:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "看匹配、薪资、校招vs社招；定投递方向（大厂/四大/外企）",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-18T18:29"
     },
     {
       "id": "e-mv6b6tbs115",
@@ -1120,9 +1122,10 @@
       "start": "21:00",
       "end": "22:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "",
-      "source": "iphone"
+      "source": "iphone",
+      "done_at": "2026-10-18T18:29"
     },
     {
       "id": "e-iph-005",

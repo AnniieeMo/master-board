@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 720 1968" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="career-roadmap-title career-roadmap-desc" id="Career-Roadmap-root">
+  <title id="career-roadmap-title">2026 年 10 月至 2027 年 8 月职业跃迁路线</title>
+  <desc id="career-roadmap-desc">上班用真实项目积累交付与商业能力，下班学习技术和售前英语，三月通过同题体验选择售前或产品主攻方向，汇合后确定公司画像、补齐缺口并准备秋招。</desc>
+  <defs>
+      <style>#Career-Roadmap-root { --color-paper:#e9e3d3;--color-paper-2:#f7f2e4;--color-ink:#33312a;--color-muted:#68614f;--color-accent:#2f7d3c;--font-sans:'Geist','PingFang SC','Microsoft YaHei',system-ui,sans-serif;--font-serif:'Instrument Serif','Songti SC','STSong',serif;--font-mono:'Geist Mono','SF Mono',ui-monospace,monospace }
+      #Career-Roadmap-root { color: var(--color-ink); font-family: var(--font-sans); }
+      #Career-Roadmap-root .diagram-container { width:100%;overflow-x:auto }
+      #Career-Roadmap-root .rd-title { font-family:var(--font-serif);font-size:44px;font-weight:500;fill:var(--color-ink) }
+      #Career-Roadmap-root .rd-name { font-family:var(--font-sans);font-size:28px;font-weight:650;fill:var(--color-ink) }
+      #Career-Roadmap-root .rd-body { font-family:var(--font-sans);font-size:20px;font-weight:400;fill:var(--color-muted) }
+      #Career-Roadmap-root .rd-date { font-family:var(--font-mono);font-size:16px;fill:var(--color-muted);letter-spacing:1px }
+      #Career-Roadmap-root .rd-small { font-family:var(--font-sans);font-size:18px;fill:var(--color-muted) }
+      #Career-Roadmap-root .rd-arrow-label { font-family:var(--font-sans);font-size:20px;fill:var(--color-accent);font-weight:600 }
+      #Career-Roadmap-root .rd-step { fill:#fffdf4;stroke:#68614f;stroke-width:1 }
+      #Career-Roadmap-root .rd-connector { fill:none;stroke:#68614f;stroke-width:1.5;marker-end:url(#Career-Roadmap-career-arrow) }
+      #Career-Roadmap-root .rd-branch { fill:none;stroke:#2f7d3c;stroke-width:1.5;marker-end:url(#Career-Roadmap-career-arrow-accent) }
+      #Career-Roadmap-root .diagram-container { overflow-x:visible }</style>
+    <marker id="Career-Roadmap-career-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#68614f"/></marker>
+    <marker id="Career-Roadmap-career-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#2f7d3c"/></marker>
+  </defs>
+  <rect width="720" height="1968" fill="#e9e3d3"/>
+  <text class="rd-date" x="40" y="56">CAREER ROADMAP / 2026.10 — 2027.08</text>
+  <text class="rd-title" x="40" y="116">把交付，变成下一站的证据。</text>
+  <text class="rd-body" x="40" y="156">2028 届 · 广州／深圳／远程 · 税前固定月薪目标 18–20k</text>
+  <line x1="40" y1="184" x2="680" y2="184" stroke="#68614f" stroke-width="1"/>
+  <text class="rd-small" x="40" y="216">上班：真实项目 × 目标力 × 业务判断　｜　下班：技术 × 表达 × 求职</text>
+
+  <!-- All connectors precede nodes. Branches merge only at the ink dot. -->
+  <line class="rd-connector" x1="360" y1="396" x2="360" y2="428"/>
+  <line class="rd-connector" x1="360" y1="572" x2="360" y2="604"/>
+  <line class="rd-connector" x1="360" y1="764" x2="360" y2="796"/>
+  <line class="rd-connector" x1="360" y1="940" x2="360" y2="984"/>
+  <path class="rd-branch" d="M 220 1064 H 168 Q 160 1064 160 1072 V 1192"/>
+  <path class="rd-branch" d="M 500 1064 H 552 Q 560 1064 560 1072 V 1192"/>
+  <path d="M 188 1336 V 1360 Q 188 1368 196 1368 H 360" fill="none" stroke="#68614f" stroke-width="1.5"/>
+  <path d="M 532 1336 V 1360 Q 532 1368 524 1368 H 360" fill="none" stroke="#68614f" stroke-width="1.5"/>
+  <line class="rd-connector" x1="360" y1="1372" x2="360" y2="1400"/>
+  <line class="rd-connector" x1="360" y1="1544" x2="360" y2="1576"/>
+  <rect x="72" y="1100" width="72" height="36" fill="#e9e3d3"/>
+  <text class="rd-arrow-label" x="108" y="1124" text-anchor="middle">售前</text>
+  <rect x="576" y="1100" width="72" height="36" fill="#e9e3d3"/>
+  <text class="rd-arrow-label" x="612" y="1124" text-anchor="middle">产品</text>
+
+  <g data-node="october">
+    <rect class="rd-step" x="124" y="252" width="472" height="144" rx="6"/>
+    <text class="rd-date" x="148" y="284">01 / OCTOBER · 2026</text>
+    <text class="rd-name" x="148" y="324">10 月｜摸透 TP，定好岗位名字</text>
+    <text class="rd-body" x="148" y="360">商业链路图＋岗位名称／工作任务对比</text>
+    <text class="rd-small" x="148" y="384">疑问集中找内部人核实；11 月再收对应 JD。</text>
+  </g>
+  <g data-node="november">
+    <rect class="rd-step" x="124" y="428" width="472" height="144" rx="6"/>
+    <text class="rd-date" x="148" y="460">02 / NOVEMBER</text>
+    <text class="rd-name" x="148" y="500">11 月｜读懂 JD，拔高售前英语</text>
+    <text class="rd-body" x="148" y="536">岗位画像初稿＋一页英文方案＋口头讲解</text>
+    <text class="rd-small" x="148" y="560">听读输入，写出方案，讲给客户，再拿反馈。</text>
+  </g>
+  <g data-node="technical-build">
+    <rect class="rd-step" x="124" y="604" width="472" height="160" rx="6"/>
+    <text class="rd-date" x="148" y="636">03 / DECEMBER → JANUARY · 2027</text>
+    <text class="rd-name" x="148" y="676">12 月懂技术，1 月做成果闭环</text>
+    <text class="rd-body" x="148" y="712">12 月：架构图、概念卡、三个小实验</text>
+    <text class="rd-body" x="148" y="744">1 月：真实案例＋平台外 PoC＋英文 demo</text>
+  </g>
+  <g data-node="feedback">
+    <rect class="rd-step" x="124" y="796" width="472" height="144" rx="6"/>
+    <text class="rd-date" x="148" y="828">04 / FEBRUARY</text>
+    <text class="rd-name" x="148" y="868">2 月｜成果自评，接受外部反馈</text>
+    <text class="rd-body" x="148" y="904">自评＋三份审阅＋三项关键修改</text>
+    <text class="rd-small" x="148" y="928">春节保留休息；只修最影响价值的缺口。</text>
+  </g>
+  <g data-node="role-decision">
+    <path d="M 360 984 L 500 1064 L 360 1144 L 220 1064 Z" fill="#edf1e4" stroke="#2f7d3c" stroke-width="1.5"/>
+    <text class="rd-date" x="360" y="1032" text-anchor="middle">05 / MARCH</text>
+    <text class="rd-name" x="360" y="1072" text-anchor="middle">3 月｜岗位验证</text>
+    <text class="rd-small" x="360" y="1104" text-anchor="middle">选主攻与备选</text>
+  </g>
+  <g data-node="presales-trial">
+    <rect class="rd-step" x="40" y="1192" width="296" height="144" rx="6"/>
+    <text class="rd-name" x="64" y="1236">AI 售前工程师</text>
+    <text class="rd-body" x="64" y="1272">需求 → 方案 → demo</text>
+    <text class="rd-small" x="64" y="1308">验证价值表达、异议与客户推动</text>
+  </g>
+  <g data-node="product-trial">
+    <rect class="rd-step" x="384" y="1192" width="296" height="144" rx="6"/>
+    <text class="rd-name" x="408" y="1236">B 端 AI 产品经理</text>
+    <text class="rd-body" x="408" y="1272">用户 → 取舍 → 原型／验收</text>
+    <text class="rd-small" x="408" y="1308">验证产品判断与迭代工作方式</text>
+  </g>
+  <circle cx="360" cy="1368" r="4" fill="#33312a"/>
+  <g data-node="target-gap">
+    <rect class="rd-step" x="124" y="1400" width="472" height="144" rx="6"/>
+    <text class="rd-date" x="148" y="1432">06 / APRIL → MAY</text>
+    <text class="rd-name" x="148" y="1472">4 月定目标画像，5 月查漏补齐</text>
+    <text class="rd-body" x="148" y="1508">公司／团队／工作方式 → 只补 1–2 个关键缺口</text>
+    <text class="rd-small" x="148" y="1532">一套作品对应主投岗位，不另开一条学习战线。</text>
+  </g>
+  <g data-node="recruitment">
+    <rect class="rd-step" x="124" y="1576" width="472" height="184" rx="20"/>
+    <text class="rd-date" x="148" y="1608">07 / JUNE → AUGUST</text>
+    <text class="rd-name" x="148" y="1648">6 月备面试，7–8 月推进秋招</text>
+    <text class="rd-body" x="148" y="1684">6 月：双语简历、作品集、故事与模拟</text>
+    <text class="rd-body" x="148" y="1716">7–8 月：提前批、内推、面试、机会比较</text>
+    <text class="rd-small" x="148" y="1744">看真实反馈；不把 8 月拿到 offer 设为硬门槛。</text>
+  </g>
+  <line x1="40" y1="1800" x2="680" y2="1800" stroke="#b3aa90" stroke-width="1"/>
+  <text class="rd-small" x="40" y="1836">每月一个主题 · 每周一个主要结果 · 所有练习进入交付</text>
+  <text class="rd-small" x="40" y="1872">先交下一个可见版本，让经验变成能力、案例和产品。</text>
+  <text class="rd-date" x="40" y="1924">RECTANGLE: ACTION / DIAMOND: CHOICE / DOT: REJOIN</text>
+</svg>

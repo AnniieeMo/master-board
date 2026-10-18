@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>万事屋 // YOROZUYA CONSOLE</title>
 <link rel="stylesheet" href="assets/pixel/Fusion-Pixel-12px-Monospaced-Simplified-Chinese.css">
+<link rel="stylesheet" href="assets/career.css?v=20261019">
 <style>
 :root{
   --bg:#e9e3d3;--panel:#f7f2e4;--panel2:#fffdf4;--ink:#33312a;
@@ -227,6 +228,7 @@ body{
     <button class="tab" data-view="week">▚ WEEK // 本周</button>
     <button class="tab" data-view="month">▚ MONTH // 本月</button>
     <button class="tab" data-view="ideas">▚ STASH // 储物舱</button>
+    <button class="tab" data-view="career">▚ JOB // 求职</button>
     <button class="tab" data-view="review">▚ REVIEW // 周报</button>
   </div>
 
@@ -234,6 +236,7 @@ body{
   <div id="view-week" style="display:none"></div>
   <div id="view-month" style="display:none"></div>
   <div id="view-ideas" style="display:none"></div>
+  <div id="view-career" style="display:none" aria-label="职业发展与秋招工作台"><div class="panel"><div class="pb">正在载入职业路线…</div></div></div>
   <div id="view-review" style="display:none"></div>
 
   <div class="footer">
@@ -2953,7 +2956,7 @@ document.addEventListener("click", async e => {
   if(tab){
     document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
     tab.classList.add("active");
-    for(const v of ["today","week","month","ideas","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
+    for(const v of ["today","week","month","ideas","career","review"]) $("view-" + v).style.display = v === tab.dataset.view ? "" : "none";
   }
 });
 
@@ -3473,7 +3476,7 @@ function prefillQuick(o){
   $("q_t_ddl").value = o.ddl || "";
   document.querySelector("#view-today").style.display = "";
   document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x.dataset.view === "today"));
-  ["week","ideas","review"].forEach(v => { const el = $("view-" + v); if(el) el.style.display = "none"; });
+  ["week","month","ideas","career","review"].forEach(v => { const el = $("view-" + v); if(el) el.style.display = "none"; });
   f.scrollIntoView({ block: "center" });
   $("q_t_title").focus();
 }
@@ -3558,6 +3561,12 @@ $("syncDot").addEventListener("click", async () => {
 });
 
 init();
+window.addEventListener("master-board-career-schedule", e => {
+  const item = e.detail || {};
+  if(typeof item.title !== "string") return;
+  prefillQuick({ title: "求职｜" + item.title.slice(0, 140), category: "skill", ddl: item.deadline ? item.deadline + "T20:00" : "" });
+});
 </script>
+<script src="assets/career.js?v=20261019" defer></script>
 </body>
 </html>

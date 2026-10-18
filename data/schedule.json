@@ -1107,9 +1107,10 @@
       "start": "18:30",
       "end": "20:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "",
-      "source": "iphone"
+      "source": "iphone",
+      "done_at": "2026-10-18T18:29"
     },
     {
       "id": "e-iph-004",

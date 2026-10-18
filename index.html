@@ -2328,7 +2328,17 @@ async function init(){
   if(queued){
     try {
       const p = JSON.parse(queued);
-      if(p && Array.isArray(p.events)){ state = p; state.ideas = state.ideas || []; dirty = true; }
+      if(p && Array.isArray(p.events)){
+        const byId = {};
+        (state.events || []).forEach(e => { byId[e.id] = e; });
+        (p.events || []).forEach(e => { byId[e.id] = byId[e.id] ? Object.assign(byId[e.id], e) : e; });
+        state.events = Object.values(byId);
+        if((p.fixed || []).length && (p.fixed_meta || {}).generated_at > ((state.fixed_meta || {}).generated_at || "")) state.fixed = p.fixed;
+        state.ideas = state.ideas || [];
+        (p.ideas || []).forEach(i => { if(!state.ideas.some(x => x.id === i.id)) state.ideas.push(i); });
+        (p.summaries || []).forEach(x => { state.summaries = (state.summaries || []).filter(s => s.week !== x.week); state.summaries.push(x); });
+        dirty = true;
+      }
     } catch(e){}
     localStorage.removeItem("mb.pendingSync");
   }

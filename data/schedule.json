@@ -843,11 +843,12 @@
       "start": "10:00",
       "end": "11:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "继续approve与rerun，接着10-13那轮",
       "source": "chat",
       "priority": "",
-      "project": "Ema"
+      "project": "Ema",
+      "done_at": "2026-10-18T16:35"
     },
     {
       "id": "e-mv6qclm4557",
@@ -857,11 +858,12 @@
       "start": "10:00",
       "end": "10:30",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "明天上午10点寄出学生证",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-18T16:35"
     },
     {
       "id": "e-mv8uf8pu371",
@@ -961,11 +963,12 @@
       "start": "19:00",
       "end": "20:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "晚间 RD 工作时段",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-18T16:35"
     },
     {
       "id": "e-mv8w62ne431",

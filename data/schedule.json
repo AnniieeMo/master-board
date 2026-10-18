@@ -1032,11 +1032,12 @@
       "start": "21:00",
       "end": "22:00",
       "ddl": "2026-10-18T23:59",
-      "status": "todo",
+      "status": "done",
       "notes": "会计大数据作业，DDL 10-18晚",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-18T16:33"
     }
   ],
   "fixed": [

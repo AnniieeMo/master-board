@@ -1045,79 +1045,109 @@
       "priority": "",
       "project": "",
       "done_at": "2026-10-18T16:33"
+    },
+    {
+      "id": "e-mv41nxqd327",
+      "title": "test Michelin workflow",
+      "category": "work",
+      "date": "2026-10-18",
+      "start": "09:00",
+      "end": "10:00",
+      "ddl": "2026-10-14T18:00",
+      "status": "todo",
+      "notes": "原10-11时段已过，挪到周三上午，DDL周三18:00 （自动顺延自 10-17）",
+      "source": "chat",
+      "priority": "",
+      "carries": 4
+    },
+    {
+      "id": "p-1791934204-0",
+      "title": "准备 · TP.ai Operate Insights | APAC | Weekly Touchbase",
+      "category": "work",
+      "date": "2026-10-18",
+      "start": "17:00",
+      "end": "17:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "例会前自动预留 （自动顺延自 10-17）",
+      "source": "prep",
+      "carries": 4
+    },
+    {
+      "id": "e-iph-001",
+      "title": "ema feedback rerun（上午场）",
+      "category": "work",
+      "date": "2026-10-13",
+      "start": "09:00",
+      "end": "12:00",
+      "ddl": "",
+      "status": "done",
+      "done_at": "2026-10-13T12:00",
+      "notes": "已执行，下午继续",
+      "source": "iphone"
+    },
+    {
+      "id": "e-iph-002",
+      "title": "ema feedback rerun（下午场）",
+      "category": "work",
+      "date": "2026-10-13",
+      "start": "14:00",
+      "end": "17:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "同类工作，继续处理",
+      "source": "iphone"
+    },
+    {
+      "id": "e-iph-003",
+      "title": "职业陪跑教练咨询",
+      "category": "life",
+      "date": "2026-10-13",
+      "start": "18:30",
+      "end": "20:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "",
+      "source": "iphone"
+    },
+    {
+      "id": "e-iph-004",
+      "title": "王新路的作业",
+      "category": "course",
+      "date": "2026-10-13",
+      "start": "21:00",
+      "end": "22:00",
+      "ddl": "",
+      "status": "todo",
+      "notes": "",
+      "source": "iphone"
+    },
+    {
+      "id": "e-iph-005",
+      "title": "发管理经济学的 PPT 到群里",
+      "category": "course",
+      "date": "2026-10-14",
+      "start": "09:00",
+      "end": "09:30",
+      "ddl": "2026-10-14T09:00",
+      "status": "todo",
+      "notes": "早上提醒事项",
+      "source": "iphone"
+    },
+    {
+      "id": "e-iph-006",
+      "title": "整理 channel 的空间",
+      "category": "work",
+      "date": "2026-10-14",
+      "start": "09:30",
+      "end": "10:00",
+      "ddl": "2026-10-14T09:30",
+      "status": "todo",
+      "notes": "早上提醒事项",
+      "source": "iphone"
     }
   ],
   "fixed": [
-    {
-      "date": "2026-10-13",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "财务管理理论与实务",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-13",
-      "start": "15:00",
-      "end": "16:00",
-      "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-13",
-      "start": "18:00",
-      "end": "21:00",
-      "title": "内部控制理论与实务",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-14",
-      "start": "11:00",
-      "end": "11:30",
-      "title": "Weekly | Ema Discovery & Insights",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-14",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "经济管理统计分析",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-14",
-      "start": "14:30",
-      "end": "15:00",
-      "title": "Discussion about CSAT AI-analytics opportunity",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-14",
-      "start": "15:00",
-      "end": "16:00",
-      "title": "APAC Analytics team weekly meeting",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-15",
-      "start": "09:00",
-      "end": "12:00",
-      "title": "审计理论与实务",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-15",
-      "start": "16:00",
-      "end": "17:00",
-      "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
-      "kind": "meeting"
-    },
-    {
-      "date": "2026-10-16",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "财务会计理论与实务",
-      "kind": "class"
-    },
     {
       "date": "2026-10-19",
       "start": "14:00",
@@ -1187,6 +1217,13 @@
       "end": "17:00",
       "title": "财务会计理论与实务",
       "kind": "class"
+    },
+    {
+      "date": "2026-10-25",
+      "start": "17:00",
+      "end": "18:00",
+      "title": "约了 siyu",
+      "kind": "meeting"
     },
     {
       "date": "2026-10-26",
@@ -1820,6 +1857,27 @@
     },
     {
       "date": "2027-01-28",
+      "start": "16:00",
+      "end": "17:00",
+      "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-02-02",
+      "start": "15:00",
+      "end": "16:00",
+      "title": "APAC Analytics team weekly meeting",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-02-03",
+      "start": "11:00",
+      "end": "11:30",
+      "title": "Weekly | Ema Discovery & Insights",
+      "kind": "meeting"
+    },
+    {
+      "date": "2027-02-04",
       "start": "16:00",
       "end": "17:00",
       "title": "TP.ai Operate Insights | APAC | Weekly Touchbase",

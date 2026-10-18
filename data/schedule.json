@@ -1004,11 +1004,12 @@
       "start": "14:00",
       "end": "17:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "下午继续rerun，与财务会计课重叠",
       "source": "chat",
       "priority": "",
-      "project": "Ema"
+      "project": "Ema",
+      "done_at": "2026-10-18T16:33"
     },
     {
       "id": "e-mvaipcq6670",

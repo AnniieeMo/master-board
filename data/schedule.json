@@ -801,11 +801,12 @@
       "start": "19:00",
       "end": "20:00",
       "ddl": "2026-10-18T23:59",
-      "status": "todo",
+      "status": "done",
       "notes": "王新路课程作业，截止10-18晚",
       "source": "chat",
       "priority": "",
-      "project": ""
+      "project": "",
+      "done_at": "2026-10-18T16:35"
     },
     {
       "id": "e-mv6auwva750",

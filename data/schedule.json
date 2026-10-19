@@ -1148,9 +1148,10 @@
       "start": "09:30",
       "end": "10:00",
       "ddl": "2026-10-14T09:30",
-      "status": "todo",
+      "status": "done",
       "notes": "早上提醒事项",
-      "source": "iphone"
+      "source": "iphone",
+      "done_at": "2026-10-19T02:45"
     }
   ],
   "fixed": [

@@ -828,15 +828,16 @@
       "id": "e-mv6b6tbs115",
       "title": "Ema 逆向工程",
       "category": "work",
-      "date": "2026-10-13",
-      "start": "21:00",
-      "end": "22:00",
+      "date": "2026-10-20",
+      "start": "09:00",
+      "end": "10:00",
       "ddl": "",
       "status": "todo",
-      "notes": "逆向研究Ema实现，衔接build ema想法",
+      "notes": "逆向研究Ema实现，衔接build ema想法 （自动顺延自 10-13）",
       "source": "chat",
       "priority": "",
-      "project": "Ema"
+      "project": "Ema",
+      "carries": 1
     },
     {
       "id": "e-mv6knscq291",
@@ -1067,14 +1068,14 @@
       "id": "p-1791934204-0",
       "title": "准备 · TP.ai Operate Insights | APAC | Weekly Touchbase",
       "category": "work",
-      "date": "2026-10-18",
-      "start": "17:00",
-      "end": "17:30",
+      "date": "2026-10-20",
+      "start": "10:00",
+      "end": "10:30",
       "ddl": "",
       "status": "todo",
-      "notes": "例会前自动预留 （自动顺延自 10-17）",
+      "notes": "例会前自动预留 （自动顺延自 10-18）",
       "source": "prep",
-      "carries": 4
+      "carries": 5
     },
     {
       "id": "e-iph-001",
@@ -1153,23 +1154,21 @@
       "notes": "早上提醒事项",
       "source": "iphone",
       "done_at": "2026-10-19T02:45"
+    },
+    {
+      "id": "p-1792453468-0",
+      "title": "准备 · Weekly | Ema Discovery & Insights",
+      "category": "work",
+      "date": "2026-10-20",
+      "start": "21:00",
+      "end": "21:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "例会前自动预留",
+      "source": "prep"
     }
   ],
   "fixed": [
-    {
-      "date": "2026-10-19",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "会计大数据管理分析",
-      "kind": "class"
-    },
-    {
-      "date": "2026-10-19",
-      "start": "18:00",
-      "end": "21:00",
-      "title": "管理经济学",
-      "kind": "class"
-    },
     {
       "date": "2026-10-20",
       "start": "14:00",
@@ -1913,9 +1912,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-13T07:32:03+08:00",
+    "generated_at": "2026-10-20T08:00:27+08:00",
     "source": "apple_calendar",
-    "count": 111,
+    "count": 103,
     "horizon_days": 110
   },
   "ideas": [

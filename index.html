@@ -3037,14 +3037,14 @@ function systemPrompt(){
 }
 
 async function callLlm(messages, handlers){
-  const onDelta = handlers && handlers.onDelta;
-  const onReasoning = handlers && handlers.onReasoning;
-  const useStream = !!(onDelta || onReasoning);
+  handlers = handlers || {};
+  const onDelta = handlers.onDelta;
+  const onReasoning = handlers.onReasoning;
   const base = config.llm.base.replace(/\/+$/, "");
   const doFetch = () => fetch(base + "/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
-    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: useStream }),
+    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: true }),
     signal: handlers && handlers.signal
   });
   const sleepMs = ms => new Promise(r => setTimeout(r, ms));
@@ -3065,7 +3065,6 @@ async function callLlm(messages, handlers){
   }
   if(!res) throw new Error("网络连接失败（已自动重试一次）——请检查网络后重新发送");
   if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
-  if(!useStream) return (await res.json()).choices[0].message.content;
   const reader = res.body.getReader();
   const dec = new TextDecoder();
   let buf = "", full = "";
@@ -3083,8 +3082,8 @@ async function callLlm(messages, handlers){
       try {
         const j = JSON.parse(payload);
         const dObj = (j.choices && j.choices[0] && j.choices[0].delta) || {};
+        if(dObj.content){ full += dObj.content; if(onDelta) onDelta(dObj.content); }
         if(dObj.reasoning_content && onReasoning) onReasoning(dObj.reasoning_content);
-        if(dObj.content && onDelta){ full += dObj.content; onDelta(dObj.content); }
       } catch(e){}
     }
   }

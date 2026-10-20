@@ -3047,11 +3047,23 @@ async function callLlm(messages, handlers){
     body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: useStream }),
     signal: handlers && handlers.signal
   });
-  let res = await doFetch();
-  if((!res.ok && res.status >= 500) || (res.status === 0)){
-    await new Promise(r => setTimeout(r, 1500));
-    res = await doFetch();
+  const sleepMs = ms => new Promise(r => setTimeout(r, ms));
+  let res = null;
+  for(let attempt = 0; attempt < 2; attempt++){
+    try {
+      res = await doFetch();
+    } catch(e){
+      if(attempt === 0){ await sleepMs(1800); continue; }
+      throw new Error("网络连接失败（已自动重试一次）——请检查网络后重新发送");
+    }
+    if(!res.ok && res.status >= 500 && attempt === 0){
+      await sleepMs(1500);
+      res = null;
+      continue;
+    }
+    break;
   }
+  if(!res) throw new Error("网络连接失败（已自动重试一次）——请检查网络后重新发送");
   if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
   if(!useStream) return (await res.json()).choices[0].message.content;
   const reader = res.body.getReader();

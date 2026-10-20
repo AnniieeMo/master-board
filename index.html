@@ -3041,12 +3041,17 @@ async function callLlm(messages, handlers){
   const onReasoning = handlers && handlers.onReasoning;
   const useStream = !!(onDelta || onReasoning);
   const base = config.llm.base.replace(/\/+$/, "");
-  const res = await fetch(base + "/chat/completions", {
+  const doFetch = () => fetch(base + "/chat/completions", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
     body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: useStream }),
     signal: handlers && handlers.signal
   });
+  let res = await doFetch();
+  if((!res.ok && res.status >= 500) || (res.status === 0)){
+    await new Promise(r => setTimeout(r, 1500));
+    res = await doFetch();
+  }
   if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
   if(!useStream) return (await res.json()).choices[0].message.content;
   const reader = res.body.getReader();
@@ -3254,7 +3259,10 @@ async function sendChat(){
     }
   } catch(err){
     if(streamCancelled){ if(live) live.remove(); chatNote("⏹ 已取消本轮回复，日程没有任何改动。"); }
-    else chatNote("出错了：" + err.message);
+    else {
+      chatNote("出错了：" + err.message);
+      $("chatText").value = text;
+    }
   } finally {
     streamAbort = null;
     $("typing").style.display = "none";

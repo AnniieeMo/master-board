@@ -271,7 +271,12 @@ body{
     <div class="ph"><span><span class="lead">■</span> SETTINGS // 设置</span><span class="r" id="btnCloseSettings">✕ 关闭</span></div>
     <div class="pb">
       <div>
-        <div class="f-label"><b>LLM · 智谱 GLM</b>（OpenAI 兼容）</div>
+        <div class="f-label"><b>LLM</b>（OpenAI 兼容接口，任意厂商）
+          <button class="btn" data-preset="zhipu" style="margin-left:4px">智谱</button>
+          <button class="btn" data-preset="deepseek">DeepSeek</button>
+          <button class="btn" data-preset="siliconflow">硅基流动</button>
+          <button class="btn" data-preset="moonshot">月之暗面</button>
+        </div>
         <input type="text" id="cfgLlmBase" placeholder="https://open.bigmodel.cn/api/paas/v4">
         <div style="height:6px"></div>
         <input type="password" id="cfgLlmKey" placeholder="API Key（只存本机浏览器）">
@@ -3610,6 +3615,20 @@ $("btnTestLlm").addEventListener("click", async () => {
     out.style.color = "var(--red)";
   }
 });
+
+const LLM_PRESETS = {
+  zhipu: { base: "https://open.bigmodel.cn/api/paas/v4", model: "glm-5.3-flash" },
+  deepseek: { base: "https://api.deepseek.com/v1", model: "deepseek-chat" },
+  siliconflow: { base: "https://api.siliconflow.cn/v1", model: "Qwen/Qwen2.5-7B-Instruct" },
+  moonshot: { base: "https://api.moonshot.cn/v1", model: "moonshot-v1-8k" }
+};
+document.querySelectorAll("[data-preset]").forEach(b => b.addEventListener("click", () => {
+  const p = LLM_PRESETS[b.dataset.preset];
+  $("cfgLlmBase").value = p.base;
+  $("cfgLlmModel").value = p.model;
+  $("testResult").textContent = "已填入 " + b.dataset.preset + " 的地址和模型——填入对应 API Key 后保存";
+  $("testResult").style.color = "var(--dim)";
+}));
 
 $("btnWipe").addEventListener("click", () => {
   if(confirm("清除本机所有配置与聊天记录？")){ localStorage.removeItem("mb.config"); localStorage.removeItem(LS_CHAT); loadConfig(); renderChatLog(); $("settingsModal").classList.remove("open"); }

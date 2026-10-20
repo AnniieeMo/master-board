@@ -290,10 +290,12 @@ body{
       </div>
       <label class="check-row"><input type="checkbox" id="cfgAuto"> 助手改完自动入库（关闭则仅存本机，需手动同步）</label>
       <div class="hint">不填 key：三视图仍可用（只读模式），助手面板不可用。</div>
-      <div style="display:flex;gap:8px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn primary" id="btnSaveSettings">保存</button>
+        <button class="btn warn" id="btnTestLlm">🧪 测试 LLM 连接</button>
         <button class="btn danger" id="btnWipe">清除本机全部配置</button>
       </div>
+      <div id="testResult" class="hint" style="min-height:16px"></div>
     </div>
   </div>
 </div>
@@ -3580,6 +3582,35 @@ $("btnSaveSettings").addEventListener("click", () => {
   $("settingsModal").classList.remove("open");
   chatNote(config.llm.key ? "配置已保存，助手可用。" : "已保存（无 key，助手只读）。");
 });
+$("btnTestLlm").addEventListener("click", async () => {
+  const out = $("testResult");
+  const base = ($("cfgLlmBase").value.trim() || "https://open.bigmodel.cn/api/paas/v4").replace(/\/+$/, "");
+  const key = $("cfgLlmKey").value.trim();
+  const model = $("cfgLlmModel").value.trim() || "glm-5.3-flash";
+  if(!key){ out.textContent = "❌ 请先填 API Key"; out.style.color = "var(--red)"; return; }
+  out.textContent = "测试中…";
+  out.style.color = "var(--dim)";
+  try {
+    const res = await fetch(base + "/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
+      body: JSON.stringify({ model, messages: [{ role: "user", content: "回复OK两个字" }], max_tokens: 8 })
+    });
+    if(res.ok){
+      const j = await res.json();
+      out.textContent = "✅ 连接成功，模型已回复（" + model + "）";
+      out.style.color = "var(--green)";
+    } else {
+      const t = await res.text();
+      out.textContent = "❌ HTTP " + res.status + "：" + t.slice(0, 150);
+      out.style.color = "var(--red)";
+    }
+  } catch(e){
+    out.textContent = "❌ 网络层失败：" + e.message + "（多半是代理/网络把连接掐断了）";
+    out.style.color = "var(--red)";
+  }
+});
+
 $("btnWipe").addEventListener("click", () => {
   if(confirm("清除本机所有配置与聊天记录？")){ localStorage.removeItem("mb.config"); localStorage.removeItem(LS_CHAT); loadConfig(); renderChatLog(); $("settingsModal").classList.remove("open"); }
 });

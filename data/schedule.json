@@ -832,11 +832,12 @@
       "start": "21:00",
       "end": "22:00",
       "ddl": "",
-      "status": "todo",
+      "status": "done",
       "notes": "逆向研究Ema实现，衔接build ema想法",
       "source": "chat",
       "priority": "",
-      "project": "Ema"
+      "project": "Ema",
+      "done_at": "2026-10-20T03:54"
     },
     {
       "id": "e-mv6knscq291",

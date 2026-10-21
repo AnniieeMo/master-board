@@ -1,2 +1,8 @@
 .llmkey
 .llmkey
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+output/playwright/

@@ -279,12 +279,18 @@ body{
         </div>
         <input type="text" id="cfgLlmBase" placeholder="https://open.bigmodel.cn/api/paas/v4">
         <div style="height:6px"></div>
-        <input type="password" id="cfgLlmKey" placeholder="API Key（只存本机浏览器）">
+        <label class="f-label" for="cfgLlmKey">API Key（直连／中转首次登录时使用）</label>
+        <input type="password" id="cfgLlmKey" placeholder="中转已登录时无需填写" autocomplete="off" spellcheck="false">
         <div style="height:6px"></div>
         <input type="text" id="cfgLlmModel" placeholder="glm-5.3-flash（推荐）/ glm-4-flash（免费但较弱）">
         <div style="height:6px"></div>
         <input type="text" id="cfgLlmVision" placeholder="视觉模型（图片OCR用），如 glm-4v-flash">
         <div class="hint" style="margin-top:4px">模型越新越聪明：日期推算、分类准确度差别很大。推荐 glm-5.3-flash 或 glm-4.6 系列；glm-4-flash 是入门免费款，容易排错日期。视觉模型负责看图识文字。</div>
+        <label class="check-row" style="margin-top:12px;min-height:44px"><input type="checkbox" id="cfgLlmRelay"> 使用安全中转（智谱推荐）</label>
+        <label class="f-label" for="cfgLlmRelayUrl">中转地址</label>
+        <input type="url" id="cfgLlmRelayUrl" placeholder="https://你的安全中转.pages.dev" autocomplete="off" spellcheck="false">
+        <div id="relayLoginStatus" class="hint" role="status" style="margin-top:6px"></div>
+        <div class="hint">首次使用或登录到期时填写智谱 Key，点「测试 LLM 连接」。中转登录成功后会清除工作台保存的 Key，仅保留 30 天登录凭据。对话及图片会经你自己的 Cloudflare 中转转发至智谱，中转不保存正文；客户资料请先脱敏。直连模式的 Key 仍只保存在本浏览器。</div>
       </div>
       <div>
         <div class="f-label"><b>GitHub 写回</b>（手机/电脑同步）</div>
@@ -294,13 +300,13 @@ body{
         <div class="hint" style="margin-top:4px">创建：GitHub → Settings → Developer settings → Fine-grained tokens → 勾选 master-board 仓库的 Contents: Read and write</div>
       </div>
       <label class="check-row"><input type="checkbox" id="cfgAuto"> 助手改完自动入库（关闭则仅存本机，需手动同步）</label>
-      <div class="hint">不填 key：三视图仍可用（只读模式），助手面板不可用。</div>
+      <div class="hint">未登录中转、也未配置直连 Key 时，日程和求职工作台仍可用，助手暂不可用。</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn primary" id="btnSaveSettings">保存</button>
         <button class="btn warn" id="btnTestLlm">🧪 测试 LLM 连接</button>
         <button class="btn danger" id="btnWipe">清除本机全部配置</button>
       </div>
-      <div id="testResult" class="hint" style="min-height:16px"></div>
+      <div id="testResult" class="hint" role="status" aria-live="polite" style="min-height:16px"></div>
     </div>
   </div>
 </div>
@@ -2305,6 +2311,7 @@ body{
 </script>
 <!--SEED:END-->
 
+<script src="assets/llm-client.js?v=20261021"></script>
 <script>
 const WD = ["日","一","二","三","四","五","六"];
 const CATN = {skill:"技能",course:"课程",work:"工作",life:"日常"};
@@ -2323,6 +2330,8 @@ let streamCancelled = false;
 function loadConfig(){
   try { config = JSON.parse(localStorage.getItem("mb.config") || "{}"); } catch(e){ config = {}; }
   config.llm = config.llm || { base: "https://open.bigmodel.cn/api/paas/v4", key: "", model: "glm-5.3-flash", vision: "glm-4v-flash" };
+  if(!config.llm.transport) config.llm.transport = config.llm.base?.includes("open.bigmodel.cn") ? "relay" : "direct";
+  if(!config.llm.relayUrl) config.llm.relayUrl = MBLlm.defaultRelayUrl || "";
   config.gh = config.gh || { repo: "AnniieeMo/master-board", pat: "" };
   config.auto = config.auto !== false;
 }
@@ -3045,56 +3054,8 @@ function systemPrompt(){
 
 async function callLlm(messages, handlers){
   handlers = handlers || {};
-  const onDelta = handlers.onDelta;
-  const onReasoning = handlers.onReasoning;
-  const base = config.llm.base.replace(/\/+$/, "");
-  const doFetch = () => fetch(base + "/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
-    body: JSON.stringify({ model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: true }),
-    signal: handlers && handlers.signal
-  });
-  const sleepMs = ms => new Promise(r => setTimeout(r, ms));
-  let res = null;
-  for(let attempt = 0; attempt < 2; attempt++){
-    try {
-      res = await doFetch();
-    } catch(e){
-      if(attempt === 0){ await sleepMs(1800); continue; }
-      throw new Error("网络连接失败（已自动重试一次）——请检查网络后重新发送");
-    }
-    if(!res.ok && res.status >= 500 && attempt === 0){
-      await sleepMs(1500);
-      res = null;
-      continue;
-    }
-    break;
-  }
-  if(!res) throw new Error("网络连接失败（已自动重试一次）——请检查网络后重新发送");
-  if(!res.ok) throw new Error("LLM " + res.status + " " + (await res.text()).slice(0, 120));
-  const reader = res.body.getReader();
-  const dec = new TextDecoder();
-  let buf = "", full = "";
-  for(;;){
-    const { done, value } = await reader.read();
-    if(done) break;
-    buf += dec.decode(value, { stream: true });
-    const lines = buf.split("\n");
-    buf = lines.pop();
-    for(const line of lines){
-      const s = line.trim();
-      if(!s.startsWith("data:")) continue;
-      const payload = s.slice(5).trim();
-      if(payload === "[DONE]") continue;
-      try {
-        const j = JSON.parse(payload);
-        const dObj = (j.choices && j.choices[0] && j.choices[0].delta) || {};
-        if(dObj.content){ full += dObj.content; if(onDelta) onDelta(dObj.content); }
-        if(dObj.reasoning_content && onReasoning) onReasoning(dObj.reasoning_content);
-      } catch(e){}
-    }
-  }
-  return full;
+  const res = await MBLlm.request(config.llm, { model: config.llm.model, messages, temperature: 0.3, max_tokens: 3000, stream: true }, { signal: handlers.signal, onSession: saveConfig });
+  return MBLlm.readStream(res, handlers);
 }
 
 function setStatus(txt, showStop){
@@ -3105,20 +3066,14 @@ function setStatus(txt, showStop){
 }
 
 async function ocrImage(dataUrl){
-  const base = config.llm.base.replace(/\/+$/, "");
-  const res = await fetch(base + "/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + config.llm.key },
-    body: JSON.stringify({
+  const res = await MBLlm.request(config.llm, {
       model: config.llm.vision || "glm-4v-flash",
       messages: [{ role: "user", content: [
         { type: "text", text: "请把图片中的所有文字完整OCR出来，保持原有结构和层级；如果是作业、通知或课表类内容，逐条列出任务要求和截止时间，不要遗漏。" },
         { type: "image_url", image_url: { url: dataUrl } }
       ]}],
-      temperature: 0.1, max_tokens: 2000
-    })
-  });
-  if(!res.ok) throw new Error("视觉模型 " + res.status + "：" + (await res.text()).slice(0, 120));
+      temperature: 0.1, max_tokens: 2000, stream: false
+  }, { onSession: saveConfig });
   return (await res.json()).choices[0].message.content;
 }
 
@@ -3200,7 +3155,7 @@ async function sendChat(){
   const box = $("chatText");
   const text = box.value.trim();
   if(!text && !pendingImage) return;
-  if(!config.llm.key){ chatNote("请先在「设置」里填入智谱 API Key。"); openSettings(); return; }
+  if(!MBLlm.ready(config.llm)){ chatNote("请先在「设置」里配置并登录安全中转，或填写直连服务商 Key。"); openSettings(); return; }
   if(/^\s*(确认|确定|好的?|ok|okay|嗯+|yes)\s*$/i.test(text)){
     const h = chatHistory();
     let pendingIdx = -1;
@@ -3289,7 +3244,7 @@ async function sendChat(){
 }
 
 async function genSummary(){
-  if(!config.llm.key){ chatNote("生成周报需要先在「设置」填 API Key。"); openSettings(); return; }
+  if(!MBLlm.ready(config.llm)){ chatNote("生成周报需要先在「设置」登录中转或填写直连 Key。"); openSettings(); return; }
   const range = reviewRange();
   setStatus("正在生成" + range.label + "周报…");
   try {
@@ -3329,7 +3284,7 @@ async function genSummary(){
 }
 
 async function planNextWeek(){
-  if(!config.llm.key){ chatNote("规划下周需要先在「设置」填 API Key。"); openSettings(); return; }
+  if(!MBLlm.ready(config.llm)){ chatNote("规划下周需要先在「设置」登录中转或填写直连 Key。"); openSettings(); return; }
   const now = new Date();
   const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() + (8 - now.getDay()) % 7);
   const end = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 6);
@@ -3572,6 +3527,9 @@ $("btnClearChat").addEventListener("click", () => { if(confirm("清空聊天记�
 function openSettings(){
   $("cfgLlmBase").value = config.llm.base; $("cfgLlmKey").value = config.llm.key; $("cfgLlmModel").value = config.llm.model;
   $("cfgLlmVision").value = config.llm.vision || "glm-4v-flash";
+  $("cfgLlmRelay").checked = config.llm.transport === "relay";
+  $("cfgLlmRelayUrl").value = config.llm.relayUrl || MBLlm.defaultRelayUrl || "";
+  $("relayLoginStatus").textContent = config.llm.session && config.llm.sessionExpiresAt > Date.now() ? "中转已登录，有效至 " + new Date(config.llm.sessionExpiresAt).toLocaleDateString("zh-CN") : "中转尚未登录；首次填写智谱 Key 后测试连接。";
   $("cfgGhRepo").value = config.gh.repo; $("cfgGhPat").value = config.gh.pat;
   $("cfgAuto").checked = config.auto;
   $("settingsModal").classList.add("open");
@@ -3579,31 +3537,36 @@ function openSettings(){
 $("btnSettings").addEventListener("click", openSettings);
 $("btnCloseSettings").addEventListener("click", () => $("settingsModal").classList.remove("open"));
 $("settingsModal").addEventListener("click", e => { if(e.target === $("settingsModal")) $("settingsModal").classList.remove("open"); });
+function llmFromSettings(){
+  const relayUrl = $("cfgLlmRelayUrl").value.trim();
+  const key = $("cfgLlmKey").value.trim();
+  const keepSession = !key && relayUrl.replace(/\/+$/, "") === (config.llm.relayUrl || "").replace(/\/+$/, "");
+  return { base: $("cfgLlmBase").value.trim() || "https://open.bigmodel.cn/api/paas/v4", key, model: $("cfgLlmModel").value.trim() || "glm-5.3-flash", vision: $("cfgLlmVision").value.trim() || "glm-4v-flash", transport: $("cfgLlmRelay").checked ? "relay" : "direct", relayUrl, session: keepSession ? config.llm.session || "" : "", sessionExpiresAt: keepSession ? config.llm.sessionExpiresAt || 0 : 0 };
+}
 $("btnSaveSettings").addEventListener("click", () => {
-  config.llm = { base: $("cfgLlmBase").value.trim() || "https://open.bigmodel.cn/api/paas/v4", key: $("cfgLlmKey").value.trim(), model: $("cfgLlmModel").value.trim() || "glm-5.3-flash", vision: $("cfgLlmVision").value.trim() || "glm-4v-flash" };
+  config.llm = llmFromSettings();
   config.gh = { repo: $("cfgGhRepo").value.trim() || "AnniieeMo/master-board", pat: $("cfgGhPat").value.trim() };
   config.auto = $("cfgAuto").checked;
   saveConfig(); renderSync();
   $("settingsModal").classList.remove("open");
-  chatNote(config.llm.key ? "配置已保存，助手可用。" : "已保存（无 key，助手只读）。");
+  chatNote(MBLlm.ready(config.llm) ? "配置已保存；中转首次使用时会自动登录。" : "已保存；请先登录中转或配置直连 Key。");
 });
 $("btnTestLlm").addEventListener("click", async () => {
   const out = $("testResult");
-  const base = ($("cfgLlmBase").value.trim() || "https://open.bigmodel.cn/api/paas/v4").replace(/\/+$/, "");
-  const key = $("cfgLlmKey").value.trim();
-  const model = $("cfgLlmModel").value.trim() || "glm-5.3-flash";
-  if(!key){ out.textContent = "❌ 请先填 API Key"; out.style.color = "var(--red)"; return; }
+  const draft = llmFromSettings();
+  if(!MBLlm.ready(draft)){ out.textContent = "请填写中转地址和首次登录用的智谱 Key；已有有效登录时无需重复填写。"; out.style.color = "var(--red)"; return; }
+  $("btnTestLlm").disabled = true;
   out.textContent = "测试中…";
   out.style.color = "var(--dim)";
   try {
-    const res = await fetch(base + "/chat/completions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": "Bearer " + key },
-      body: JSON.stringify({ model, messages: [{ role: "user", content: "回复OK两个字" }], max_tokens: 8 })
+    const res = await MBLlm.request(draft, { model: draft.model, messages: [{ role: "user", content: "回复OK两个字" }], max_tokens: 1024, stream: false }, {
+      signal: AbortSignal.timeout(30000),
+      onSession: () => { config.llm = draft; saveConfig(); $("cfgLlmKey").value = ""; $("relayLoginStatus").textContent = draft.session ? "中转已登录，工作台保存的智谱 Key 已清除。" : "登录已失效，请重新登录。"; }
     });
     if(res.ok){
       const j = await res.json();
-      out.textContent = "✅ 连接成功，模型已回复（" + model + "）";
+      if(!j.choices?.[0]?.message) throw new Error("接口未返回模型消息");
+      out.textContent = "连接成功，已" + (draft.transport === "relay" ? "通过安全中转" : "直连") + "收到模型响应（" + draft.model + "）";
       out.style.color = "var(--green)";
     } else {
       const t = await res.text();
@@ -3611,9 +3574,9 @@ $("btnTestLlm").addEventListener("click", async () => {
       out.style.color = "var(--red)";
     }
   } catch(e){
-    out.textContent = "❌ 网络层失败：" + e.message + "（多半是代理/网络把连接掐断了）";
+    out.textContent = "连接未成功：" + e.message;
     out.style.color = "var(--red)";
-  }
+  } finally { $("btnTestLlm").disabled = false; }
 });
 
 const LLM_PRESETS = {
@@ -3626,6 +3589,8 @@ document.querySelectorAll("[data-preset]").forEach(b => b.addEventListener("clic
   const p = LLM_PRESETS[b.dataset.preset];
   $("cfgLlmBase").value = p.base;
   $("cfgLlmModel").value = p.model;
+  $("cfgLlmRelay").checked = b.dataset.preset === "zhipu";
+  $("cfgLlmKey").value = "";
   $("testResult").textContent = "已填入 " + b.dataset.preset + " 的地址和模型——填入对应 API Key 后保存";
   $("testResult").style.color = "var(--dim)";
 }));

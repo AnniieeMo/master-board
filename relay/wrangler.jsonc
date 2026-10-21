@@ -1,0 +1,17 @@
+{
+  "$schema": "https://unpkg.com/wrangler@4.151.3/config-schema.json",
+  "name": "master-board-relay",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-21",
+  "workers_dev": false,
+  "preview_urls": false,
+  "vars": {
+    "ALLOWED_ORIGIN": "https://anniieemo.github.io",
+    "ALLOWED_MODELS": "glm-5.3-flash,glm-4v-flash,glm-4-flash"
+  },
+  "ratelimits": [
+    { "name": "CHAT_LIMITER", "namespace_id": "26102101", "simple": { "limit": 15, "period": 60 } },
+    { "name": "LOGIN_LIMITER", "namespace_id": "26102102", "simple": { "limit": 5, "period": 60 } }
+  ],
+  "observability": { "enabled": false }
+}

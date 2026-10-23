@@ -828,17 +828,17 @@
       "id": "e-mv6b6tbs115",
       "title": "Ema 逆向工程",
       "category": "work",
-      "date": "2026-10-23",
+      "date": "2026-10-24",
       "start": "09:00",
       "end": "10:00",
       "ddl": "",
       "status": "todo",
-      "notes": "逆向研究Ema实现，衔接build ema想法 （自动顺延自 10-22）",
+      "notes": "逆向研究Ema实现，衔接build ema想法 （自动顺延自 10-23）",
       "source": "chat",
       "priority": "",
       "project": "Ema",
       "done_at": "2026-10-20T03:54",
-      "carries": 3
+      "carries": 4
     },
     {
       "id": "e-mv6knscq291",
@@ -1069,14 +1069,14 @@
       "id": "p-1791934204-0",
       "title": "准备 · TP.ai Operate Insights | APAC | Weekly Touchbase",
       "category": "work",
-      "date": "2026-10-23",
+      "date": "2026-10-24",
       "start": "10:00",
       "end": "10:30",
       "ddl": "",
       "status": "todo",
-      "notes": "例会前自动预留 （自动顺延自 10-22）",
+      "notes": "例会前自动预留 （自动顺延自 10-23）",
       "source": "prep",
-      "carries": 7,
+      "carries": 8,
       "done_at": "2026-10-20T03:54"
     },
     {
@@ -1156,21 +1156,33 @@
       "notes": "早上提醒事项",
       "source": "iphone",
       "done_at": "2026-10-19T02:45"
+    },
+    {
+      "id": "p-1792798206-0",
+      "title": "准备 · 约了 siyu",
+      "category": "work",
+      "date": "2026-10-24",
+      "start": "19:00",
+      "end": "19:30",
+      "ddl": "",
+      "status": "todo",
+      "notes": "例会前自动预留",
+      "source": "prep"
     }
   ],
   "fixed": [
-    {
-      "date": "2026-10-23",
-      "start": "14:00",
-      "end": "17:00",
-      "title": "财务会计理论与实务",
-      "kind": "class"
-    },
     {
       "date": "2026-10-25",
       "start": "17:00",
       "end": "18:00",
       "title": "约了 siyu",
+      "kind": "meeting"
+    },
+    {
+      "date": "2026-10-26",
+      "start": "10:00",
+      "end": "10:30",
+      "title": "Ema demo upgrade and new features",
       "kind": "meeting"
     },
     {
@@ -1837,6 +1849,13 @@
       "end": "16:00",
       "title": "APAC Analytics team weekly meeting",
       "kind": "meeting"
+    },
+    {
+      "date": "2027-02-10",
+      "start": "11:00",
+      "end": "11:30",
+      "title": "Weekly | Ema Discovery & Insights",
+      "kind": "meeting"
     }
   ],
   "summaries": [
@@ -1860,9 +1879,9 @@
     }
   ],
   "fixed_meta": {
-    "generated_at": "2026-10-23T07:30:04+08:00",
+    "generated_at": "2026-10-24T07:30:08+08:00",
     "source": "apple_calendar",
-    "count": 97,
+    "count": 98,
     "horizon_days": 110
   },
   "ideas": [
